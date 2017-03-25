@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory>
+    <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
+    <!-- 数据库版本 -->
+    <property name="dialect">NHibernate.Dialect.MySQL5Dialect</property>
+    <!-- 配置使用什么数据库 -->
+    <property name="connection.driver_class">NHibernate.Driver.MySqlDataDriver</property>
+    <!-- 数据库连接信息 -->
+    <property name="connection.connection_string">Server=localhost;Database=mobadb;User ID=root;Password=root;</property>
+
+    <property name="show_sql">true</property>
+  </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="MOBAServer"
+                   namespace="MOBAServer.DataBase.Model">
+
+  <class name ="User" table ="users">
+    <id name ="Id" column ="id" type ="Int32">
+      <generator class="native"></generator>
+    </id>
+    <property name="Username" column="username" type="String"></property>
+    <property name="Password" column="password" type="String"></property>
+    <property name="RegisterDate" column="registerdate" type="Date"></property>
+  </class>
+
+</hibernate-mapping>

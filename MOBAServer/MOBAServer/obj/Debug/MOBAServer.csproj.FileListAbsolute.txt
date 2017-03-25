@@ -1,0 +1,10 @@
+C:\Photon-OnPremise-Server-SDK_v4-0-29-11263\deploy\MOBA\bin\log4net.config
+C:\Photon-OnPremise-Server-SDK_v4-0-29-11263\deploy\MOBA\bin\MOBAServer.dll
+C:\Photon-OnPremise-Server-SDK_v4-0-29-11263\deploy\MOBA\bin\MOBAServer.pdb
+C:\Users\hasee\documents\visual studio 2015\Projects\MOBAServer\MOBAServer\obj\Debug\MOBAServer.csprojResolveAssemblyReference.cache
+C:\Users\hasee\documents\visual studio 2015\Projects\MOBAServer\MOBAServer\obj\Debug\MOBAServer.dll
+C:\Users\hasee\documents\visual studio 2015\Projects\MOBAServer\MOBAServer\obj\Debug\MOBAServer.pdb
+C:\Photon-OnPremise-Server-SDK_v4-0-29-11263\deploy\MOBA\bin\hibernate.cfg.xml
+C:\Users\hasee\Documents\GitHub\MOBAGame\MOBAServer\MOBAServer\obj\Debug\MOBAServer.csprojResolveAssemblyReference.cache
+C:\Users\hasee\Documents\GitHub\MOBAGame\MOBAServer\MOBAServer\obj\Debug\MOBAServer.dll
+C:\Users\hasee\Documents\GitHub\MOBAGame\MOBAServer\MOBAServer\obj\Debug\MOBAServer.pdb
