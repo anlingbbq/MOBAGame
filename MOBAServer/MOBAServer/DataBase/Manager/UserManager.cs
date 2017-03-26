@@ -14,17 +14,17 @@ namespace MOBAServer.DataBase.Manager
     /// </summary>
     public class UserManager : IUserManager
     {
-        private static UserManager s_Instanc;
+        private static UserManager _Instanc;
 
         public static UserManager Instance
         {
             get
             {
-                if (s_Instanc == null)
+                if (_Instanc == null)
                 {
-                    s_Instanc = new UserManager();
+                    _Instanc = new UserManager();
                 }
-                return s_Instanc;
+                return _Instanc;
             }
         }
 

@@ -11,10 +11,10 @@ using PhotonHostRuntimeInterfaces;
 
 namespace MOBAServer
 {
-    public class MobaClient : ClientPeer
+    public class MobaPeer : ClientPeer
     {
         public string Username;
-        public MobaClient(InitRequest initRequest) : base(initRequest)
+        public MobaPeer(InitRequest initRequest) : base(initRequest)
         {
 
         }

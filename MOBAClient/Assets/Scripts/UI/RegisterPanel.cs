@@ -22,7 +22,7 @@ namespace Assets.Scripts.UI
             m_RegisterRequest = GetComponent<RegisterRequest>();
         }
 
-        public void OnRegisterButtonClick()
+        public void OnBtnRegisterClick()
         {
             TextPrompt.text = "";
             if (!string.IsNullOrEmpty(InputUsername.text)
@@ -34,6 +34,9 @@ namespace Assets.Scripts.UI
                     m_RegisterRequest.Username = InputUsername.text;
                     m_RegisterRequest.Password = InputPassword.text;
                     m_RegisterRequest.DefalutRequest();
+
+                    ResetPanel();
+                    MaskLayer.Instance.Show();
                 }
                 else
                 {
@@ -50,12 +53,20 @@ namespace Assets.Scripts.UI
         {
             if (returnCode == ReturnCode.Suceess)
             {
-                TextPrompt.text = "注册成功";
+                MessageTip.Instance.Show("注册成功");
             }
             else if (returnCode == ReturnCode.Falied)
             {
-                TextPrompt.text = "用户已存在";
+                MessageTip.Instance.Show("用户已存在");
             }
+        }
+
+        public void ResetPanel()
+        {
+            InputUsername.text = "";
+            InputPassword.text = "";
+            InputRepeat.text = "";
+            TextPrompt.text = "";
         }
     }
 }

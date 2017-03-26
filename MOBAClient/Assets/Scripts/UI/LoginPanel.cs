@@ -18,15 +18,17 @@ public class LoginPanel : MonoBehaviour
         InputUsername.ActivateInputField();
 	}
 
-    public void OnLoginButtonClick()
+    public void OnBtnLoginClick()
     {
-        TextPrompt.text = "";
         if (!string.IsNullOrEmpty(InputUsername.text)
             && !string.IsNullOrEmpty(InputPassword.text))
         {
             m_LoginRequest.Username = InputUsername.text;
             m_LoginRequest.Password = InputPassword.text;
             m_LoginRequest.DefalutRequest();
+
+            ResetPanel();
+            MaskLayer.Instance.Show();
         }
         else
         {
@@ -34,21 +36,23 @@ public class LoginPanel : MonoBehaviour
         }
     }
 
-    public void OnRegisterButtonClick()
-    {
-        
-    }
-
     public void OnLoginResponse(ReturnCode returnCode)
     {
         if (returnCode == ReturnCode.Suceess)
         {
             // 跳转场景
-            TextPrompt.text = "登陆成功";
+            MessageTip.Instance.Show("登陆成功");
         }
         else
         {
-            TextPrompt.text = "用户名或密码错误";
+            MessageTip.Instance.Show("用户名或密码错误");
         }
+    }
+
+    public void ResetPanel()
+    {
+        InputUsername.text = "";
+        InputPassword.text = "";
+        TextPrompt.text = "";
     }
 }

@@ -23,7 +23,7 @@ namespace MOBAServer
         protected override PeerBase CreatePeer(InitRequest initRequest)
         {
             LogInfo("客户端连接");
-            return new MobaClient(initRequest);
+            return new MobaPeer(initRequest);
         }
 
         // 服务器启动

@@ -10,13 +10,13 @@ namespace MOBAServer.DataBase
 {
     class NhibernateHelper
     {
-        private static ISessionFactory m_SessionFactory;
+        private static ISessionFactory _SessionFactory;
 
         public static ISessionFactory SessionFactory
         {
             get
             {
-                if (m_SessionFactory == null)
+                if (_SessionFactory == null)
                 {
                     var configuration = new Configuration();
                     // 解析hibernate.cfg.xml
@@ -24,9 +24,9 @@ namespace MOBAServer.DataBase
                     // 解析程序集中的映射文件
                     configuration.AddAssembly("MobaServer");
 
-                    m_SessionFactory = configuration.BuildSessionFactory();
+                    _SessionFactory = configuration.BuildSessionFactory();
                 }
-                return m_SessionFactory;
+                return _SessionFactory;
             }
         }
 

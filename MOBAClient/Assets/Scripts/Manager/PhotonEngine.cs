@@ -22,6 +22,8 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
     // 使用协议
     private ConnectionProtocol m_Protocol = ConnectionProtocol.Udp;
 
+    private bool IsConnect = false;
+
     public static PhotonEngine Instance;
 
     void Awake()
@@ -43,7 +45,12 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 	}
 	
 	void Update () {
-		m_Peer.Service();
+	    if (!IsConnect)
+	    {
+            // 主要是防止中途断开连接时 立即重连
+            m_Peer.Connect(m_ServerAddress, m_ApplicationName);
+	    }
+        m_Peer.Service();
 	}
 
     void OnDestroy()
@@ -55,7 +62,18 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 
     public void DebugReturn(DebugLevel level, string message)
     {
-        throw new System.NotImplementedException();
+        if (level == DebugLevel.ERROR)
+        {
+            Log.Error(message);
+        }
+        else if (level == DebugLevel.WARNING)
+        {
+            Log.Warning(message);
+        }
+        else
+        {
+            Log.Debug(message);
+        }
     }
 
     public void OnOperationResponse(OperationResponse operationResponse)
@@ -67,7 +85,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
         }
         else
         {
-            Debug.LogError("找不到响应的对相应处理对象");
+            Log.Error("找不到响应的对相应处理对象");
         }
     }
 
@@ -78,7 +96,15 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 
     public void OnStatusChanged(StatusCode statusCode)
     {
-        Debug.Log("当前连接状态： " + statusCode);
+        Log.Debug("当前连接状态： " + statusCode);
+        if (statusCode == StatusCode.Connect)
+        {
+            IsConnect = true;
+        }
+        else if (statusCode == StatusCode.Disconnect)
+        {
+            IsConnect = false;
+        }
     }
 
     #endregion
