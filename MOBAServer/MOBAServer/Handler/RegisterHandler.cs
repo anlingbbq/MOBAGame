@@ -19,7 +19,7 @@ namespace MOBAServer.Handler
             OpCode = OperationCode.Register;
         }
 
-        public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaClient peer)
+        public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
             string username = request.Parameters.TryGetEx((byte) ParameterCode.Username) as string;
             string password = request.Parameters.TryGetEx((byte) ParameterCode.Password) as string;

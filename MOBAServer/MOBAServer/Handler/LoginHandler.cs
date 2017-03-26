@@ -19,7 +19,7 @@ namespace MOBAServer.Handler
         }
 
         public override void OnOperationRequest(OperationRequest request, 
-            SendParameters sendParameters, MobaClient peer)
+            SendParameters sendParameters, MobaPeer peer)
         {
             MobaServer.LogInfo("处理登陆请求");
             string username = request.Parameters.TryGetEx((byte)ParameterCode.Username) as string;

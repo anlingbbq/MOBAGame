@@ -13,6 +13,6 @@ namespace MOBAServer.Handler
         public OperationCode OpCode;
 
         public abstract void OnOperationRequest(OperationRequest request,
-            SendParameters sendParameters, MobaClient peer);
+            SendParameters sendParameters, MobaPeer peer);
     }
 }

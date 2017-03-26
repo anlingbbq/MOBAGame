@@ -73,7 +73,7 @@
     <Compile Include="Handler\BaseHandler.cs" />
     <Compile Include="Handler\LoginHandler.cs" />
     <Compile Include="Handler\RegisterHandler.cs" />
-    <Compile Include="MobaClient.cs" />
+    <Compile Include="MobaPeer.cs" />
     <Compile Include="MobaServer.cs" />
     <Compile Include="DataBase\Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
