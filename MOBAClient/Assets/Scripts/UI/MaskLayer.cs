@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 屏蔽层 发送消息时先启用屏蔽按钮等事件
 /// </summary>
-public class MaskLayer : Singlton<MaskLayer>
+public class MaskLayer : Singleton<MaskLayer>
 {
     [SerializeField]
     private GameObject Layer;

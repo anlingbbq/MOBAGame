@@ -14,7 +14,7 @@ public class LoginRequest : BaseRequest
 
     private LoginPanel m_LoginPanel;
 
-    void Start()
+    public override void Start()
     {
         this.OpCode = OperationCode.Login;
         base.Start();

@@ -15,7 +15,7 @@ public class RegisterRequest : BaseRequest
 
     private RegisterPanel m_RegisterPanel;
 
-    void Start()
+    public override void Start()
     {
         this.OpCode = OperationCode.Register;
         base.Start();

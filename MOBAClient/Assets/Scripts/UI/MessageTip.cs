@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MessageTip : Singlton<MessageTip>
+public class MessageTip : Singleton<MessageTip>
 {
     [SerializeField]
     private Text TextConent;

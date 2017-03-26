@@ -24,6 +24,8 @@ namespace Assets.Scripts.UI
 
         public void OnBtnRegisterClick()
         {
+            SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
             TextPrompt.text = "";
             if (!string.IsNullOrEmpty(InputUsername.text)
                 && !string.IsNullOrEmpty(InputPassword.text))
