@@ -40,7 +40,7 @@ public class LoadAsset
     // 异步加载
     public void LoadAsync()
     {
-        this.Request = Resources.LoadAsync(AssetName, Type);
+        Request = Resources.LoadAsync(AssetName, Type);
     }
 
 

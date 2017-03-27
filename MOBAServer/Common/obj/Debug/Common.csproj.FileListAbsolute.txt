@@ -3,3 +3,6 @@ C:\Users\hasee\Documents\GitHub\MOBAGame\MOBAClient\Assets\Plugins\Common.pdb
 C:\Users\hasee\Documents\Visual Studio 2015\Projects\MOBAServer\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
 C:\Users\hasee\Documents\Visual Studio 2015\Projects\MOBAServer\Common\obj\Debug\Common.dll
 C:\Users\hasee\Documents\Visual Studio 2015\Projects\MOBAServer\Common\obj\Debug\Common.pdb
+C:\Users\hasee\Documents\GitHub\MOBAGame\MOBAServer\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Users\hasee\Documents\GitHub\MOBAGame\MOBAServer\Common\obj\Debug\Common.dll
+C:\Users\hasee\Documents\GitHub\MOBAGame\MOBAServer\Common\obj\Debug\Common.pdb

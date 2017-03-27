@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Code;
+﻿using Common.Code;
 using Photon.SocketServer;
-using Common.Extension;
 using Common.OpCode;
 using MOBAServer.DataBase.Manager;
+using MOBAServer.Extension;
 
 namespace MOBAServer.Handler
 {
@@ -22,8 +17,8 @@ namespace MOBAServer.Handler
             SendParameters sendParameters, MobaPeer peer)
         {
             MobaServer.LogInfo("处理登陆请求");
-            string username = request.Parameters.TryGetEx((byte)ParameterCode.Username) as string;
-            string password = request.Parameters.TryGetEx((byte) ParameterCode.Password) as string;
+            string username = request.Parameters.ExTryGet((byte)ParameterCode.Username) as string;
+            string password = request.Parameters.ExTryGet((byte) ParameterCode.Password) as string;
 
             bool isExist = UserManager.Instance.VerifyUser(username, password);
             OperationResponse response = new OperationResponse(request.OperationCode);

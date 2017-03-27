@@ -73,6 +73,24 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>Assets\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets\Demigiant\DOTween\DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenPro">
+      <HintPath>Assets\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+    </Reference>
     <Reference Include="Common">
       <HintPath>Assets\Plugins\Common.dll</HintPath>
     </Reference>
@@ -84,8 +102,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\Scripts\Config\Paths.cs" />
     <Compile Include="Assets\Scripts\Event\BaseEvent.cs" />
+    <Compile Include="Assets\Scripts\Manager\GameRoot.cs" />
     <Compile Include="Assets\Scripts\Manager\Log.cs" />
     <Compile Include="Assets\Scripts\Manager\PhotonEngine.cs" />
     <Compile Include="Assets\Scripts\Manager\Resource\AssetType.cs" />
@@ -97,10 +117,30 @@
     <Compile Include="Assets\Scripts\Request\LoginRequest.cs" />
     <Compile Include="Assets\Scripts\Request\RegisterRequest.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
-    <Compile Include="Assets\Scripts\UI\LoginPanel.cs" />
-    <Compile Include="Assets\Scripts\UI\MaskLayer.cs" />
-    <Compile Include="Assets\Scripts\UI\MessageTip.cs" />
-    <Compile Include="Assets\Scripts\UI\RegisterPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\LoginPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\MainMenuPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\MaskPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\RegisterPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\TipPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\UIFramework\Base\UIBasePanel.cs" />
+    <Compile Include="Assets\Scripts\UI\UIFramework\Extension\DictionarytExtension.cs" />
+    <Compile Include="Assets\Scripts\UI\UIFramework\Manager\UIManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UIFramework\UIPanel\UIPanelInfo.cs" />
+    <Compile Include="Assets\Scripts\UI\UIFramework\UIPanel\UIPanelType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
+    <None Include="Assets\Demigiant\DOTween\DOTween43.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween46.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween50.xml" />
+    <None Include="Assets\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\Demigiant\DOTween\readme.txt" />
+    <None Include="Assets\Demigiant\DOTweenPro\DOTweenPro.XML" />
+    <None Include="Assets\Demigiant\DOTweenPro\Editor\DOTweenProEditor.XML" />
+    <None Include="Assets\Demigiant\DOTweenPro\readme.txt" />
+    <None Include="Assets\Demigiant\DemiLib\Core\DemiLib.xml" />
+    <None Include="Assets\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
+    <None Include="Assets\Demigiant\readme_DOTweenPro.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

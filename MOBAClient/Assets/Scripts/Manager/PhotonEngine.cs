@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Common.Code;
-using Common.Extension;
 using Common.OpCode;
 using ExitGames.Client.Photon;
 using UnityEngine;
@@ -78,7 +77,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 
     public void OnOperationResponse(OperationResponse operationResponse)
     {
-        BaseRequest request = m_RequestDict.TryGetEx((OperationCode) operationResponse.OperationCode);
+        BaseRequest request = m_RequestDict.ExTryGet((OperationCode) operationResponse.OperationCode);
         if (request)
         {
             request.OnOperationResponse(operationResponse);

@@ -1,0 +1,22 @@
+[
+	{
+		"Name" : "MainMenu",
+		"Path" : "UI/Panel/MainMenuPanel"
+	},
+	{
+		"Name" : "Login",
+		"Path" : "UI/Panel/LoginPanel"
+	},
+	{
+		"Name" : "Register",
+		"Path" : "UI/Panel/RegisterPanel"
+	},
+	{
+		"Name" : "Mask",
+		"Path" : "UI/Panel/MaskPanel"
+	},
+	{
+		"Name" : "Tip",
+		"Path" : "UI/Panel/TipPanel"
+	}
+]

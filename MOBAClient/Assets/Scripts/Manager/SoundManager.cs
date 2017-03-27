@@ -12,9 +12,6 @@ public class SoundManager : Singleton<SoundManager>, IResourceListener
     [SerializeField]
     private AudioSource EffectAudioSource;
 
-    // 保存加载的音效
-    //private Dictionary<string, AudioClip> m_EffectDict = new Dictionary<string, AudioClip>();
-
     void Start()
     {
         BgmAudioSource.loop = true;
@@ -50,6 +47,7 @@ public class SoundManager : Singleton<SoundManager>, IResourceListener
     {
         if(clip == null)
         {
+            Log.Error("没有找到背景音乐");
             return;
         }
 
@@ -72,16 +70,16 @@ public class SoundManager : Singleton<SoundManager>, IResourceListener
     public void PlayEffectMusic(string name)
     {
         AudioClip asset = ResourcesManager.Instance.GetAsset(name) as AudioClip;
+        if (asset == null)
+        {
+            Log.Error("没有找到音效:" + name);
+            return;
+        }
         PlayEffectMusic(asset);
     }
 
     public void PlayEffectMusic(AudioClip clip)
     {
-        if (clip == null)
-        {
-            return;
-        }
-
         EffectAudioSource.clip = clip;
         EffectAudioSource.Play();
     }

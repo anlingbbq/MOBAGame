@@ -45,7 +45,6 @@
     <Compile Include="Code\OperationCode.cs" />
     <Compile Include="Code\ParameterCode.cs" />
     <Compile Include="Code\ReturnCode.cs" />
-    <Compile Include="Extension\DictEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

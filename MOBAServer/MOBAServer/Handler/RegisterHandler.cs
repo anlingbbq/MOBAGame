@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Extension;
-using Common.OpCode;
+﻿using Common.OpCode;
 using Photon.SocketServer;
 using Common.Code;
 using MOBAServer.DataBase.Manager;
 using MOBAServer.DataBase.Model;
+using MOBAServer.Extension;
 
 namespace MOBAServer.Handler
 {
@@ -21,8 +16,8 @@ namespace MOBAServer.Handler
 
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
-            string username = request.Parameters.TryGetEx((byte) ParameterCode.Username) as string;
-            string password = request.Parameters.TryGetEx((byte) ParameterCode.Password) as string;
+            string username = request.Parameters.ExTryGet((byte) ParameterCode.Username) as string;
+            string password = request.Parameters.ExTryGet((byte) ParameterCode.Password) as string;
 
             OperationResponse response = new OperationResponse(request.OperationCode);
             if (UserManager.Instance.GetByUsername(username) == null)
