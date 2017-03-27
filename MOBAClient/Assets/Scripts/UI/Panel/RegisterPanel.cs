@@ -36,6 +36,8 @@ public class RegisterPanel : UIBasePanel
                 m_RegisterRequest.DefalutRequest();
 
                 ResetPanel();
+
+                UIManager.Instance.PushPanel(UIPanelType.Mask);
             }
             else
             {
@@ -55,6 +57,9 @@ public class RegisterPanel : UIBasePanel
 
     public void OnRegisterResponse(ReturnCode returnCode)
     {
+        // 关闭遮罩界面
+        UIManager.Instance.PopPanel();
+
         if (returnCode == ReturnCode.Suceess)
         {
             TipPanel.SetContent("注册成功");

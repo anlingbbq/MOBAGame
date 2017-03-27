@@ -54,6 +54,9 @@ public class LoginPanel : UIBasePanel
 
     public void OnLoginResponse(ReturnCode returnCode)
     {
+        // 关闭遮罩界面
+        UIManager.Instance.PopPanel();
+
         if (returnCode == ReturnCode.Suceess)
         {
             // 跳转场景
@@ -61,9 +64,6 @@ public class LoginPanel : UIBasePanel
         }
         else
         {
-            // 关闭遮罩界面
-            UIManager.Instance.PopPanel();
-
             TipPanel.SetContent("用户名或密码错误");
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }

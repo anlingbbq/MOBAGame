@@ -4,10 +4,7 @@ namespace MOBAServer.DataBase.Model
 {
     public class User
     {
-        public User()
-        {
-            
-        }
+        public User() { }
 
         public User(string username, string password)
         {
