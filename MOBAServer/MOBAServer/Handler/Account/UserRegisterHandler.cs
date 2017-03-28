@@ -1,34 +1,34 @@
-﻿using Common.OpCode;
+﻿using System;
+using Common.OpCode;
 using Photon.SocketServer;
 using Common.Code;
 using MOBAServer.DataBase.Manager;
 using MOBAServer.DataBase.Model;
 using MOBAServer.Extension;
 
-namespace MOBAServer.Handler
+namespace MOBAServer.Handler.Account
 {
-    public class RegisterHandler : BaseHandler
+    public class UserRegisterHandler : BaseHandler
     {
-        public RegisterHandler()
-        {
-            OpCode = OperationCode.Register;
-        }
-
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
             string username = request.Parameters.ExTryGet((byte) ParameterCode.Username) as string;
             string password = request.Parameters.ExTryGet((byte) ParameterCode.Password) as string;
 
+            // 无效检测
+            if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password)) return;
+
             OperationResponse response = new OperationResponse(request.OperationCode);
-            if (UserManager.Instance.GetByUsername(username) == null)
+            if (UserManager.GetByUsername(username) == null)
             {
                 // 添加新用户
-                UserManager.Instance.Add(new User(username, password));
+                UserManager.Add(new User(username, password));
                 response.ReturnCode = (byte) ReturnCode.Suceess;
             }
             else
             {
                 response.ReturnCode = (byte) ReturnCode.Falied;
+                response.DebugMessage = "账号已存在";
             }
             peer.SendOperationResponse(response, sendParameters);
         }

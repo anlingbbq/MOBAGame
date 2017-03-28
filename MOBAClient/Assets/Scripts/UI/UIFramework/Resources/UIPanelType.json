@@ -18,5 +18,9 @@
 	{
 		"Name" : "Tip",
 		"Path" : "UI/Panel/TipPanel"
+	},
+	{
+		"Name" : "CreatePlayer",
+		"Path" : "UI/Panel/CreatePlayerPanel"
 	}
 ]

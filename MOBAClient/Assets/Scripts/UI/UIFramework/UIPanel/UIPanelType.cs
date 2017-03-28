@@ -7,5 +7,6 @@ public enum UIPanelType {
     Login,
     Register,
     Mask,
-    Tip
+    Tip,
+    CreatePlayer
 }

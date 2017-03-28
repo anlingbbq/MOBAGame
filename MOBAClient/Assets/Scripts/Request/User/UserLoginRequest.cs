@@ -5,21 +5,21 @@ using Common.OpCode;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class RegisterRequest : BaseRequest
+public class UserLoginRequest : BaseRequest
 {
     [HideInInspector]
     public string Username;
     [HideInInspector]
     public string Password;
 
-    private RegisterPanel m_RegisterPanel;
+    private LoginPanel m_LoginPanel;
 
     public override void Start()
     {
-        this.OpCode = OperationCode.Register;
+        this.OpCode = OperationCode.UserLogin;
         base.Start();
-
-        m_RegisterPanel = GetComponent<RegisterPanel>();
+        
+        m_LoginPanel = GetComponent<LoginPanel>();
     }
 
     public override void DefalutRequest()
@@ -32,6 +32,6 @@ public class RegisterRequest : BaseRequest
 
     public override void OnOperationResponse(OperationResponse response)
     {
-        m_RegisterPanel.OnRegisterResponse((ReturnCode)response.ReturnCode);
+        m_LoginPanel.OnLoginResponse(response);
     }
 }

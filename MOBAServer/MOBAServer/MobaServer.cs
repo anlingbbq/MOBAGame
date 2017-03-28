@@ -9,6 +9,8 @@ using Photon.SocketServer;
 using LogManager = ExitGames.Logging.LogManager;
 using log4net.Config;
 using MOBAServer.Handler;
+using MOBAServer.Handler.Player;
+using MOBAServer.Handler.Account;
 
 namespace MOBAServer
 {
@@ -43,11 +45,20 @@ namespace MOBAServer
             LogInfo("服务器关闭");
         }
 
+        // 初始化处理类
         private void InitHandler()
         {
-            // 创建所有handler对象并保存起来
-            HandlerDict.Add(OperationCode.Login, new LoginHandler());
-            HandlerDict.Add(OperationCode.Register, new RegisterHandler());
+            /** ================== 创建所有handler对象并保存起来 ================== **/
+
+            // 用户操作
+            HandlerDict.Add(OperationCode.UserLogin, new UserLoginHandler() { OpCode = OperationCode.UserLogin });
+            HandlerDict.Add(OperationCode.UserRegister, new UserRegisterHandler());
+
+            // 玩家操作
+            HandlerDict.Add(OperationCode.PlayerCreate, new PlayerCreateHandler() { OpCode = OperationCode.UserRegister });
+            HandlerDict.Add(OperationCode.PlayerGetInfo, new PlayerGetInfoHandler() { OpCode = OperationCode.PlayerCreate });
+            HandlerDict.Add(OperationCode.PlayerAdd, new PlayerAddHandler() { OpCode = OperationCode.PlayerGetInfo });
+            HandlerDict.Add(OperationCode.PlayerOnline, new PlayerOnlineHandler() { OpCode = OperationCode.PlayerOnline});
         }
 
         #region 日志功能

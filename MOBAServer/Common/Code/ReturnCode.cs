@@ -8,6 +8,7 @@ namespace Common.Code
     public enum ReturnCode
     {
         Suceess,
-        Falied
+        Falied,
+        Empty
     }
 }

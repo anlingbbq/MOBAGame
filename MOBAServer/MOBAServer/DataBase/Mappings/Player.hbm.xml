@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="MOBAServer.DataBase.Model" assembly="MOBAServer">
+    <class name="Player" table="players" >
+        <id name="Identification" column="Id" type="Int32" >
+            <generator class="native" />
+        </id>
+        <property name="Name" column="Name" type="String" not-null="true" length="48" /> 
+        <property name="Lv" column="Lv" type="Int32" not-null="true" /> 
+        <property name="Exp" column="Exp" type="Int32" not-null="true" /> 
+        <property name="Power" column="power" type="Int32" not-null="true" /> 
+        <property name="RunCount" column="RunCount" type="Int32" not-null="true" /> 
+        <property name="WinCount" column="WinCount" type="Int32" not-null="true" /> 
+        <property name="LostCount" column="LostCount" type="Int32" not-null="true" /> 
+        <property name="HeroIdList" column="HeroIdList" type="String" not-null="false" length="192" /> 
+        <property name="FriendIdList" column="FriendIdList" type="String" not-null="false" length="192" /> 
+        <many-to-one name="User" class="User" not-null="true" >
+            <column name="UserId" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common.Code;
+using ExitGames.Client.Photon;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,11 +14,11 @@ public class RegisterPanel : UIBasePanel
     public InputField InputRepeat;
     public Text TextPrompt;
 
-    private RegisterRequest m_RegisterRequest;
+    private UserRegisterRequest m_RegisterRequest;
 
     void Start()
     {
-        m_RegisterRequest = GetComponent<RegisterRequest>();
+        m_RegisterRequest = GetComponent<UserRegisterRequest>();
     }
 
     public void OnBtnRegisterClick()
@@ -55,19 +56,19 @@ public class RegisterPanel : UIBasePanel
         UIManager.Instance.PopPanel();
     }
 
-    public void OnRegisterResponse(ReturnCode returnCode)
+    public void OnRegisterResponse(OperationResponse response)
     {
         // 关闭遮罩界面
         UIManager.Instance.PopPanel();
 
-        if (returnCode == ReturnCode.Suceess)
+        if ((ReturnCode)response.ReturnCode == ReturnCode.Suceess)
         {
             TipPanel.SetContent("注册成功");
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }
-        else if (returnCode == ReturnCode.Falied)
+        else if ((ReturnCode)response.ReturnCode == ReturnCode.Falied)
         {
-            TipPanel.SetContent("用户已存在");
+            TipPanel.SetContent(response.DebugMessage);
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }
     }

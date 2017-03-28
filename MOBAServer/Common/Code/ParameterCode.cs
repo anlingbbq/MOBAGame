@@ -9,6 +9,8 @@ namespace Common.Code
     public enum ParameterCode
     {
         Username,
-        Password
+        Password,
+        PlayerDot,
+        PlayerName
     }
 }

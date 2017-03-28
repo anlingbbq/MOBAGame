@@ -47,6 +47,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 	    if (!IsConnect)
 	    {
             // 主要是防止中途断开连接时 立即重连
+            // 这个地方重连 有bug 没有重新登陆 TODO
             m_Peer.Connect(m_ServerAddress, m_ApplicationName);
 	    }
         m_Peer.Service();
@@ -84,7 +85,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
         }
         else
         {
-            Log.Error("找不到响应的对相应处理对象");
+            Log.Error("找不到响应的对相应处理对象 ：" + operationResponse.OperationCode.ToString());
         }
     }
 

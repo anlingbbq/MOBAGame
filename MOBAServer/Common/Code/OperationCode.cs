@@ -9,7 +9,11 @@ namespace Common.OpCode
     public enum OperationCode
     {
         Defalut,
-        Login,
-        Register,
+        UserLogin,
+        UserRegister,
+        PlayerCreate,
+        PlayerGetInfo,
+        PlayerAdd,
+        PlayerOnline
     }
 }

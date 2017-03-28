@@ -2,7 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Common.Code;
+using Common.DTO;
+using Common.OpCode;
 using DG.Tweening;
+using ExitGames.Client.Photon;
+using LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +18,13 @@ public class LoginPanel : UIBasePanel
 
     public GameObject RegisterPanel;
 
-    private LoginRequest m_LoginRequest;
+    private UserLoginRequest m_LoginRequest;
+    private PlayerGetInfoRequest m_GetInfoRequest;
 
 	void Start ()
 	{
-	    m_LoginRequest = GetComponent<LoginRequest>();
+	    m_LoginRequest = GetComponent<UserLoginRequest>();
+	    m_GetInfoRequest = GetComponent<PlayerGetInfoRequest>();
         InputUsername.ActivateInputField();
 
         SoundManager.Instance.LoadLoginSound();
@@ -52,19 +58,47 @@ public class LoginPanel : UIBasePanel
         UIManager.Instance.PushPanel(UIPanelType.Register);
     }
 
-    public void OnLoginResponse(ReturnCode returnCode)
+    // 获取登陆响应
+    public void OnLoginResponse(OperationResponse response)
+    {
+        if ((ReturnCode)response.ReturnCode == ReturnCode.Suceess)
+        {
+            // 登陆音效
+            SoundManager.Instance.PlayEffectMusic(Paths.UI_ENTERGAME);
+
+            // 发送消息获取角色信息
+            m_GetInfoRequest.DefalutRequest();
+        }
+        else
+        {
+            TipPanel.SetContent(response.DebugMessage);
+            UIManager.Instance.PushPanel(UIPanelType.Tip);
+        }
+    }
+
+    // 获得角色信息响应
+    public void OnPlayerInfoResponse(OperationResponse response)
     {
         // 关闭遮罩界面
         UIManager.Instance.PopPanel();
 
-        if (returnCode == ReturnCode.Suceess)
+        if ((ReturnCode)response.ReturnCode == ReturnCode.Suceess)
         {
-            // 跳转场景
-            SoundManager.Instance.PlayEffectMusic(Paths.UI_ENTERGAME);
+            // 获取角色数据
+            DTOPlayer dto = JsonMapper.ToObject<DTOPlayer>(response
+                .Parameters
+                .ExTryGet((byte)ParameterCode.PlayerDot) as string);
+
+            Log.Debug(dto.Name);
         }
-        else
+        else if ((ReturnCode) response.ReturnCode == ReturnCode.Empty)
         {
-            TipPanel.SetContent("用户名或密码错误");
+            // 打开创建角色的面板
+            UIManager.Instance.PushPanel(UIPanelType.CreatePlayer);
+        }
+        else if ((ReturnCode)response.ReturnCode == ReturnCode.Falied)
+        {
+            TipPanel.SetContent(response.DebugMessage);
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }
     }

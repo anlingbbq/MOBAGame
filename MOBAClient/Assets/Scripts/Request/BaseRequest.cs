@@ -11,7 +11,8 @@ public abstract class BaseRequest : MonoBehaviour
     public abstract void DefalutRequest();
     public abstract void OnOperationResponse(OperationResponse response);
 
-	public virtual void Start () {
+    // 子类需要重写Start方法, 先给OpCode赋值
+    public virtual void Start () {
 		PhotonEngine.Instance.AddRequest(this);
 	}
 

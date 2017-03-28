@@ -67,13 +67,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBase\Manager\IUserManager.cs" />
+    <Compile Include="Cache\BaseCache.cs" />
+    <Compile Include="Cache\Caches.cs" />
+    <Compile Include="Cache\PlayerCache.cs" />
+    <Compile Include="Cache\UserCache.cs" />
+    <Compile Include="DataBase\Manager\BaseManager.cs" />
+    <Compile Include="DataBase\Manager\PlayerManager.cs" />
     <Compile Include="DataBase\Manager\UserManager.cs" />
+    <Compile Include="DataBase\Model\Player.cs" />
     <Compile Include="DataBase\NhibernateHelper.cs" />
     <Compile Include="Extension\DictEx.cs" />
     <Compile Include="Handler\BaseHandler.cs" />
-    <Compile Include="Handler\LoginHandler.cs" />
-    <Compile Include="Handler\RegisterHandler.cs" />
+    <Compile Include="Handler\Player\PlayerAddHandler.cs" />
+    <Compile Include="Handler\Player\PlayerGetInfoHandler.cs" />
+    <Compile Include="Handler\Player\PlayerOnlineHandler.cs" />
+    <Compile Include="Handler\Account\UserLoginHandler.cs" />
+    <Compile Include="Handler\Player\PlayerCreateHandler.cs" />
+    <Compile Include="Handler\Account\UserRegisterHandler.cs" />
     <Compile Include="MobaPeer.cs" />
     <Compile Include="MobaServer.cs" />
     <Compile Include="DataBase\Model\User.cs" />
@@ -88,6 +98,7 @@
     <EmbeddedResource Include="DataBase\Mappings\User.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DataBase\Mappings\Player.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

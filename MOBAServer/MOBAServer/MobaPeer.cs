@@ -1,4 +1,5 @@
-﻿using Common.OpCode;
+﻿using System.Collections.Generic;
+using Common.OpCode;
 using MOBAServer.Extension;
 using MOBAServer.Handler;
 using Photon.SocketServer;
@@ -9,6 +10,7 @@ namespace MOBAServer
     public class MobaPeer : ClientPeer
     {
         public string Username;
+
         public MobaPeer(InitRequest initRequest) : base(initRequest)
         {
 
@@ -40,5 +42,20 @@ namespace MOBAServer
                 MobaServer.LogInfo("未知客户端断开");
             }
         }
+
+        //public virtual void Send(byte opCode, short retCode, string mess, params object[] parameters)
+        //{
+        //    OperationResponse response = new OperationResponse();
+        //    response.OperationCode = opCode;
+
+        //    response.Parameters = new Dictionary<byte, object>();
+        //    for (int i = 0; i < parameters.Length; i++)
+        //        response[(byte)i] = parameters[i];
+
+        //    response.ReturnCode = retCode;
+        //    response.DebugMessage = mess;
+
+        //    this.SendOperationResponse(response, new SendParameters());
+        //}
     }
 }
