@@ -20,6 +20,7 @@ namespace MOBAServer.Cache
             return m_PeerDict.ContainsKey(username);
         }
 
+        // 在线添加缓存
         public void Online(string username, MobaPeer peer)
         {
             if (m_PeerDict.ContainsKey(username))
@@ -27,6 +28,17 @@ namespace MOBAServer.Cache
 
             peer.Username = username;
             m_PeerDict.Add(username, peer);
+        }
+
+        // 离线移除缓存
+        public void OffLine(string username)
+        {
+            if (!m_PeerDict.ContainsKey(username))
+            {
+                MobaServer.LogWarn("账号非法登录");
+                return;
+            }
+            m_PeerDict.Remove(username);
         }
 
         // 验证连接对象是否已经登陆

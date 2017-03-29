@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 屏蔽界面 UIManager中会屏蔽界面的控制 打开这个主要是好看。。
+/// 屏蔽界面 UIManager中会屏蔽界面的控制 打开这个主要是视觉效果
 /// </summary>
 public class MaskPanel : UIBasePanel
 {

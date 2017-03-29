@@ -47,13 +47,34 @@ namespace MOBAServer.DataBase.Manager
         {
             using (ISession session = NhibernateHelper.OpenSession())
             {
-                User user = session.CreateCriteria(typeof(User))
+                IList<Player> playerList = session.CreateCriteria(typeof(User))
                     .Add(Restrictions.Eq("Name", username))
-                    .UniqueResult<User>();
+                    .UniqueResult<User>().PlayerList;
 
-                if (user.PlayerList.Count > 0)
+                if (playerList.Count > 0)
                     return true;
                 return false;
+            }
+        }
+
+        // 添加用户对应的玩家数据
+        public static void AddPlayer(Player player)
+        {
+            using (ISession session = NhibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Save(player);
+                    // 这里这样就可以了
+                    // 没有必要再对User对象的PlayerList进行操作 然后更新User表
+                    // 在数据库中是以外键关联的方式 User没有更新的东西
+                    // 而在程序中获取PlayerList会再次执行关联查询
+                    // 所以 在这一点上没有维护User的必要
+
+                    // 这个函数只是为了提醒这一点
+
+                    transaction.Commit();
+                }
             }
         }
 
@@ -62,19 +83,12 @@ namespace MOBAServer.DataBase.Manager
         {
             using (ISession session = NhibernateHelper.OpenSession())
             {
-                User user = session.CreateCriteria(typeof(User))
+                IList<Player> playerList = session.CreateCriteria(typeof(User))
                     .Add(Restrictions.Eq("Name", username))
-                    .UniqueResult<User>();
+                    .UniqueResult<User>().PlayerList;
 
-                return user.PlayerList;
+                return playerList;
             }
-            //using (ISession session = NhibernateHelper.OpenSession())
-            //{
-            //    return session.CreateCriteria(typeof(User))
-            //        .CreateCriteria("PlayerList")
-            //        .SetResultTransformer(new NHibernate.Transform.DistinctRootEntityResultTransformer())
-            //        .List<Player>();
-            //}
         }
     }
 }

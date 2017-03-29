@@ -83,6 +83,12 @@ namespace MOBAServer
             log.Info(text);
         }
 
+        // 输出警告信息
+        public static void LogWarn(string text)
+        {
+            log.Warn(text);
+        }
+
         // 输出错误信息
         public static void LogError(string text)
         {

@@ -71,6 +71,9 @@ public class LoginPanel : UIBasePanel
         }
         else
         {
+            // 关闭遮罩界面
+            UIManager.Instance.PopPanel();
+
             TipPanel.SetContent(response.DebugMessage);
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common.OpCode;
+using MOBAServer.Cache;
 using MOBAServer.Extension;
 using MOBAServer.Handler;
 using Photon.SocketServer;
@@ -35,6 +36,7 @@ namespace MOBAServer
         {
             if (Username != null)
             {
+                Caches.User.OffLine(Username);
                 MobaServer.LogInfo("客户端断开, Username : " + Username);
             }
             else
@@ -42,20 +44,5 @@ namespace MOBAServer
                 MobaServer.LogInfo("未知客户端断开");
             }
         }
-
-        //public virtual void Send(byte opCode, short retCode, string mess, params object[] parameters)
-        //{
-        //    OperationResponse response = new OperationResponse();
-        //    response.OperationCode = opCode;
-
-        //    response.Parameters = new Dictionary<byte, object>();
-        //    for (int i = 0; i < parameters.Length; i++)
-        //        response[(byte)i] = parameters[i];
-
-        //    response.ReturnCode = retCode;
-        //    response.DebugMessage = mess;
-
-        //    this.SendOperationResponse(response, new SendParameters());
-        //}
     }
 }

@@ -16,17 +16,12 @@ namespace MOBAServer.DataBase.Manager
         {
             using (ISession session = NhibernateHelper.OpenSession())
             {
-                using (ITransaction transcation = session.Transaction)
-                {
-                    Player player = session.CreateCriteria(typeof(Player))
-                        .Add(Restrictions
-                        .Eq("Name", playerName))
-                        .UniqueResult<Player>();
+                Player player = session.CreateCriteria(typeof(Player))
+                    .Add(Restrictions
+                    .Eq("Name", playerName))
+                    .UniqueResult<Player>();
 
-                    transcation.Commit();
-                    return player;
-                }
-                
+                return player;
             }
         }
     }
