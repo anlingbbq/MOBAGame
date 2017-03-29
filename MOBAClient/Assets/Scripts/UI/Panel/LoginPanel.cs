@@ -91,8 +91,6 @@ public class LoginPanel : UIBasePanel
             DTOPlayer dto = JsonMapper.ToObject<DTOPlayer>(response
                 .Parameters
                 .ExTryGet((byte)ParameterCode.PlayerDot) as string);
-
-            Log.Debug(dto.Name);
         }
         else if ((ReturnCode) response.ReturnCode == ReturnCode.Empty)
         {

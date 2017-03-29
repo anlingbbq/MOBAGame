@@ -29,6 +29,6 @@ public class PlayerCreateRequest : BaseRequest
 
     public override void OnOperationResponse(OperationResponse response)
     {
-
+        m_CreatePlayerPanel.OnCreateResponse(response);
     }
 }

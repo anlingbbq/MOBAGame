@@ -18,10 +18,13 @@ public class CreatePlayerPanel : UIBasePanel
 
     public void OnBtnOkClick()
     {
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
         if (String.IsNullOrEmpty(InputName.text))
-        {
             return;
-        }
+
+        UIManager.Instance.PushPanel(UIPanelType.Mask);
+
         m_CreateRequest.PlayerName = InputName.text;
         m_CreateRequest.DefalutRequest();
     }

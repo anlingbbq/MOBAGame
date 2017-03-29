@@ -10,8 +10,10 @@ namespace MOBAServer.Handler.Account
 {
     public class UserRegisterHandler : BaseHandler
     {
+        // 处理注册请求
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
+            MobaServer.LogInfo("处理注册请求");
             string username = request.Parameters.ExTryGet((byte) ParameterCode.Username) as string;
             string password = request.Parameters.ExTryGet((byte) ParameterCode.Password) as string;
 

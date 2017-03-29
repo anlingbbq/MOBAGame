@@ -15,6 +15,7 @@ namespace MOBAServer.Cache
         static Caches()
         {
             User = new UserCache();
+            Player = new PlayerCache();
         }
     }
 }

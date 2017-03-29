@@ -11,6 +11,7 @@ namespace MOBAServer.Handler.Account
 {
     public class UserLoginHandler : BaseHandler
     {
+        // 处理登陆请求
         public override void OnOperationRequest(OperationRequest request, 
             SendParameters sendParameters, MobaPeer peer)
         {
@@ -24,7 +25,7 @@ namespace MOBAServer.Handler.Account
             OperationResponse response = new OperationResponse(request.OperationCode);
 
             // 验证在线
-            if (Caches.User.IsOnLine(username))
+            if (Caches.User.IsOnline(username))
             {
                 response.ReturnCode = (short) ReturnCode.Falied;
                 response.DebugMessage = "账号已登陆";
@@ -35,6 +36,7 @@ namespace MOBAServer.Handler.Account
                 if (UserManager.VerifyUser(username, password))
                 {
                     Caches.User.Online(username, peer);
+
                     response.ReturnCode = (short)ReturnCode.Suceess;
                 }
                 else

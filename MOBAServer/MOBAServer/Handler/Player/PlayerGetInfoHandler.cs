@@ -25,8 +25,7 @@ namespace MOBAServer.Handler.Player
                     // 本来玩家和角色是一对多的关系
                     // 这里简化这个过程 直接选择第一个角色
                     // 反正也没创建第二个角色的界面
-                    IList<DataBase.Model.Player> playerList = UserManager.GetPlayerList(peer.Username);
-                    string dto = JsonMapper.ToJson(playerList[0].ConvertToDot());
+                    string dto = JsonMapper.ToJson(UserManager.GetPlayer(peer.Username).ConvertToDot());
                     Dictionary<byte, object> data = new Dictionary<byte, object>();
                     data.Add((byte)ParameterCode.PlayerDot, dto);
 

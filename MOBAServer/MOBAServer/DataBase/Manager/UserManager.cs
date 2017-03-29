@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.DTO;
+using MOBAServer.Cache;
 using MOBAServer.DataBase.Model;
 using NHibernate;
 using NHibernate.Criterion;
@@ -8,13 +9,25 @@ using NHibernate.Criterion;
 namespace MOBAServer.DataBase.Manager
 {
     /// <summary>
-    /// 封装对数据库中User表的操作
+    /// 封装对用户数据的管理
+    /// 先进行内存操作 然后对数据库操作
     /// </summary>
     public class UserManager : BaseManager
     {
-        // 通过用户名查找
+        // 增加用户
+        public static void Add(User user)
+        {
+            BaseManager.Add(user);
+
+            Caches.User.AddUser(user);
+        }
+
+         // 通过用户名查找
         public static User GetByUsername(string username)
         {
+            if (Caches.User.IsExistUser(username))
+                return Caches.User.GetUser(username);
+
             using (ISession session = NhibernateHelper.OpenSession())
             {
                 User user = session.CreateCriteria(typeof(User))
@@ -28,6 +41,9 @@ namespace MOBAServer.DataBase.Manager
         // 核实用户名和密码
         public static bool VerifyUser(string username, string password)
         {
+            if (Caches.User.IsExistUser(username))
+                return Caches.User.VerifyUser(username, password);
+
             using (ISession session = NhibernateHelper.OpenSession())
             {
                 User user = session
@@ -45,6 +61,9 @@ namespace MOBAServer.DataBase.Manager
         // 判断用户是否存在角色
         public static bool HasPlayer(string username)
         {
+            if (Caches.User.IsExistUser(username))
+                return Caches.Player.HasPlayer(username);
+
             using (ISession session = NhibernateHelper.OpenSession())
             {
                 IList<Player> playerList = session.CreateCriteria(typeof(User))
@@ -57,29 +76,22 @@ namespace MOBAServer.DataBase.Manager
             }
         }
 
-        // 添加用户对应的玩家数据
-        public static void AddPlayer(Player player)
+        // 获取用户的第一个玩家数据
+        public static Player GetPlayer(string username)
         {
+            if (Caches.User.IsExistUser(username))
+                return Caches.Player.GetPlayerList(username)[0];
+
             using (ISession session = NhibernateHelper.OpenSession())
             {
-                using (ITransaction transaction = session.BeginTransaction())
-                {
-                    session.Save(player);
-                    // 这里这样就可以了
-                    // 没有必要再对User对象的PlayerList进行操作 然后更新User表
-                    // 在数据库中是以外键关联的方式 User没有更新的东西
-                    // 而在程序中获取PlayerList会再次执行关联查询
-                    // 所以 在这一点上没有维护User的必要
-
-                    // 这个函数只是为了提醒这一点
-
-                    transaction.Commit();
-                }
+                return session.CreateCriteria(typeof(User))
+                    .Add(Restrictions.Eq("Name", username))
+                    .UniqueResult<User>().PlayerList[0];
             }
         }
 
-        // 获取所有用户的玩家列表
-        public static IList<Player> GetPlayerList(string username)
+        // 缓存用户的玩家列表
+        public static void CachePlayerList(string username, IList<Player> list)
         {
             using (ISession session = NhibernateHelper.OpenSession())
             {
@@ -87,8 +99,18 @@ namespace MOBAServer.DataBase.Manager
                     .Add(Restrictions.Eq("Name", username))
                     .UniqueResult<User>().PlayerList;
 
-                return playerList;
+                // 深度复制
+                for (int i = 0; i < playerList.Count; i++)
+                {
+                    list.Add(playerList[i]);
+                }
             }
+        }
+
+        // 从缓存中获取用户的玩家列表
+        public static IList<Player> GetPlayerList(string username)
+        {
+            return Caches.Player.GetPlayerList(username);
         }
     }
 }

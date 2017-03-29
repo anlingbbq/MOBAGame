@@ -67,7 +67,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cache\BaseCache.cs" />
     <Compile Include="Cache\Caches.cs" />
     <Compile Include="Cache\PlayerCache.cs" />
     <Compile Include="Cache\UserCache.cs" />

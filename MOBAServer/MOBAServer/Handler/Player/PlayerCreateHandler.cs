@@ -23,7 +23,7 @@ namespace MOBAServer.Handler.Player
 
             User user = UserManager.GetByUsername(peer.Username);
             DataBase.Model.Player player = new DataBase.Model.Player(playerName, user);
-            UserManager.AddPlayer(player);
+            PlayerManager.Add(player);
 
             OperationResponse response = new OperationResponse(request.OperationCode);
             response.ReturnCode = (short) ReturnCode.Suceess;
