@@ -23,10 +23,9 @@ namespace MOBAServer.Handler.Player
 
             User user = UserManager.GetByUsername(peer.Username);
             DataBase.Model.Player player = new DataBase.Model.Player(playerName, user);
-            PlayerManager.Add(player);
+            PlayerManager.Add(peer.Username, player);
 
             OperationResponse response = new OperationResponse(request.OperationCode);
-            response.ReturnCode = (short) ReturnCode.Suceess;
             peer.SendOperationResponse(response, sendParameters);
         }
     }

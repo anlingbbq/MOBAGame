@@ -27,7 +27,7 @@ namespace MOBAServer
             }
             else
             {
-                MobaServer.LogError("找不到请求的对应处理");
+                MobaServer.LogError("找不到请求的对应处理 Code : " + operationRequest.OperationCode);
             }
         }
 
@@ -36,7 +36,7 @@ namespace MOBAServer
         {
             if (Username != null)
             {
-                Caches.User.OffLine(Username);
+                Caches.User.Offline(Username);
                 MobaServer.LogInfo("客户端断开, Username : " + Username);
             }
             else

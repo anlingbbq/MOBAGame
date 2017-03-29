@@ -16,13 +16,14 @@ namespace MOBAServer.Cache
      */
     public class PlayerCache
     {
+        #region 缓存用户玩家数据
+
         // 保存玩家数据 用户名和玩家列表的映射
         private Dictionary<string, IList<Player>> m_PlayerDict = new Dictionary<string, IList<Player>>();
 
         // 添加玩家数据
         public void AddPlayer(string username, Player player)
         {
-            MobaServer.LogInfo(">>>>>>>>>> 刚创建的player id :" + player.Identification);
             m_PlayerDict.ExTryGet(username).Add(player);
         }
 
@@ -61,5 +62,30 @@ namespace MOBAServer.Cache
                 MobaServer.LogInfo(info);
             }
         }
+
+        #endregion
+
+        #region 缓存上线的玩家数据
+
+        // 保存上线的玩家
+        private Dictionary<int, Player> m_OnlineDict = new Dictionary<int, Player>();
+
+        public void Online(int id, Player player)
+        {
+            if (m_OnlineDict.ContainsKey(id))
+                return;
+
+            m_OnlineDict.Add(id, player);
+        }
+
+        public void Offline(int id)
+        {
+            if (!m_OnlineDict.ContainsKey(id))
+                return;
+
+            m_OnlineDict.Remove(id);
+        }
+
+        #endregion
     }
 }

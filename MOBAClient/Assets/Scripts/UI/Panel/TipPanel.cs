@@ -22,6 +22,8 @@ public class TipPanel : UIBasePanel
 
     public void OnBtnOkClick()
     {
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
         if (onCompleted != null)
         {
             onCompleted();

@@ -63,7 +63,7 @@ public class RegisterPanel : UIBasePanel
 
         if ((ReturnCode)response.ReturnCode == ReturnCode.Suceess)
         {
-            TipPanel.SetContent("注册成功");
+            TipPanel.SetContent("注册成功", () => UIManager.Instance.PopPanel());
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }
         else if ((ReturnCode)response.ReturnCode == ReturnCode.Falied)

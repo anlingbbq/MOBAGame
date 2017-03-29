@@ -25,12 +25,17 @@ public class CreatePlayerPanel : UIBasePanel
 
         UIManager.Instance.PushPanel(UIPanelType.Mask);
 
+        // 发送创建玩家的请求
         m_CreateRequest.PlayerName = InputName.text;
         m_CreateRequest.DefalutRequest();
     }
 
     public void OnCreateResponse(OperationResponse response)
     {
-        Log.Debug("创建成功");
+        // 关闭遮罩面板
+        UIManager.Instance.PopPanel();
+
+        // 打开主界面
+        UIManager.Instance.PushPanel(UIPanelType.MainMenu);
     }
 }

@@ -1,9 +1,5 @@
 [
 	{
-		"Name" : "MainMenu",
-		"Path" : "UI/Panel/MainMenuPanel"
-	},
-	{
 		"Name" : "Login",
 		"Path" : "UI/Panel/LoginPanel"
 	},
@@ -22,5 +18,9 @@
 	{
 		"Name" : "CreatePlayer",
 		"Path" : "UI/Panel/CreatePlayerPanel"
+	},
+	{
+		"Name" : "MainMenu",
+		"Path" : "UI/Panel/MainMenuPanel"
 	}
 ]

@@ -15,16 +15,15 @@ public class LoginPanel : UIBasePanel
     public InputField InputUsername;
     public InputField InputPassword;
     public Text TextPrompt;
+    public Transform LoginLayer;
 
     public GameObject RegisterPanel;
 
     private UserLoginRequest m_LoginRequest;
-    private PlayerGetInfoRequest m_GetInfoRequest;
 
 	void Start ()
 	{
 	    m_LoginRequest = GetComponent<UserLoginRequest>();
-	    m_GetInfoRequest = GetComponent<PlayerGetInfoRequest>();
         InputUsername.ActivateInputField();
 
         SoundManager.Instance.LoadLoginSound();
@@ -66,39 +65,13 @@ public class LoginPanel : UIBasePanel
             // 登陆音效
             SoundManager.Instance.PlayEffectMusic(Paths.UI_ENTERGAME);
 
-            // 发送消息获取角色信息
-            m_GetInfoRequest.DefalutRequest();
+            UIManager.Instance.PushPanel(UIPanelType.MainMenu);
         }
         else
         {
             // 关闭遮罩界面
             UIManager.Instance.PopPanel();
 
-            TipPanel.SetContent(response.DebugMessage);
-            UIManager.Instance.PushPanel(UIPanelType.Tip);
-        }
-    }
-
-    // 获得角色信息响应
-    public void OnPlayerInfoResponse(OperationResponse response)
-    {
-        // 关闭遮罩界面
-        UIManager.Instance.PopPanel();
-
-        if ((ReturnCode)response.ReturnCode == ReturnCode.Suceess)
-        {
-            // 获取角色数据
-            DTOPlayer dto = JsonMapper.ToObject<DTOPlayer>(response
-                .Parameters
-                .ExTryGet((byte)ParameterCode.PlayerDot) as string);
-        }
-        else if ((ReturnCode) response.ReturnCode == ReturnCode.Empty)
-        {
-            // 打开创建角色的面板
-            UIManager.Instance.PushPanel(UIPanelType.CreatePlayer);
-        }
-        else if ((ReturnCode)response.ReturnCode == ReturnCode.Falied)
-        {
             TipPanel.SetContent(response.DebugMessage);
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }
@@ -115,10 +88,10 @@ public class LoginPanel : UIBasePanel
     {
         base.OnEnter();
 
-        // 这里有时间改成闪光效果 TODO
-        Vector3 temp = transform.localPosition;
+        //  TODO 这里有时间改成闪光效果
+        Vector3 temp = LoginLayer.localPosition;
         temp.y = Screen.height / 2 + GetComponent<RectTransform>().sizeDelta.y / 2;
-        transform.localPosition = temp;
-        transform.DOLocalMoveY(0, 1.5f).SetEase(Ease.OutBack);
+        LoginLayer.localPosition = temp;
+        LoginLayer.DOLocalMoveY(0, 1.5f).SetEase(Ease.OutBack);
     }
 }

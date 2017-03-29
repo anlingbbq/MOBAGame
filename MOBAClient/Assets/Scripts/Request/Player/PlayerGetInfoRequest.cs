@@ -6,14 +6,18 @@ using ExitGames.Client.Photon;
 
 public class PlayerGetInfoRequest : BaseRequest
 {
-    private LoginPanel m_LoginPanel;
+    private MainMenuPanel m_MainPanel;
+
+    void Awake()
+    {
+        this.OpCode = OperationCode.PlayerGetInfo;
+    }
 
     public override void Start()
     {
-        this.OpCode = OperationCode.PlayerGetInfo;
         base.Start();
 
-        m_LoginPanel = GetComponent<LoginPanel>();
+        m_MainPanel = GetComponent<MainMenuPanel>();
     }
 
     public override void DefalutRequest()
@@ -23,6 +27,6 @@ public class PlayerGetInfoRequest : BaseRequest
 
     public override void OnOperationResponse(OperationResponse response)
     {
-        m_LoginPanel.OnPlayerInfoResponse(response);
+        m_MainPanel.OnGetInfoRequest(response);
     }
 }

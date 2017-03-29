@@ -36,15 +36,17 @@ namespace MOBAServer.Cache
             Caches.User.AddUser(username);
         }
 
-        // 离线移除缓存
-        public void OffLine(string username)
+        // 离线移除上线缓存
+        public void Offline(string username)
         {
             if (!m_PeerDict.ContainsKey(username))
-            {
-                MobaServer.LogWarn("账号非法登录");
                 return;
-            }
+
             m_PeerDict.Remove(username);
+
+            // 玩家下线
+            int id = UserManager.GetPlayer(username).Identification;
+            Caches.Player.Offline(id);
         }
 
         // 验证连接对象是否已经登陆
