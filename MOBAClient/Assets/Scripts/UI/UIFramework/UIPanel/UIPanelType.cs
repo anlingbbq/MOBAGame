@@ -8,5 +8,7 @@ public enum UIPanelType {
     Mask,
     Tip,
     CreatePlayer,
-    MainMenu
+    MainMenu,
+    AddFriend,
+    FriendList
 }

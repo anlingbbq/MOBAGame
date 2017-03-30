@@ -67,23 +67,35 @@ namespace MOBAServer.Cache
 
         #region 缓存上线的玩家数据
 
-        // 保存上线的玩家
-        private Dictionary<int, Player> m_OnlineDict = new Dictionary<int, Player>();
+        // 保存上线的玩家 玩家id和客户端连接的映射
+        private Dictionary<int, MobaPeer> m_OnlineDict = new Dictionary<int, MobaPeer>();
 
-        public void Online(int id, Player player)
+        public bool IsOnline(int id)
+        {
+            return m_OnlineDict.ContainsKey(id);
+        }
+
+        public void Online(int id, MobaPeer peer)
         {
             if (m_OnlineDict.ContainsKey(id))
                 return;
 
-            m_OnlineDict.Add(id, player);
+            m_OnlineDict.Add(id, peer);
         }
 
-        public void Offline(int id)
+        public void Offline(string username)
         {
-            if (!m_OnlineDict.ContainsKey(id))
+            int playerId = UserManager.GetPlayer(username).Identification;
+
+            if (!m_OnlineDict.ContainsKey(playerId))
                 return;
 
-            m_OnlineDict.Remove(id);
+            m_OnlineDict.Remove(playerId);
+        }
+
+        public MobaPeer GetPeer(int id)
+        {
+            return m_OnlineDict.ExTryGet(id);
         }
 
         #endregion

@@ -9,10 +9,14 @@ using UnityEngine.UI;
 
 public class RegisterPanel : UIBasePanel
 {
-    public InputField InputUsername;
-    public InputField InputPassword;
-    public InputField InputRepeat;
-    public Text TextPrompt;
+    [SerializeField]
+    private InputField InputUsername;
+    [SerializeField]
+    private InputField InputPassword;
+    [SerializeField]
+    private InputField InputRepeat;
+    [SerializeField]
+    private Text TextPrompt;
 
     private UserRegisterRequest m_RegisterRequest;
 
@@ -20,6 +24,8 @@ public class RegisterPanel : UIBasePanel
     {
         m_RegisterRequest = GetComponent<UserRegisterRequest>();
     }
+
+    #region 点击回掉
 
     public void OnBtnRegisterClick()
     {
@@ -56,6 +62,10 @@ public class RegisterPanel : UIBasePanel
         UIManager.Instance.PopPanel();
     }
 
+    #endregion
+
+    #region 服务器响应
+
     public void OnRegisterResponse(OperationResponse response)
     {
         // 关闭遮罩界面
@@ -72,6 +82,8 @@ public class RegisterPanel : UIBasePanel
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }
     }
+
+    #endregion
 
     public void ResetPanel()
     {

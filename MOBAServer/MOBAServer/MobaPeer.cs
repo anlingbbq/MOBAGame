@@ -36,7 +36,9 @@ namespace MOBAServer
         {
             if (Username != null)
             {
+                Caches.Player.Offline(Username);
                 Caches.User.Offline(Username);
+
                 MobaServer.LogInfo("客户端断开, Username : " + Username);
             }
             else

@@ -22,5 +22,13 @@
 	{
 		"Name" : "MainMenu",
 		"Path" : "UI/Panel/MainMenuPanel"
+	},
+	{
+		"Name" : "AddFriend",
+		"Path" : "UI/Panel/AddFriendPanel"
+	},
+	{
+		"Name" : "FriendList",
+		"Path" : "UI/Panel/FriendListPanel"
 	}
 ]

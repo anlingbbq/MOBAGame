@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class CreatePlayerPanel : UIBasePanel
 {
+    [SerializeField]
     public InputField InputName;
 
     private PlayerCreateRequest m_CreateRequest;
@@ -15,6 +16,8 @@ public class CreatePlayerPanel : UIBasePanel
     {
         m_CreateRequest = GetComponent<PlayerCreateRequest>();
     }
+
+    #region 点击回掉
 
     public void OnBtnOkClick()
     {
@@ -30,6 +33,10 @@ public class CreatePlayerPanel : UIBasePanel
         m_CreateRequest.DefalutRequest();
     }
 
+    #endregion
+
+    #region 服务器响应
+
     public void OnCreateResponse(OperationResponse response)
     {
         // 关闭遮罩面板
@@ -38,4 +45,6 @@ public class CreatePlayerPanel : UIBasePanel
         // 打开主界面
         UIManager.Instance.PushPanel(UIPanelType.MainMenu);
     }
+
+    #endregion
 }

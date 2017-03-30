@@ -43,10 +43,6 @@ namespace MOBAServer.Cache
                 return;
 
             m_PeerDict.Remove(username);
-
-            // 玩家下线
-            int id = UserManager.GetPlayer(username).Identification;
-            Caches.Player.Offline(id);
         }
 
         // 验证连接对象是否已经登陆

@@ -58,8 +58,8 @@ public class UIManager
         }
         UIBasePanel panel = GetPanel(panelType);
         panel.transform.SetAsLastSibling();
-        panel.OnEnter();
         m_PanelStack.Push(panel);
+        panel.OnEnter();
 
         return panel;
     }
@@ -75,6 +75,7 @@ public class UIManager
 
         if (m_PanelStack.Count <= 0) return;
         topPanel = m_PanelStack.Peek();
+        topPanel.transform.SetAsLastSibling();
         topPanel.OnResume();
     }
 

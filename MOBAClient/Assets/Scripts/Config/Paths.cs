@@ -17,7 +17,6 @@ public class Paths
     public const string UI_READY = RES_SOUND_UI + "Ready";
     public const string UI_SALE = RES_SOUND_UI + "Sale";
     public const string UI_SELECT = RES_SOUND_UI + "Select";
-
     /** ===================================================================== **/
 
     #endregion

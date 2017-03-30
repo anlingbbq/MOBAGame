@@ -11,6 +11,7 @@ namespace Common.Code
         Username,
         Password,
         PlayerDot,
-        PlayerName
+        PlayerName,
+        FriendId
     }
 }

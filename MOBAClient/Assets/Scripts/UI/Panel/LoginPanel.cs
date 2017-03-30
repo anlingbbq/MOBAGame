@@ -12,22 +12,26 @@ using UnityEngine.UI;
 
 public class LoginPanel : UIBasePanel
 {
-    public InputField InputUsername;
-    public InputField InputPassword;
-    public Text TextPrompt;
-    public Transform LoginLayer;
-
-    public GameObject RegisterPanel;
+    [SerializeField]
+    private InputField InputUsername;
+    [SerializeField]
+    private InputField InputPassword;
+    [SerializeField]
+    private Text TextPrompt;
+    [SerializeField]
+    private Transform LoginLayer;
+    [SerializeField]
+    private GameObject RegisterPanel;
 
     private UserLoginRequest m_LoginRequest;
 
 	void Start ()
 	{
 	    m_LoginRequest = GetComponent<UserLoginRequest>();
-        InputUsername.ActivateInputField();
-
         SoundManager.Instance.LoadLoginSound();
 	}
+
+    #region 点击回掉
 
     public void OnBtnLoginClick()
     {
@@ -57,9 +61,17 @@ public class LoginPanel : UIBasePanel
         UIManager.Instance.PushPanel(UIPanelType.Register);
     }
 
+
+    #endregion
+
+    #region 服务器响应
+
     // 获取登陆响应
     public void OnLoginResponse(OperationResponse response)
     {
+        // 关闭遮罩界面
+        UIManager.Instance.PopPanel();
+
         if ((ReturnCode)response.ReturnCode == ReturnCode.Suceess)
         {
             // 登陆音效
@@ -69,13 +81,12 @@ public class LoginPanel : UIBasePanel
         }
         else
         {
-            // 关闭遮罩界面
-            UIManager.Instance.PopPanel();
-
             TipPanel.SetContent(response.DebugMessage);
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }
     }
+
+    #endregion
 
     public void ResetPanel()
     {
@@ -87,6 +98,8 @@ public class LoginPanel : UIBasePanel
     public override void OnEnter()
     {
         base.OnEnter();
+
+        InputUsername.ActivateInputField();
 
         //  TODO 这里有时间改成闪光效果
         Vector3 temp = LoginLayer.localPosition;

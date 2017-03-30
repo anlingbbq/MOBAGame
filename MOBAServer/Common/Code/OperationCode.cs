@@ -14,6 +14,7 @@ namespace Common.OpCode
         PlayerCreate,
         PlayerGetInfo,
         PlayerAdd,
-        PlayerOnline
+        PlayerOnline,
+        FriendOnline
     }
 }

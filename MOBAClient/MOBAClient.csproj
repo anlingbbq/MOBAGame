@@ -114,12 +114,16 @@
     <Compile Include="Assets\Scripts\Manager\Resource\ResourcesManager.cs" />
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Player\PlayerAddFriendRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerCreateRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerGetInfoRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Player\PlayerOnlineRequest.cs" />
     <Compile Include="Assets\Scripts\Request\User\UserLoginRequest.cs" />
     <Compile Include="Assets\Scripts\Request\User\UserRegisterRequest.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\AddFriendPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\CreatePlayerPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\FriendListPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\LoginPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\MainMenuPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\MaskPanel.cs" />
