@@ -9,6 +9,7 @@ public enum UIPanelType {
     Tip,
     CreatePlayer,
     MainMenu,
-    AddFriend,
+    AddRequest,
+    AddToClient,
     FriendList
 }

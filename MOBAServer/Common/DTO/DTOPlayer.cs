@@ -5,8 +5,9 @@ using System.Text;
 
 namespace Common.DTO
 {
-    public class DTOPlayer
+    public class DtoPlayer
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Lv { get; set; }
         public int Exp { get; set; }
@@ -14,7 +15,13 @@ namespace Common.DTO
         public int RunCount { get; set; }
         public int WinCount { get; set; }
         public int LostCount { get; set; }
-        public string HeroIdList { get; set; }
-        public string FriendIdList { get; set; }
+        public List<int> HeroIds { get; set; }
+        public List<DtoFriend> Friends { get; set; }
+
+        public  DtoPlayer()
+        {
+            HeroIds = new List<int>();
+            Friends = new List<DtoFriend>();
+        }
     }
 }

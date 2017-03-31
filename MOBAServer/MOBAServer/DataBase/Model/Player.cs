@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.DTO;
+using MOBAServer.Cache;
+using MOBAServer.DataBase.Manager;
 
 namespace MOBAServer.DataBase.Model
 {
@@ -42,10 +44,11 @@ namespace MOBAServer.DataBase.Model
         public virtual User User { get; set; }
 
         // 获得数据传输对象
-        public virtual DTOPlayer ConvertToDot()
+        public virtual DtoPlayer ConvertToDot()
         {
-            return new DTOPlayer()
+            DtoPlayer dtoPlayer = new DtoPlayer()
             {
+                Id = this.Identification,
                 Name = this.Name,
                 Lv = this.Lv,
                 Exp = this.Exp,
@@ -53,9 +56,28 @@ namespace MOBAServer.DataBase.Model
                 RunCount = this.RunCount,
                 WinCount = this.WinCount,
                 LostCount = this.LostCount,
-                HeroIdList = this.HeroIdList,
-                FriendIdList = this.FriendIdList
             };
+
+            // 复制英雄列表
+            string[] heros = this.HeroIdList.Split(',');
+            foreach (string hero in heros)
+            {
+                dtoPlayer.HeroIds.Add(int.Parse(hero));
+            }
+
+            // 复制好友列表
+            string[] friends = this.FriendIdList.Split(',');
+            foreach (string friend in friends)
+            {
+                if (string.IsNullOrEmpty(friend))
+                    continue;
+
+                int id = int.Parse(friend);
+                string name = PlayerManager.GetById(id).Name;
+                bool isOnline = Caches.Player.IsOnline(id);
+                dtoPlayer.Friends.Add(new DtoFriend(id, name, isOnline));
+            }
+            return dtoPlayer;
         }
     }
 }

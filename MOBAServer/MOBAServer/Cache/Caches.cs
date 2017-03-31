@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace MOBAServer.Cache
 {
-    // 缓存层 减少数据库调用
+    /// <summary>
+    /// 缓存层 减少数据库调用
+    /// </summary>
     public class Caches
     {
         public static UserCache User;

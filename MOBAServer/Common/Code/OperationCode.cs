@@ -13,8 +13,10 @@ namespace Common.OpCode
         UserRegister,
         PlayerCreate,
         PlayerGetInfo,
-        PlayerAdd,
         PlayerOnline,
+        PlayerAddRequest,
+        PlayerAddToClient,
+        PlayerAddResult,
         FriendOnline
     }
 }

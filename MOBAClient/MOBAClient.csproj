@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\Scripts\Config\Paths.cs" />
+    <Compile Include="Assets\Scripts\Data\GameData.cs" />
     <Compile Include="Assets\Scripts\Event\BaseEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\GameRoot.cs" />
     <Compile Include="Assets\Scripts\Manager\Log.cs" />
@@ -115,19 +116,22 @@
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerAddFriendRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Player\PlayerAddToClientRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerCreateRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerGetInfoRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerOnlineRequest.cs" />
     <Compile Include="Assets\Scripts\Request\User\UserLoginRequest.cs" />
     <Compile Include="Assets\Scripts\Request\User\UserRegisterRequest.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
-    <Compile Include="Assets\Scripts\UI\Panel\AddFriendPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\CreatePlayerPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\FriendListPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\Item\FriendItem.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\LoginPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\MainMenuPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\MaskPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\RegisterPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\RequestAddPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\ResponseAddPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\TipPanel.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Base\UIBasePanel.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Extension\DictionarytExtension.cs" />

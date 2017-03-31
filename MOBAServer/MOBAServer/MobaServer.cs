@@ -21,14 +21,20 @@ namespace MOBAServer
         // 保存所有对客户端请求的操作
         public Dictionary<OperationCode, BaseHandler> HandlerDict = new Dictionary<OperationCode, BaseHandler>();
 
-        // 客户端连接
+        /// <summary>
+        /// 客户端连接 
+        /// </summary>
+        /// <param name="initRequest"></param>
+        /// <returns></returns>
         protected override PeerBase CreatePeer(InitRequest initRequest)
         {
             LogInfo("客户端连接");
             return new MobaPeer(initRequest);
         }
 
-        // 服务器启动
+        /// <summary>
+        /// 服务器启动 
+        /// </summary>
         protected override void Setup()
         {
             Instance = this;
@@ -39,31 +45,37 @@ namespace MOBAServer
             InitHandler();
         }
 
-        // 服务器断开
+        /// <summary>
+        /// 服务器断开 
+        /// </summary>
         protected override void TearDown()
         {
             LogInfo("服务器关闭");
         }
 
-        // 初始化处理类
+        /// <summary>
+        /// 初始化处理类 
+        /// </summary>
         private void InitHandler()
         {
             /** ================== 创建所有handler对象并保存起来 ================== **/
 
             // 用户操作
-            HandlerDict.Add(OperationCode.UserLogin, new UserLoginHandler() { OpCode = OperationCode.UserLogin });
+            HandlerDict.Add(OperationCode.UserLogin, new UserLoginHandler());
             HandlerDict.Add(OperationCode.UserRegister, new UserRegisterHandler());
 
             // 玩家操作
-            HandlerDict.Add(OperationCode.PlayerCreate, new PlayerCreateHandler() { OpCode = OperationCode.UserRegister });
-            HandlerDict.Add(OperationCode.PlayerGetInfo, new PlayerGetInfoHandler() { OpCode = OperationCode.PlayerCreate });
-            HandlerDict.Add(OperationCode.PlayerAdd, new PlayerAddHandler() { OpCode = OperationCode.PlayerGetInfo });
-            HandlerDict.Add(OperationCode.PlayerOnline, new PlayerOnlineHandler() { OpCode = OperationCode.PlayerOnline});
+            HandlerDict.Add(OperationCode.PlayerCreate, new PlayerCreateHandler());
+            HandlerDict.Add(OperationCode.PlayerGetInfo, new PlayerGetInfoHandler());
+            HandlerDict.Add(OperationCode.PlayerAddRequest, new PlayerAddRequestHandler());
+            HandlerDict.Add(OperationCode.PlayerOnline, new PlayerOnlineHandler());
         }
 
         #region 日志功能
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
-        // 初始化日志
+        /// <summary>
+        /// 初始化日志 
+        /// </summary>
         private void InitLog()
         {
             // 指定使用的log插件
@@ -77,19 +89,28 @@ namespace MOBAServer
             XmlConfigurator.ConfigureAndWatch(new FileInfo(Path.Combine(this.BinaryPath, "log4net.config")));
         }
 
-        // 输出日志信息
+        /// <summary>
+        /// 输出日志信息 
+        /// </summary>
+        /// <param name="text"></param>
         public static void LogInfo(string text)
         {
             log.Info(text);
         }
 
-        // 输出警告信息
+        /// <summary>
+        /// 输出警告信息 
+        /// </summary>
+        /// <param name="text"></param>
         public static void LogWarn(string text)
         {
             log.Warn(text);
         }
 
-        // 输出错误信息
+        /// <summary>
+        /// 输出错误信息 
+        /// </summary>
+        /// <param name="text"></param>
         public static void LogError(string text)
         {
             log.Error(text);

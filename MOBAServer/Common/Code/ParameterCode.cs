@@ -10,8 +10,9 @@ namespace Common.Code
     {
         Username,
         Password,
-        PlayerDot,
+        DtoPlayer,
         PlayerName,
-        FriendId
+        FriendId,
+        AcceptAddFriend
     }
 }

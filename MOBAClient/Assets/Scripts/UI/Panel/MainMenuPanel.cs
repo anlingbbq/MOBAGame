@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class MainMenuPanel : UIBasePanel
 {
+    [Header("玩家属性")]
     [SerializeField]
     private Text TextName;
     [SerializeField]
@@ -17,10 +18,6 @@ public class MainMenuPanel : UIBasePanel
     private Text TextPower;
     [SerializeField]
     private Slider SliderExp;
-    [SerializeField]
-    private Transform LayerFriendList;
-    [SerializeField]
-    private Transform LayerAddFriend;
 
     private PlayerGetInfoRequest m_InfoRequest;
     private PlayerOnlineRequest m_OnlineRequest;
@@ -67,7 +64,7 @@ public class MainMenuPanel : UIBasePanel
                 m_IsOpenFriendList = false;
             }
             m_IsOpenAddFriend = true;
-            UIManager.Instance.PushPanel(UIPanelType.AddFriend);
+            UIManager.Instance.PushPanel(UIPanelType.AddRequest);
         }
     }
 
@@ -125,8 +122,10 @@ public class MainMenuPanel : UIBasePanel
         UIManager.Instance.PopPanel();
 
         // 获取角色数据
-        DTOPlayer dtoPlayer = JsonMapper.ToObject<DTOPlayer>
-            (response.Parameters.ExTryGet((byte)ParameterCode.PlayerDot) as string);
+        DtoPlayer dtoPlayer = JsonMapper.ToObject<DtoPlayer>
+            (response.Parameters.ExTryGet((byte)ParameterCode.DtoPlayer) as string);
+
+        GameData.player = dtoPlayer;
 
         TextName.text = dtoPlayer.Name;
         TextLv.text = dtoPlayer.Lv.ToString();

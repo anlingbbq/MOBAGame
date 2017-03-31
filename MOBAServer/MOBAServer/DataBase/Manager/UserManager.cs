@@ -11,10 +11,17 @@ namespace MOBAServer.DataBase.Manager
     /// <summary>
     /// 封装对用户数据的管理
     /// 先进行内存操作 然后对数据库操作
+    /// 
+    /// 这里我只缓存了登陆过的用户信息
+    /// 也可以在每次执行sql查询的之后缓存该信息
+    /// 从而缓存所有使用过的信息
     /// </summary>
     public class UserManager : BaseManager
     {
-        // 增加用户
+        /// <summary>
+        /// 增加用户 
+        /// </summary>
+        /// <param name="user"></param>
         public static void Add(User user)
         {
             BaseManager.Add(user);
@@ -22,7 +29,11 @@ namespace MOBAServer.DataBase.Manager
             Caches.User.AddUser(user);
         }
 
-         // 通过用户名查找
+        /// <summary>
+        /// 通过用户名查找
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static User GetByUsername(string username)
         {
             if (Caches.User.IsExistUser(username))
@@ -38,7 +49,12 @@ namespace MOBAServer.DataBase.Manager
             }
         }
 
-        // 核实用户名和密码
+        /// <summary>
+        /// 核实用户名和密码 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static bool VerifyUser(string username, string password)
         {
             if (Caches.User.IsExistUser(username))
@@ -58,7 +74,12 @@ namespace MOBAServer.DataBase.Manager
             }
         }
 
-        // 判断用户是否存在角色
+
+        /// <summary>
+        /// 判断用户是否存在角色
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static bool HasPlayer(string username)
         {
             if (Caches.User.IsExistUser(username))
@@ -76,7 +97,11 @@ namespace MOBAServer.DataBase.Manager
             }
         }
 
-        // 获取用户的第一个玩家数据
+        /// <summary>
+        /// 获取用户的第一个玩家数据 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static Player GetPlayer(string username)
         {
             if (Caches.User.IsExistUser(username))
@@ -90,7 +115,12 @@ namespace MOBAServer.DataBase.Manager
             }
         }
 
-        // 缓存用户的玩家列表
+
+        /// <summary>
+        /// 缓存用户的玩家列表
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="list"></param>
         public static void CachePlayerList(string username, IList<Player> list)
         {
             using (ISession session = NhibernateHelper.OpenSession())
@@ -99,15 +129,21 @@ namespace MOBAServer.DataBase.Manager
                     .Add(Restrictions.Eq("Name", username))
                     .UniqueResult<User>().PlayerList;
 
-                // 深度复制
+                // 复制用户下的玩家列表
                 for (int i = 0; i < playerList.Count; i++)
                 {
                     list.Add(playerList[i]);
+                    // 缓存玩家数据
+                    Caches.Player.AddPlayer(playerList[i]);
                 }
             }
         }
 
-        // 从缓存中获取用户的玩家列表
+        /// <summary>
+        /// 从缓存中获取用户的玩家列表 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static IList<Player> GetPlayerList(string username)
         {
             return Caches.Player.GetPlayerList(username);

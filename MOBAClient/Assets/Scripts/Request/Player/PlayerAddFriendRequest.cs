@@ -1,32 +1,38 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common.Code;
 using Common.OpCode;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
+/// <summary>
+/// 请求添加好友
+/// </summary>
 public class PlayerAddFriendRequest : BaseRequest
 {
-    private AddFriendPanel m_AddFriendPanel;
+    private RequestAddPanel m_AddFriendPanel;
 
     [HideInInspector]
     public string Username;
 
     public override void Start()
     {
-        this.OpCode = OperationCode.PlayerAdd;
+        this.OpCode = OperationCode.PlayerAddRequest;
         base.Start();
 
-        m_AddFriendPanel = GetComponent<AddFriendPanel>();
+        m_AddFriendPanel = GetComponent<RequestAddPanel>();
     }
 
     public override void DefalutRequest()
     {
-        // TODO 完善添加好友的功能
+        Dictionary<byte, object> data = new Dictionary<byte, object>();
+        data.Add((byte)ParameterCode.PlayerName, Username);
+        PhotonEngine.Peer.OpCustom((byte) this.OpCode, data, true);
     }
 
     public override void OnOperationResponse(OperationResponse response)
     {
-        m_AddFriendPanel.OnAddFriend(response);
+        m_AddFriendPanel.OnAddRequest(response);
     }
 }

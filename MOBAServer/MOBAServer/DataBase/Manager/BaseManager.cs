@@ -13,7 +13,11 @@ namespace MOBAServer.DataBase.Manager
     /// </summary>
     public class BaseManager
     {
-        // 增加对象
+        /// <summary>
+        /// 增加对象 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
         public static void Add<T>(T t)
         {
             using (ISession session = NhibernateHelper.OpenSession())
@@ -26,7 +30,11 @@ namespace MOBAServer.DataBase.Manager
             }
         }
 
-        // 移除对象
+        /// <summary>
+        /// 移除对象 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
         public static void Remove<T>(T t)
         {
             using (ISession session = NhibernateHelper.OpenSession())
@@ -39,7 +47,11 @@ namespace MOBAServer.DataBase.Manager
             }
         }
 
-        // 修改对象
+        /// <summary>
+        /// 修改对象 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
         public static void Update<T>(T t)
         {
             using (ISession session = NhibernateHelper.OpenSession())
@@ -52,7 +64,12 @@ namespace MOBAServer.DataBase.Manager
             }
         }
 
-        // 通过id查找对象
+        /// <summary>
+        /// 通过id查找对象 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static T GetById<T>(int id)
         {
             using (ISession session = NhibernateHelper.OpenSession())
@@ -66,7 +83,11 @@ namespace MOBAServer.DataBase.Manager
             }
         }
 
-        // 获取所有该类型的对象列表
+        /// <summary>
+        /// 获取所有该类型的对象列表 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static ICollection<T> GetAll<T>()
         {
             using (ISession session = NhibernateHelper.OpenSession())

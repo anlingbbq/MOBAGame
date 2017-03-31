@@ -77,7 +77,8 @@
     <Compile Include="DataBase\NhibernateHelper.cs" />
     <Compile Include="Extension\DictEx.cs" />
     <Compile Include="Handler\BaseHandler.cs" />
-    <Compile Include="Handler\Player\PlayerAddHandler.cs" />
+    <Compile Include="Handler\Player\PlayerAddRequestHandler.cs" />
+    <Compile Include="Handler\Player\PlayerAddToClientHandler.cs" />
     <Compile Include="Handler\Player\PlayerGetInfoHandler.cs" />
     <Compile Include="Handler\Player\PlayerOnlineHandler.cs" />
     <Compile Include="Handler\Account\UserLoginHandler.cs" />

@@ -17,7 +17,11 @@ namespace MOBAServer
 
         }
 
-        // 处理客户端请求
+        /// <summary>
+        /// 处理客户端请求 
+        /// </summary>
+        /// <param name="operationRequest"></param>
+        /// <param name="sendParameters"></param>
         protected override void OnOperationRequest(OperationRequest operationRequest, SendParameters sendParameters)
         {
             BaseHandler handler = MobaServer.Instance.HandlerDict.ExTryGet((OperationCode) operationRequest.OperationCode);
@@ -31,7 +35,11 @@ namespace MOBAServer
             }
         }
 
-        // 客户端断开连接
+        /// <summary>
+        /// 客户端断开连接 
+        /// </summary>
+        /// <param name="reasonCode"></param>
+        /// <param name="reasonDetail"></param>
         protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail)
         {
             if (Username != null)

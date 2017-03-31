@@ -9,7 +9,10 @@ using MOBAServer.Extension;
 
 namespace MOBAServer.Cache
 {
-    // 缓存用户信息
+    /// <summary>
+    /// 缓存用户信息 
+    /// 这里只缓存登陆过的用户的信息
+    /// </summary>
     public class UserCache
     {
         #region 缓存客户端连接
@@ -17,13 +20,21 @@ namespace MOBAServer.Cache
         // 保存登陆的客户端连接
         private Dictionary<string, MobaPeer> m_PeerDict = new Dictionary<string, MobaPeer>();
 
-        // 玩家是否在线
+        /// <summary>
+        /// 玩家是否在线 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public bool IsOnline(string username)
         {
             return m_PeerDict.ContainsKey(username);
         }
 
-        // 在线添加缓存
+        /// <summary>
+        /// 在线添加缓存 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="peer"></param>
         public void Online(string username, MobaPeer peer)
         {
             if (m_PeerDict.ContainsKey(username))
@@ -36,7 +47,10 @@ namespace MOBAServer.Cache
             Caches.User.AddUser(username);
         }
 
-        // 离线移除上线缓存
+        /// <summary>
+        /// 离线移除上线缓存 
+        /// </summary>
+        /// <param name="username"></param>
         public void Offline(string username)
         {
             if (!m_PeerDict.ContainsKey(username))
@@ -45,7 +59,11 @@ namespace MOBAServer.Cache
             m_PeerDict.Remove(username);
         }
 
-        // 验证连接对象是否已经登陆
+        /// <summary>
+        /// 验证连接对象是否已经登陆 
+        /// </summary>
+        /// <param name="peer"></param>
+        /// <returns></returns>
         public bool VerifyPeer(MobaPeer peer)
         {
             return m_PeerDict.ContainsKey(peer.Username);
@@ -63,19 +81,30 @@ namespace MOBAServer.Cache
         // 保存用户数据库对象
         private Dictionary<string, User> m_UserDict = new Dictionary<string, User>();
 
-        // 是否存在用户数据
+        /// <summary>
+        /// 是否存在用户数据 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public bool IsExistUser(string username)
         {
             return m_UserDict.ContainsKey(username);
         }
 
-        // 获取用户数据
+        /// <summary>
+        /// 获取用户数据 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public User GetUser(string username)
         {
             return m_UserDict[username];
         }
 
-        // 添加用户数据
+        /// <summary>
+        /// 添加用户数据 
+        /// </summary>
+        /// <param name="user"></param>
         public void AddUser(User user)
         {
             m_UserDict.Add(user.Name, user);
@@ -84,7 +113,10 @@ namespace MOBAServer.Cache
             Caches.Player.AddPlayerList(user.Name);
         }
 
-        // 添加用户数据
+        /// <summary>
+        /// 添加用户数据 
+        /// </summary>
+        /// <param name="username"></param>
         public void AddUser(string username)
         {
             if (!m_UserDict.ContainsKey(username))
@@ -97,7 +129,12 @@ namespace MOBAServer.Cache
             }
         }
 
-        // 核实用户名和密码
+        /// <summary>
+        /// 核实用户名和密码 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool VerifyUser(string username, string password)
         {
             return m_UserDict.ExTryGet(username).Password == password;

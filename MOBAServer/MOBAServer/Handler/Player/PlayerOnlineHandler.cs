@@ -68,7 +68,7 @@ namespace MOBAServer.Handler.Player
             // 发送自身的玩家数据给客户端
             response.OperationCode = request.OperationCode;
             response.Parameters = new Dictionary<byte, object>();
-            response[(byte)ParameterCode.PlayerDot] = JsonMapper.ToJson(player.ConvertToDot());
+            response[(byte)ParameterCode.DtoPlayer] = JsonMapper.ToJson(player.ConvertToDot());
             peer.SendOperationResponse(response, sendParameters);
         }
     }

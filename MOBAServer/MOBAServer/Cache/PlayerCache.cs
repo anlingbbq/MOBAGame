@@ -9,47 +9,69 @@ using MOBAServer.Extension;
 
 namespace MOBAServer.Cache
 {
-    // 缓存玩家(角色)信息
-    /*
-     * TODO PlayerList内存释放
-     * 同样这里的内存没有释放的机会 需要在User释放时一起释放
-     */
+    /// <summary>
+    /// 缓存玩家(角色)信息
+    /// 这里只缓存登陆过的用户的信息
+    /// </summary>
     public class PlayerCache
     {
-        #region 缓存用户玩家数据
+        /*
+        * TODO PlayerList内存释放
+        * 同样这里的内存没有释放的机会
+        */
 
-        // 保存玩家数据 用户名和玩家列表的映射
-        private Dictionary<string, IList<Player>> m_PlayerDict = new Dictionary<string, IList<Player>>();
+        #region 缓存用户的玩家列表
 
-        // 添加玩家数据
+        // 保存用户名和玩家列表的映射
+        private Dictionary<string, IList<Player>> m_PlayerListDict = new Dictionary<string, IList<Player>>();
+
+        /// <summary>
+        /// 根据用户名添加到用户的玩家列表
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="player"></param>
         public void AddPlayer(string username, Player player)
         {
-            m_PlayerDict.ExTryGet(username).Add(player);
+            m_PlayerListDict.ExTryGet(username).Add(player);
         }
 
-        // 添加玩家列表
+        /// <summary>
+        /// 添加玩家列表 
+        /// </summary>
+        /// <param name="username"></param>
         public void AddPlayerList(string username)
         {
             IList<Player> playerList = new List<Player>();
             UserManager.CachePlayerList(username, playerList);
-            m_PlayerDict.Add(username, playerList);
+            m_PlayerListDict.Add(username, playerList);
 
             PrintPlayerList(playerList);
         }
 
-        // 用户是否创建有玩家
+        /// <summary>
+        /// 用户是否创建有玩家 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public bool HasPlayer(string username)
         {
-            return m_PlayerDict.ExTryGet(username).Count > 0;
+            return m_PlayerListDict.ExTryGet(username).Count > 0;
         }
 
-        // 获得用户的玩家列表
+        /// <summary>
+        /// 获得用户的玩家列表 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public IList<Player> GetPlayerList(string username)
         {
-            return m_PlayerDict.ExTryGet(username);
+            return m_PlayerListDict.ExTryGet(username);
         }
 
-        // 输出所有的玩家信息
+        /// <summary>
+        /// 输出用户的所有玩家信息 
+        /// </summary>
+        /// <param name="list"></param>
         public void PrintPlayerList(IList<Player> list)
         {
             for (int i = 0; i < list.Count; i++)
@@ -65,16 +87,77 @@ namespace MOBAServer.Cache
 
         #endregion
 
+        #region 缓存玩家数据
+
+        // 保存玩家id和玩家数据的映射
+        private Dictionary<int, Player> m_PlayerDict = new Dictionary<int, Player>();
+
+        /// <summary>
+        /// 缓存玩家数据
+        /// </summary>
+        /// <param name="player"></param>
+        public void AddPlayer(Player player)
+        {
+            if (!m_PlayerDict.ContainsKey(player.Identification))
+                m_PlayerDict.Add(player.Identification, player);
+        }
+
+        /// <summary>
+        /// 是否存在玩家数据
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool IsExistPlayer(int id)
+        {
+            return m_PlayerDict.ContainsKey(id);
+        }
+
+        /// <summary>
+        /// 获取玩家数据
+        /// </summary>
+        /// <returns></returns>
+        public Player GetPlayer(int id)
+        {
+            return m_PlayerDict.ExTryGet(id);
+        }
+
+        /// <summary>
+        /// 根据名称获取玩家数据
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Player GetPlayerByName(string name)
+        {
+            foreach (Player player in m_PlayerDict.Values)
+            {
+                if (player.Name == name)
+                    return player;
+            }
+            return null;
+        }
+
+        #endregion
+
         #region 缓存上线的玩家数据
 
         // 保存上线的玩家 玩家id和客户端连接的映射
         private Dictionary<int, MobaPeer> m_OnlineDict = new Dictionary<int, MobaPeer>();
 
+        /// <summary>
+        /// 玩家是否上线
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool IsOnline(int id)
         {
             return m_OnlineDict.ContainsKey(id);
         }
 
+        /// <summary>
+        /// 上线添加缓存
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="peer"></param>
         public void Online(int id, MobaPeer peer)
         {
             if (m_OnlineDict.ContainsKey(id))
@@ -83,6 +166,10 @@ namespace MOBAServer.Cache
             m_OnlineDict.Add(id, peer);
         }
 
+        /// <summary>
+        /// 下线移除缓存
+        /// </summary>
+        /// <param name="username"></param>
         public void Offline(string username)
         {
             int playerId = UserManager.GetPlayer(username).Identification;
@@ -93,6 +180,11 @@ namespace MOBAServer.Cache
             m_OnlineDict.Remove(playerId);
         }
 
+        /// <summary>
+        /// 通过玩家id获取上线的客户端连接
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public MobaPeer GetPeer(int id)
         {
             return m_OnlineDict.ExTryGet(id);

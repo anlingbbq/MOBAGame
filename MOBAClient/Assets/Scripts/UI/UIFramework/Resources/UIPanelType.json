@@ -24,8 +24,12 @@
 		"Path" : "UI/Panel/MainMenuPanel"
 	},
 	{
-		"Name" : "AddFriend",
-		"Path" : "UI/Panel/AddFriendPanel"
+		"Name" : "AddRequest",
+		"Path" : "UI/Panel/AddRequestPanel"
+	},
+	{
+		"Name" : "AddToClient",
+		"Path" : "UI/Panel/AddToClientPanel"
 	},
 	{
 		"Name" : "FriendList",
