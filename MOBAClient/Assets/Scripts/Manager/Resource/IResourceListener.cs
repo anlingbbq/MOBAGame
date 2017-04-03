@@ -4,6 +4,11 @@ using UnityEngine;
 
 public interface IResourceListener
 {
-    // 资源加载完成后的回掉
+    /// <summary>
+    /// 资源加载完成后的回掉 
+    /// </summary>
+    /// <param name="assetName"></param>
+    /// <param name="asset"></param>
+    /// <param name="assetType"></param>
     void OnLoaded(string assetName, object asset, AssetType assetType);
 }

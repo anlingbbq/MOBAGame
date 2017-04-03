@@ -17,6 +17,6 @@ namespace Common.OpCode
         PlayerAddRequest,
         PlayerAddToClient,
         PlayerAddResult,
-        FriendOnline
+        FriendStateChange
     }
 }

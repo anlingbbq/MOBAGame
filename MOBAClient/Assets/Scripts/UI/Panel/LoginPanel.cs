@@ -10,6 +10,9 @@ using LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 登陆用户的界面
+/// </summary>
 public class LoginPanel : UIBasePanel
 {
     [SerializeField]
@@ -28,11 +31,14 @@ public class LoginPanel : UIBasePanel
 	void Start ()
 	{
 	    m_LoginRequest = GetComponent<UserLoginRequest>();
-        SoundManager.Instance.LoadLoginSound();
+        SoundManager.Instance.LoadUiSound();
 	}
 
-    #region 点击回掉
+    #region 点击回调
 
+    /// <summary>
+    /// 点击登陆
+    /// </summary>
     public void OnBtnLoginClick()
     {
         SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
@@ -54,6 +60,9 @@ public class LoginPanel : UIBasePanel
         }
     }
 
+    /// <summary>
+    /// 点击注册
+    /// </summary>
     public void OnBtnRegisterClick()
     {
         SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
@@ -66,7 +75,10 @@ public class LoginPanel : UIBasePanel
 
     #region 服务器响应
 
-    // 获取登陆响应
+    /// <summary>
+    /// 登陆响应 
+    /// </summary>
+    /// <param name="response"></param>
     public void OnLoginResponse(OperationResponse response)
     {
         // 关闭遮罩界面

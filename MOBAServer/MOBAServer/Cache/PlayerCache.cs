@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Code;
+using Common.DTO;
+using Common.OpCode;
+using LitJson;
 using MOBAServer.DataBase.Manager;
 using MOBAServer.DataBase.Model;
 using MOBAServer.Extension;
+using Photon.SocketServer;
 
 namespace MOBAServer.Cache
 {
@@ -17,7 +22,7 @@ namespace MOBAServer.Cache
     {
         /*
         * TODO PlayerList内存释放
-        * 同样这里的内存没有释放的机会
+        * 同样这里的内存没有释放的机会 将会保存至服务器关闭
         */
 
         #region 缓存用户的玩家列表
@@ -45,7 +50,7 @@ namespace MOBAServer.Cache
             UserManager.CachePlayerList(username, playerList);
             m_PlayerListDict.Add(username, playerList);
 
-            PrintPlayerList(playerList);
+            //PrintPlayerList(playerList);
         }
 
         /// <summary>
@@ -170,14 +175,34 @@ namespace MOBAServer.Cache
         /// 下线移除缓存
         /// </summary>
         /// <param name="username"></param>
-        public void Offline(string username)
+        public void Offline(MobaPeer peer)
         {
-            int playerId = UserManager.GetPlayer(username).Identification;
+            Player player = UserManager.GetPlayer(peer.Username);
 
-            if (!m_OnlineDict.ContainsKey(playerId))
+            if (!m_OnlineDict.ContainsKey(player.Identification))
                 return;
 
-            m_OnlineDict.Remove(playerId);
+            // 通知所有好友下线
+            if (!string.IsNullOrEmpty(player.FriendIdList))
+            {
+                OperationResponse response = new OperationResponse((byte) OperationCode.FriendStateChange);
+                string[] friendList = player.FriendIdList.Split(',');
+                foreach (string friendId in friendList)
+                {
+                    int id = int.Parse(friendId);
+                    if (IsOnline(id))
+                    {
+                        response.Parameters = new Dictionary<byte, object>();
+                        MobaPeer tempPeer = GetPeer(id);
+                        
+                        DtoFriend dto = new DtoFriend(id, player.Name, false);
+                        response[(byte)ParameterCode.DtoFriend] = JsonMapper.ToJson(dto);
+                        tempPeer.SendOperationResponse(response, new SendParameters());
+                    }
+                }
+            }
+
+            m_OnlineDict.Remove(player.Identification);
         }
 
         /// <summary>

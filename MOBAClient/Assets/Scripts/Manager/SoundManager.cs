@@ -21,8 +21,10 @@ public class SoundManager : Singleton<SoundManager>, IResourceListener
         EffectAudioSource.playOnAwake = false;
     }
 
-    // 加载登陆界面的声音文件
-    public void LoadLoginSound()
+    /// <summary>
+    /// 加载UI界面的声音文件 
+    /// </summary>
+    public void LoadUiSound()
     {
         ResourcesManager.Instance.Load(Paths.UI_LOGIN_BG, typeof(AudioClip), this, AssetType.SoundBGM);
         ResourcesManager.Instance.Load(Paths.UI_ENTERGAME, typeof(AudioClip), this);
@@ -42,7 +44,10 @@ public class SoundManager : Singleton<SoundManager>, IResourceListener
 
     #region 背景音乐
 
-    // 播放背景音乐
+    /// <summary>
+    /// 播放背景音乐 
+    /// </summary>
+    /// <param name="clip"></param>
     public void PlayBgMusic(AudioClip clip)
     {
         if(clip == null)
@@ -55,7 +60,9 @@ public class SoundManager : Singleton<SoundManager>, IResourceListener
         BgmAudioSource.Play();
     }
 
-    // 停止背景音乐
+    /// <summary>
+    /// 停止背景音乐 
+    /// </summary>
     public void StopBgMusic()
     {
         BgmAudioSource.clip = null;
@@ -66,7 +73,10 @@ public class SoundManager : Singleton<SoundManager>, IResourceListener
 
     #region 音效音乐
 
-    // 播放音效
+    /// <summary>
+    /// 播放音效 
+    /// </summary>
+    /// <param name="name"></param>
     public void PlayEffectMusic(string name)
     {
         AudioClip asset = ResourcesManager.Instance.GetAsset(name) as AudioClip;

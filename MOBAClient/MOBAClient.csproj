@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -116,28 +118,31 @@
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerAddFriendRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Player\PlayerAddResultRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerAddToClientRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerCreateRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Player\PlayerFriendStateRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerGetInfoRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerOnlineRequest.cs" />
     <Compile Include="Assets\Scripts\Request\User\UserLoginRequest.cs" />
     <Compile Include="Assets\Scripts\Request\User\UserRegisterRequest.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
+    <Compile Include="Assets\Scripts\UI\Item\FriendItem.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\AddToClientPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\CreatePlayerPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\FriendListPanel.cs" />
-    <Compile Include="Assets\Scripts\UI\Panel\Item\FriendItem.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\LoginPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\MainMenuPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\MaskPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\MatchPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\RegisterPanel.cs" />
-    <Compile Include="Assets\Scripts\UI\Panel\RequestAddPanel.cs" />
-    <Compile Include="Assets\Scripts\UI\Panel\ResponseAddPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\AddRequestPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\TipPanel.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Base\UIBasePanel.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Extension\DictionarytExtension.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Manager\UIManager.cs" />
-    <Compile Include="Assets\Scripts\UI\UIFramework\UIPanel\UIPanelInfo.cs" />
-    <Compile Include="Assets\Scripts\UI\UIFramework\UIPanel\UIPanelType.cs" />
+    <Compile Include="Assets\Scripts\UI\UIFramework\Parse\UIPanelInfo.cs" />
+    <Compile Include="Assets\Scripts\UI\UIFramework\Parse\UIPanelType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demigiant\DOTween\DOTween.XML" />

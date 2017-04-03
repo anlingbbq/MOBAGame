@@ -37,17 +37,21 @@ public class LoadAsset
         }
     }
 
-    // 异步加载
+    /// <summary>
+    /// 异步加载 
+    /// </summary>
     public void LoadAsync()
     {
         Request = Resources.LoadAsync(AssetName, Type);
     }
 
-
     // 回掉集合
     public List<IResourceListener> ListenerList;
 
-    // 添加回掉
+    /// <summary>
+    /// 添加回掉 
+    /// </summary>
+    /// <param name="listener"></param>
     public void AddListener(IResourceListener listener)
     {
         if (ListenerList == null)

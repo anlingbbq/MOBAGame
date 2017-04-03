@@ -67,8 +67,10 @@ namespace MOBAServer
             // 玩家操作
             HandlerDict.Add(OperationCode.PlayerCreate, new PlayerCreateHandler());
             HandlerDict.Add(OperationCode.PlayerGetInfo, new PlayerGetInfoHandler());
-            HandlerDict.Add(OperationCode.PlayerAddRequest, new PlayerAddRequestHandler());
             HandlerDict.Add(OperationCode.PlayerOnline, new PlayerOnlineHandler());
+            HandlerDict.Add(OperationCode.PlayerAddRequest, new PlayerAddRequestHandler());
+            HandlerDict.Add(OperationCode.PlayerAddToClient, new PlayerAddToClientHandler());
+            HandlerDict.Add(OperationCode.PlayerAddResult, new PlayerAddRequestHandler());
         }
 
         #region 日志功能

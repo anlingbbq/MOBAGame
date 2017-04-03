@@ -7,6 +7,9 @@ using ExitGames.Client.Photon;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 注册用户的界面
+/// </summary>
 public class RegisterPanel : UIBasePanel
 {
     [SerializeField]
@@ -27,6 +30,9 @@ public class RegisterPanel : UIBasePanel
 
     #region 点击回掉
 
+    /// <summary>
+    /// 点击注册
+    /// </summary>
     public void OnBtnRegisterClick()
     {
         SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
@@ -57,6 +63,9 @@ public class RegisterPanel : UIBasePanel
         }
     }
 
+    /// <summary>
+    /// 点击屏蔽层
+    /// </summary>
     public void OnMaskLayerClick()
     {
         UIManager.Instance.PopPanel();
@@ -66,6 +75,10 @@ public class RegisterPanel : UIBasePanel
 
     #region 服务器响应
 
+    /// <summary>
+    /// 注册响应
+    /// </summary>
+    /// <param name="response"></param>
     public void OnRegisterResponse(OperationResponse response)
     {
         // 关闭遮罩界面

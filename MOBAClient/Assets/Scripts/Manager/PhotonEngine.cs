@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Common.Code;
 using Common.OpCode;
@@ -47,7 +48,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 	    if (!IsConnect)
 	    {
             // 主要是防止中途断开连接时 立即重连
-            // 这个地方重连 有bug 没有重新登陆 TODO
+            // TODO 这个地方重连 但没有重新登陆 无法识别客户端
             m_Peer.Connect(m_ServerAddress, m_ApplicationName);
 	    }
         m_Peer.Service();
@@ -62,6 +63,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 
     public void DebugReturn(DebugLevel level, string message)
     {
+        // TODO 加一个服务器没有开启的反馈
         if (level == DebugLevel.ERROR)
         {
             Log.Error(message);
@@ -85,13 +87,24 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
         }
         else
         {
-            Log.Error("找不到响应的对相应处理对象 ：" + operationResponse.OperationCode.ToString());
+            Log.Error("找不到响应的对相应处理对象 ："
+                + Enum.GetName(typeof(OperationCode), operationResponse.OperationCode));
         }
     }
 
     public void OnEvent(EventData eventData)
     {
-        throw new System.NotImplementedException();
+        BaseEvent _event = m_EventDict.ExTryGet((EventCode)eventData.Code);
+        if (_event)
+        {
+            _event.OnEvent(eventData);
+        }
+        else
+        {
+            Log.Error("找不到广播的对相应处理对象 ："
+                + Enum.GetName(typeof(OperationCode), eventData.Code));
+        }
+
     }
 
     public void OnStatusChanged(StatusCode statusCode)
@@ -128,13 +141,13 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 
     public void AddEvent(BaseEvent baseEvent)
     {
-        if (!m_EventDict.ContainsKey(baseEvent.EventCode))
-            m_EventDict.Add(baseEvent.EventCode, baseEvent);
+        if (!m_EventDict.ContainsKey(baseEvent.Code))
+            m_EventDict.Add(baseEvent.Code, baseEvent);
     }
 
     public void RemoveEvent(BaseEvent baseEvent)
     {
-        m_EventDict.Remove(baseEvent.EventCode);
+        m_EventDict.Remove(baseEvent.Code);
     }
 
     #endregion

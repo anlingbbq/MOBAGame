@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerAddFriendRequest : BaseRequest
 {
-    private RequestAddPanel m_AddFriendPanel;
+    private AddRequestPanel m_AddFriendPanel;
 
     [HideInInspector]
     public string Username;
@@ -21,7 +21,7 @@ public class PlayerAddFriendRequest : BaseRequest
         this.OpCode = OperationCode.PlayerAddRequest;
         base.Start();
 
-        m_AddFriendPanel = GetComponent<RequestAddPanel>();
+        m_AddFriendPanel = GetComponent<AddRequestPanel>();
     }
 
     public override void DefalutRequest()
@@ -31,6 +31,10 @@ public class PlayerAddFriendRequest : BaseRequest
         PhotonEngine.Peer.OpCustom((byte) this.OpCode, data, true);
     }
 
+    /// <summary>
+    /// 这里处理的是能不能添加好友 而不是是否同意
+    /// </summary>
+    /// <param name="response"></param>
     public override void OnOperationResponse(OperationResponse response)
     {
         m_AddFriendPanel.OnAddRequest(response);

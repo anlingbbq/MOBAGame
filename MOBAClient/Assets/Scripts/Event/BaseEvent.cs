@@ -6,9 +6,12 @@ using UnityEngine;
 
 public abstract class BaseEvent : MonoBehaviour
 {
-    public EventCode EventCode;
+    public EventCode Code;
     public abstract void OnEvent(EventData eventData);
 
+    /// <summary>
+    /// 需要在start或之前给EventCode赋值
+    /// </summary>
     public virtual void Start()
     {
         PhotonEngine.Instance.AddEvent(this);

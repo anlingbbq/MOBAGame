@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Code;
+using Common.DTO;
 using Common.OpCode;
 using LitJson;
 using MOBAServer.Cache;
@@ -40,13 +41,12 @@ namespace MOBAServer.Handler.Player
 
             OperationResponse response = new OperationResponse();
 
-            #region 上线时 通知好友
-
+            // 上线通知好友
             if (!String.IsNullOrEmpty(player.FriendIdList))
             {
                 string[] friends = player.FriendIdList.Split(',');
                 MobaPeer tempPeer = null;
-                response.OperationCode = (byte)OperationCode.FriendOnline;
+                response.OperationCode = (byte)OperationCode.FriendStateChange;
                 foreach (string friend in friends)
                 {
                     if (string.IsNullOrEmpty(friend))
@@ -58,12 +58,11 @@ namespace MOBAServer.Handler.Player
 
                     // 发送好友上线的消息
                     response.Parameters = new Dictionary<byte, object>();
-                    response[(byte)ParameterCode.FriendId] = id;
+                    DtoFriend dto = new DtoFriend(player.Identification, player.Name, true);
+                    response[(byte)ParameterCode.DtoFriend] = JsonMapper.ToJson(dto);
                     tempPeer.SendOperationResponse(response, sendParameters);
                 }
             }
-
-            #endregion
 
             // 发送自身的玩家数据给客户端
             response.OperationCode = request.OperationCode;

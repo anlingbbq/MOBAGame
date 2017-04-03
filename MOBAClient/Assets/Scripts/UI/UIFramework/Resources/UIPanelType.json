@@ -34,5 +34,9 @@
 	{
 		"Name" : "FriendList",
 		"Path" : "UI/Panel/FriendListPanel"
+	},
+	{
+		"Name" : "Match",
+		"Path" : "UI/Panel/MatchPanel"
 	}
 ]

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 提示界面
+/// </summary>
 public class TipPanel : UIBasePanel
 {
     [SerializeField]
@@ -13,7 +16,11 @@ public class TipPanel : UIBasePanel
     // 点击确定按钮后回掉
     private static Action onCompleted;
 
-    // ！！ 打开界面之前需要先设置内容
+    /// <summary>
+    /// 打开界面之前需要先设置内容！
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="action"></param>
     public static void SetContent(string text, Action action = null)
     {
         Content = text;

@@ -5,6 +5,9 @@ using ExitGames.Client.Photon;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 创建玩家的界面
+/// </summary>
 public class CreatePlayerPanel : UIBasePanel
 {
     [SerializeField]
@@ -17,8 +20,9 @@ public class CreatePlayerPanel : UIBasePanel
         m_CreateRequest = GetComponent<PlayerCreateRequest>();
     }
 
-    #region 点击回掉
-
+    /// <summary>
+    /// 按钮回调
+    /// </summary>
     public void OnBtnOkClick()
     {
         SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
@@ -33,10 +37,10 @@ public class CreatePlayerPanel : UIBasePanel
         m_CreateRequest.DefalutRequest();
     }
 
-    #endregion
-
-    #region 服务器响应
-
+    /// <summary>
+    /// 处理创建玩家的响应
+    /// </summary>
+    /// <param name="response"></param>
     public void OnCreateResponse(OperationResponse response)
     {
         // 关闭遮罩面板
@@ -45,6 +49,4 @@ public class CreatePlayerPanel : UIBasePanel
         // 打开主界面
         UIManager.Instance.PushPanel(UIPanelType.MainMenu);
     }
-
-    #endregion
 }

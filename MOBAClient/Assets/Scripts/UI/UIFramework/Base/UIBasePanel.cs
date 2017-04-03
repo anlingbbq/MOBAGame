@@ -47,9 +47,22 @@ public class UIBasePanel : MonoBehaviour
 
     #endregion
 
-
-    public virtual void OnClosePanel()
+    /// <summary>
+    /// 显示面板 用于不适合放在栈空间的面板
+    /// 栈内的面板使用 UIManager的PushPanel显示
+    /// </summary>
+    public virtual void ShowPanel()
     {
-        UIManager.Instance.PopPanel();
+        this.transform.SetAsLastSibling();
+        this.OnEnter();
+    }
+
+    /// <summary>
+    /// 显示面板 用于不适合放在栈空间的面板
+    /// 栈内的面板使用 UIManager的PopPanel隐藏
+    /// </summary>
+    public virtual void HidePanel()
+    {
+        this.OnExit();
     }
 }

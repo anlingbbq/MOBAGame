@@ -109,7 +109,11 @@ public class ResourcesManager : Singleton<ResourcesManager>
         m_WaitingQueue.Enqueue(asset);
     }
 
-    // 获取资源
+    /// <summary>
+    /// 获取资源 
+    /// </summary>
+    /// <param name="assetName"></param>
+    /// <returns></returns>
     public object GetAsset(string assetName)
     {
         object asset = null;
@@ -117,7 +121,10 @@ public class ResourcesManager : Singleton<ResourcesManager>
         return asset;
     }
 
-    // 释放资源
+    /// <summary>
+    /// 释放资源 
+    /// </summary>
+    /// <param name="assetName"></param>
     public void ReleaseAsset(string assetName)
     {
         if (m_AssetDict.ContainsKey(assetName))
@@ -127,7 +134,9 @@ public class ResourcesManager : Singleton<ResourcesManager>
         }
     }
 
-    // 释放所有资源
+    /// <summary>
+    /// 释放所有资源 
+    /// </summary>
     public void ReleaseAll()
     {
         Resources.UnloadUnusedAssets();

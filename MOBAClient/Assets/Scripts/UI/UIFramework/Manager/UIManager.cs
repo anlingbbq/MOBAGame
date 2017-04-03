@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using LitJson;
 using UnityEngine;
 
+/// <summary>
+/// 管理UI面板
+/// 1.主要的面板放在栈内，使用PushPanel和PopPanel管理
+/// 2.并行的子面板，不适合放在栈内的，
+/// 使用LoadPanel加载后，通过UIBasePanel的ShowPanel和HidePanel自行管理
+/// </summary>
 public class UIManager
 {
     private static UIManager m_Instance = null;
@@ -35,7 +41,7 @@ public class UIManager
     private Dictionary<UIPanelType, string> m_PanelPathDict;
     // 储存所有实例化的面板基类
     private Dictionary<UIPanelType, UIBasePanel> m_PanelDict;
-    // 储存显示的面板
+    // 储存栈空间显示的面板
     private Stack<UIBasePanel> m_PanelStack;
 
     public UIManager()
@@ -48,7 +54,7 @@ public class UIManager
     /// <summary>
     /// 入栈并显示面板
     /// </summary>
-    public UIBasePanel PushPanel(UIPanelType panelType)
+    public void PushPanel(UIPanelType panelType)
     {
         // 暂停上一级的页面
         if (m_PanelStack.Count > 0)
@@ -60,8 +66,6 @@ public class UIManager
         panel.transform.SetAsLastSibling();
         m_PanelStack.Push(panel);
         panel.OnEnter();
-
-        return panel;
     }
 
     /// <summary>
@@ -75,10 +79,24 @@ public class UIManager
 
         if (m_PanelStack.Count <= 0) return;
         topPanel = m_PanelStack.Peek();
-        topPanel.transform.SetAsLastSibling();
         topPanel.OnResume();
     }
 
+    /// <summary>
+    /// 加载面板 用于不适合放在栈内的面板
+    /// 和UIBasePanel的ShowPanel和HidePanel一起使用
+    /// </summary>
+    public UIBasePanel LoadPanel(UIPanelType panelType)
+    {
+        UIBasePanel panel = GetPanel(panelType);
+        panel.OnExit();
+
+        return panel;
+    }
+
+    /// <summary>
+    /// 解析面板配置文件
+    /// </summary>
     private void ParseUIPanelTypeJson()
     {
         m_PanelPathDict = new Dictionary<UIPanelType, string>();
@@ -92,6 +110,9 @@ public class UIManager
         }
     }
 
+    /// <summary>
+    /// 获得面板 没有则加载
+    /// </summary>
     public UIBasePanel GetPanel(UIPanelType panelType)
     {
         UIBasePanel panel = m_PanelDict.ExTryGet(panelType);

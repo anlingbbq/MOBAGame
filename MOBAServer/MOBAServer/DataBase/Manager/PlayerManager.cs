@@ -58,6 +58,11 @@ namespace MOBAServer.DataBase.Manager
             Caches.Player.AddPlayer(player);
         }
 
+        /// <summary>
+        /// 根据id获取玩家数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static Player GetById(int id)
         {
             if (Caches.Player.IsExistPlayer(id))
@@ -67,7 +72,7 @@ namespace MOBAServer.DataBase.Manager
         }
 
         /// <summary>
-        /// 通过用户名获取玩家数据
+        /// 通过玩家名获取玩家数据
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -82,6 +87,32 @@ namespace MOBAServer.DataBase.Manager
                     .Add(Restrictions.Eq("Name", name))
                     .UniqueResult<Player>();
             }
+        }
+
+        /// <summary>
+        /// 添加好友
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="friendId"></param>
+        public static void AddFriend(int playerId, int friendId)
+        {
+            // 给自身添加好友id
+            Player player = GetById(playerId);
+            if (String.IsNullOrEmpty(player.FriendIdList))
+                player.FriendIdList = friendId.ToString();
+            else
+                player.FriendIdList += ',' + friendId.ToString();
+
+            Update(player);
+
+            // 给好友添加自身的id
+            player = GetById(friendId);
+            if (String.IsNullOrEmpty(player.FriendIdList))
+                player.FriendIdList = playerId.ToString();
+            else
+                player.FriendIdList += ',' + playerId.ToString();
+
+            Update(player);
         }
     }
 }

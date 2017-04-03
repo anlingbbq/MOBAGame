@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Common.OpCode;
+﻿using Common.OpCode;
 using ExitGames.Client.Photon;
-using UnityEngine;
 
 public class PlayerOnlineRequest : BaseRequest
 {
@@ -22,6 +18,10 @@ public class PlayerOnlineRequest : BaseRequest
         PhotonEngine.Peer.OpCustom((byte)OpCode, null, true);
     }
 
+    /// <summary>
+    /// 玩家上线的处理
+    /// </summary>
+    /// <param name="response"></param>
     public override void OnOperationResponse(OperationResponse response)
     {
         m_MainPanel.OnOnline(response);

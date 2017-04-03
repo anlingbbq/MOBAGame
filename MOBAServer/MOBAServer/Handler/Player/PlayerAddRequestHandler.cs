@@ -64,7 +64,7 @@ namespace MOBAServer.Handler.Player
                 }
             }
             // 判断是否在线 这里不提供离线处理 直接返回失败
-            // TODO 添加好友时玩家离线的功能
+            // TODO 不能给离线的玩家发送信息
             bool isOnline = Caches.Player.IsOnline(player.Identification);
             if (!isOnline)
             {
@@ -73,11 +73,14 @@ namespace MOBAServer.Handler.Player
                 peer.SendOperationResponse(response, sendParameters);
                 return;
             }
+
             // 玩家在线 向玩家发送是否同意的响应
             MobaPeer toPeer = Caches.Player.GetPeer(player.Identification);
             response.OperationCode = (byte)OperationCode.PlayerAddToClient;
             response.Parameters = new Dictionary<byte, object>();
-            response[(byte) (ParameterCode.DtoPlayer)] = JsonMapper.ToJson(selfPlayer.ConvertToDot());
+            // 传输玩家名和id
+            response[(byte) (ParameterCode.PlayerName)] = selfPlayer.Name;
+            response[(byte) (ParameterCode.PlayerId)] = selfPlayer.Identification;
             toPeer.SendOperationResponse(response, sendParameters);
         }
     }

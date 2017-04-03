@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.OpCode;
 using MOBAServer.Cache;
 using MOBAServer.Extension;
@@ -31,7 +32,8 @@ namespace MOBAServer
             }
             else
             {
-                MobaServer.LogError("找不到请求的对应处理 Code : " + operationRequest.OperationCode);
+                MobaServer.LogError("找不到请求的对应处理 : " + 
+                    Enum.GetName(typeof(OperationCode), operationRequest.OperationCode));
             }
         }
 
@@ -44,7 +46,7 @@ namespace MOBAServer
         {
             if (Username != null)
             {
-                Caches.Player.Offline(Username);
+                Caches.Player.Offline(this);
                 Caches.User.Offline(Username);
 
                 MobaServer.LogInfo("客户端断开, Username : " + Username);
