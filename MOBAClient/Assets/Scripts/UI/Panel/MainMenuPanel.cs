@@ -27,99 +27,15 @@ public class MainMenuPanel : UIBasePanel
     // 玩家上线的消息处理
     private PlayerOnlineRequest m_OnlineRequest;
 
-    // 请求添加好友的界面
-    private AddRequestPanel m_AddRequestPanel;
-    // 回应添加好友的界面 
-    private AddToClientPanel m_AddToClientPanel;
-    // 好友列表的界面
-    private FriendListPanel m_FriendListPanel;
-    // 匹配界面
-    private MatchPanel m_MatchPanel;
-
     public override void Awake()
     {
         base.Awake();
         m_InfoRequest = GetComponent<PlayerGetInfoRequest>();
         m_OnlineRequest = GetComponent<PlayerOnlineRequest>();
+        m_StartMatchRequest = GetComponent<PlayerStartMatchRequest>();
 
         SoundManager.Instance.StopBgMusic();
     }
-
-    #region 点击回掉
-
-    /// <summary>
-    /// 匹配单人游戏 
-    /// </summary>
-    public void OnBtnSinglePlayClick()
-    {
-        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
-
-        m_MatchPanel.ShowPanel();
-    }
-
-    /// <summary>
-    /// 匹配多人游戏 
-    /// </summary>
-    public void OnBtnMultiPlayClick()
-    {
-        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
-    }
-    
-    private bool m_IsOpenAddFriend;
-    /// <summary>
-    /// 控制添加好友面板的显示 
-    /// </summary>
-    public void OnBtnAddFriendsClick()
-    {
-        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
-
-        if (m_IsOpenAddFriend)
-        {
-            m_AddRequestPanel.HidePanel();
-            m_IsOpenAddFriend = false;
-        }
-        else
-        {
-            m_AddToClientPanel.HidePanel();
-            if (m_IsOpenFriendList)
-            {
-                m_FriendListPanel.HidePanel();
-                m_IsOpenFriendList = false;
-            }
-            m_IsOpenAddFriend = true;
-            m_AddRequestPanel.ShowPanel();
-        }
-    }
-
-    private bool m_IsOpenFriendList;
-    /// <summary>
-    /// 控制好友列表面板的显示 
-    /// </summary>
-    public void OnBtnFriendListClick()
-    {
-        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
-
-        if (m_IsOpenFriendList)
-        {
-            m_FriendListPanel.HidePanel();
-            m_IsOpenFriendList = false;
-        }
-        else
-        {
-            m_AddToClientPanel.HidePanel();
-            if (m_IsOpenAddFriend)
-            {
-                m_AddRequestPanel.HidePanel();
-                m_IsOpenAddFriend = false;
-            }
-            m_IsOpenFriendList = true;
-            m_FriendListPanel.ShowPanel();
-        }
-    }
-
-    #endregion
-
-    #region 响应服务器
 
     /// <summary>
     /// 获取是否存在玩家的信息
@@ -172,22 +88,83 @@ public class MainMenuPanel : UIBasePanel
         UIManager.Instance.PopPanel();
     }
 
+    #region 好友模块
+
+    // 请求添加好友的界面
+    private AddRequestPanel m_AddRequestPanel;
+    // 回应添加好友的界面 
+    private AddToClientPanel m_AddToClientPanel;
+    // 好友列表的界面
+    private FriendListPanel m_FriendListPanel;
+
+    private bool m_IsOpenAddFriend;
+    /// <summary>
+    /// 控制添加好友面板的显示 
+    /// </summary>
+    public void OnBtnAddFriendsClick()
+    {
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
+        if (m_IsOpenAddFriend)
+        {
+            m_AddRequestPanel.HidePanel();
+            m_IsOpenAddFriend = false;
+        }
+        else
+        {
+            m_AddToClientPanel.HidePanel();
+            if (m_IsOpenFriendList)
+            {
+                m_FriendListPanel.HidePanel();
+                m_IsOpenFriendList = false;
+            }
+            m_IsOpenAddFriend = true;
+            m_AddRequestPanel.ShowPanel();
+        }
+    }
+
+    private bool m_IsOpenFriendList;
+    /// <summary>
+    /// 控制好友列表面板的显示 
+    /// </summary>
+    public void OnBtnFriendListClick()
+    {
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
+        if (m_IsOpenFriendList)
+        {
+            m_FriendListPanel.HidePanel();
+            m_IsOpenFriendList = false;
+        }
+        else
+        {
+            m_AddToClientPanel.HidePanel();
+            if (m_IsOpenAddFriend)
+            {
+                m_AddRequestPanel.HidePanel();
+                m_IsOpenAddFriend = false;
+            }
+            m_IsOpenFriendList = true;
+            m_FriendListPanel.ShowPanel();
+        }
+    }
+
     /// <summary>
     /// 获取添加好友的结果
     /// </summary>
     /// <param name="response"></param>
     public void OnAddResult(OperationResponse response)
     {
-        if (response.ReturnCode == (short) ReturnCode.Falied)
+        if (response.ReturnCode == (short)ReturnCode.Falied)
         {
             // 对方拒绝了 但我什么也不敢做
         }
-        else if (response.ReturnCode == (short) ReturnCode.Suceess)
+        else if (response.ReturnCode == (short)ReturnCode.Suceess)
         {
             // 添加新的好友
-            DtoFriend friend =  JsonMapper.ToObject<DtoFriend>(response.Parameters[(byte) ParameterCode.DtoFriend] as string);
+            DtoFriend friend = JsonMapper.ToObject<DtoFriend>(response.Parameters[(byte)ParameterCode.DtoFriend] as string);
 
-            FriendListPanel panel = (FriendListPanel) UIManager.Instance.GetPanel(UIPanelType.FriendList);
+            FriendListPanel panel = (FriendListPanel)UIManager.Instance.GetPanel(UIPanelType.FriendList);
             panel.AddFriend(friend);
         }
     }
@@ -201,6 +178,68 @@ public class MainMenuPanel : UIBasePanel
         DtoFriend friend = JsonMapper.ToObject<DtoFriend>(response.Parameters[(byte)ParameterCode.DtoFriend] as string);
         FriendListPanel panel = (FriendListPanel)UIManager.Instance.GetPanel(UIPanelType.FriendList);
         panel.UpdateFriendItem(friend);
+    }
+
+    #endregion
+
+    #region 匹配模块
+
+    // 匹配界面
+    private MatchPanel m_MatchPanel;
+    [Header("匹配模块")]
+    // 单人匹配按钮
+    [SerializeField]
+    private Button m_BtnSingleMatch;
+    // 多人匹配按钮
+    [SerializeField]
+    private Button m_BtnMultiMatch;
+
+    // 匹配的请求
+    private PlayerStartMatchRequest m_StartMatchRequest;
+
+    /// <summary>
+    /// 设置匹配按钮的激活状态
+    /// </summary>
+    /// <param name="isActive"></param>
+    public void SetMatchBtnActive(bool isActive)
+    {
+        m_BtnSingleMatch.interactable = isActive;
+        m_BtnMultiMatch.interactable = isActive;
+    }
+
+    /// <summary>
+    /// 单人匹配游戏 
+    /// </summary>
+    public void OnBtnSinglePlayClick()
+    {
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
+        m_MatchPanel.ShowPanel();
+        m_StartMatchRequest.DefalutRequest();
+        SetMatchBtnActive(false);
+    }
+
+    /// <summary>
+    /// 多人匹配游戏 
+    /// </summary>
+    public void OnBtnMultiPlayClick()
+    {
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
+       // TODO 没有多人匹配的实现
+    }
+
+    /// <summary>
+    /// 匹配完成 进入选择界面
+    /// </summary>
+    public void OnMatchComplete(OperationResponse response)
+    {
+        if ((ReturnCode) response.ReturnCode == ReturnCode.Suceess)
+        {
+            // 停止匹配
+            m_MatchPanel.HidePanel();
+            SetMatchBtnActive(true);
+        }
     }
 
     #endregion

@@ -45,8 +45,8 @@
     <Compile Include="Code\OperationCode.cs" />
     <Compile Include="Code\ParameterCode.cs" />
     <Compile Include="Code\ReturnCode.cs" />
-    <Compile Include="DTO\DtoFriend.cs" />
-    <Compile Include="DTO\DtoPlayer.cs" />
+    <Compile Include="Dto\DtoFriend.cs" />
+    <Compile Include="Dto\DtoPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

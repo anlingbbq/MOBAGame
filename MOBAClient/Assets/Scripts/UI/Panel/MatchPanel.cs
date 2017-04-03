@@ -15,6 +15,13 @@ public class MatchPanel : UIBasePanel
     private float m_Minute = 0;
     private float m_Second = 0;
 
+    private PlayerStopMatchRequest m_StopMatchRequest;
+
+    void Start()
+    {
+        m_StopMatchRequest = GetComponent<PlayerStopMatchRequest>();
+    }
+
     public void StartMatch()
     {
         TextTime.text = "00:01";
@@ -43,7 +50,16 @@ public class MatchPanel : UIBasePanel
 
     public void OnBtnCloseClick()
     {
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
         this.HidePanel();
+
+        // 恢复禁用按钮
+        MainMenuPanel panel = UIManager.Instance.GetPanel(UIPanelType.MainMenu) as MainMenuPanel;
+        panel.SetMatchBtnActive(true);
+
+        // 发送停止的请求
+        m_StopMatchRequest.DefalutRequest();
     }
 
     public override void OnEnter()

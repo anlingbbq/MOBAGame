@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache\Caches.cs" />
+    <Compile Include="Cache\MatchCache.cs" />
     <Compile Include="Cache\PlayerCache.cs" />
     <Compile Include="Cache\UserCache.cs" />
     <Compile Include="DataBase\Manager\BaseManager.cs" />
@@ -84,10 +85,14 @@
     <Compile Include="Handler\Account\UserLoginHandler.cs" />
     <Compile Include="Handler\Player\PlayerCreateHandler.cs" />
     <Compile Include="Handler\Account\UserRegisterHandler.cs" />
+    <Compile Include="Handler\Player\PlayerStartMatchHandler.cs" />
+    <Compile Include="Handler\Player\PlayerStopMatchHandler.cs" />
     <Compile Include="MobaPeer.cs" />
     <Compile Include="MobaServer.cs" />
     <Compile Include="DataBase\Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Room\MatchRoom.cs" />
+    <Compile Include="Room\RoomBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="log4net.config">

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Common.DTO
 {
+    /// <summary>
+    /// 好友传输对象
+    /// </summary>
     public class DtoFriend
     {
         public int Id { get; set; }

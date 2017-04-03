@@ -8,7 +8,9 @@ using Photon.SocketServer;
 
 namespace MOBAServer.Handler.Player
 {
-    // 获取角色信息
+    /// <summary>
+    /// 获取玩家信息 这里只是判断玩家是否存在
+    /// </summary>
     class PlayerGetInfoHandler : BaseHandler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)

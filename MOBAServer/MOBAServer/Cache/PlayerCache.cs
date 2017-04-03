@@ -20,11 +20,6 @@ namespace MOBAServer.Cache
     /// </summary>
     public class PlayerCache
     {
-        /*
-        * TODO PlayerList内存释放
-        * 同样这里的内存没有释放的机会 将会保存至服务器关闭
-        */
-
         #region 缓存用户的玩家列表
 
         // 保存用户名和玩家列表的映射

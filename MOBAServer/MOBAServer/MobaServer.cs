@@ -71,6 +71,8 @@ namespace MOBAServer
             HandlerDict.Add(OperationCode.PlayerAddRequest, new PlayerAddRequestHandler());
             HandlerDict.Add(OperationCode.PlayerAddToClient, new PlayerAddToClientHandler());
             HandlerDict.Add(OperationCode.PlayerAddResult, new PlayerAddRequestHandler());
+            HandlerDict.Add(OperationCode.StartMatch, new PlayerStartMatchHandler());
+            HandlerDict.Add(OperationCode.StopMatch, new PlayerStopMatchHandler());
         }
 
         #region 日志功能

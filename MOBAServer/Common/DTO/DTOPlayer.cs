@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Common.DTO
 {
+    /// <summary>
+    /// 玩家传输对象
+    /// </summary>
     public class DtoPlayer
     {
         public int Id { get; set; }

@@ -11,6 +11,9 @@ using Photon.SocketServer;
 
 namespace MOBAServer.Handler.Player
 {
+    /// <summary>
+    /// 创建玩家
+    /// </summary>
     class PlayerCreateHandler : BaseHandler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)

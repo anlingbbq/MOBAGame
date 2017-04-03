@@ -71,11 +71,6 @@ namespace MOBAServer.Cache
 
         #endregion
 
-
-        /*
-         * TODO User内存释放
-         * 这里的用户缓存并没有自动释放的机会 内存会持续增加
-         */
         #region 缓存用户数据
 
         // 保存用户数据库对象

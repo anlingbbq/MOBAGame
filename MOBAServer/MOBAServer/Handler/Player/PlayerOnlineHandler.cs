@@ -13,9 +13,10 @@ using Photon.SocketServer;
 
 namespace MOBAServer.Handler.Player
 {
-    // 本来玩家和角色是一对多的关系
-    // 这里简化这个过程 直接选择第一个角色
-    // 反正也没创建第二个角色的界面
+    /// <summary>
+    /// 本来玩家和角色是一对多的关系
+    //  这里简化这个过程 直接选择第一个角色 
+    /// </summary>
     class PlayerOnlineHandler : BaseHandler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
