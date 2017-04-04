@@ -12,5 +12,6 @@ public enum UIPanelType {
     AddRequest,
     AddToClient,
     FriendList,
-    Match
+    Match,
+    Select
 }

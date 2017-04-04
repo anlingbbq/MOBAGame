@@ -137,6 +137,7 @@
     <Compile Include="Assets\Scripts\UI\Panel\MaskPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\MatchPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\RegisterPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\SelectPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\TipPanel.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Base\UIBasePanel.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Extension\DictionarytExtension.cs" />

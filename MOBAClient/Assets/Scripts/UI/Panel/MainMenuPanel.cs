@@ -240,6 +240,9 @@ public class MainMenuPanel : UIBasePanel
             m_MatchPanel.HidePanel();
             SetMatchBtnActive(true);
         }
+
+        UIManager.Instance.PopPanel();
+        UIManager.Instance.PushPanel(UIPanelType.Select);
     }
 
     #endregion

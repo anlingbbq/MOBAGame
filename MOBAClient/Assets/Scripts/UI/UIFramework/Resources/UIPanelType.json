@@ -38,5 +38,10 @@
 	{
 		"Name" : "Match",
 		"Path" : "UI/Panel/MatchPanel"
+	},
+	{
+		"Name" : "Select",
+		"Path" : "UI/Panel/SelectPanel"
 	}
+
 ]
