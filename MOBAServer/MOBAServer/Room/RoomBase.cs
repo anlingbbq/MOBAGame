@@ -98,10 +98,11 @@ namespace MOBAServer.Room
         /// 广播
         /// </summary>
         /// <param name="opCode">操作码</param>
+        /// <param name="data">数据</param>
+        /// <param name="self">自身的客户端连接</param>
         /// <param name="retCode">返回码</param>
         /// <param name="debugMsg">调试信息</param>
-        /// <param name="data">数据</param>
-        public void Brocast(OperationCode opCode, Dictionary<byte, object> data,
+        public void Brocast(OperationCode opCode, Dictionary<byte, object> data, TPeer self = null,
             ReturnCode retCode = ReturnCode.Suceess, string debugMsg = "")
         {
             OperationResponse response = new OperationResponse((byte)opCode);
@@ -111,6 +112,10 @@ namespace MOBAServer.Room
 
             foreach (TPeer peer in PeerList)
             {
+                // 不给自身发送消息
+                if (self == peer)
+                    continue;
+
                 peer.SendOperationResponse(response, new SendParameters());
             }
         }

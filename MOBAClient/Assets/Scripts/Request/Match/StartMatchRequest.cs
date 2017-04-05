@@ -6,7 +6,7 @@ using Common.OpCode;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class PlayerStartMatchRequest : BaseRequest
+public class StartMatchRequest : BaseRequest
 {
     private MainMenuPanel m_MainMenuPanel;
 

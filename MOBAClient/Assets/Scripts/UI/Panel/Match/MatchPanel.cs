@@ -15,11 +15,11 @@ public class MatchPanel : UIBasePanel
     private float m_Minute = 0;
     private float m_Second = 0;
 
-    private PlayerStopMatchRequest m_StopMatchRequest;
+    private StopMatchRequest m_StopMatchRequest;
 
     void Start()
     {
-        m_StopMatchRequest = GetComponent<PlayerStopMatchRequest>();
+        m_StopMatchRequest = GetComponent<StopMatchRequest>();
     }
 
     public void StartMatch()

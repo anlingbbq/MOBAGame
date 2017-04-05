@@ -21,8 +21,6 @@ public class AddRequestPanel : UIBasePanel
         m_AddRequest = GetComponent<PlayerAddFriendRequest>();
     }
 
-    #region 点击回掉
-
     public void OnBtnOk()
     {
         SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
@@ -33,10 +31,6 @@ public class AddRequestPanel : UIBasePanel
         m_AddRequest.Username = InputName.text;
         m_AddRequest.DefalutRequest();
     }
-
-    #endregion
-
-    #region 服务器响应
 
     /// <summary>
     /// 获取请求添加好友的响应
@@ -50,8 +44,6 @@ public class AddRequestPanel : UIBasePanel
             UIManager.Instance.PushPanel(UIPanelType.Tip);
         }
     }
-
-    #endregion
 
     public override void OnEnter()
     {

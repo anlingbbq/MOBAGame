@@ -9,14 +9,22 @@ namespace Common.OpCode
     public enum OperationCode
     {
         Defalut,
+
+        #region 用户
+
         /// <summary>
-        /// 用户登陆
+        /// 用户登录
         /// </summary>
         UserLogin,
         /// <summary>
         /// 用户注册
         /// </summary>
         UserRegister,
+
+        #endregion
+
+        #region 玩家
+
         /// <summary>
         /// 创建玩家
         /// </summary>
@@ -45,6 +53,11 @@ namespace Common.OpCode
         /// 好友登陆状态改变
         /// </summary>
         FriendStateChange,
+
+        #endregion
+
+        #region 匹配
+
         /// <summary>
         /// 开始匹配
         /// </summary>
@@ -52,6 +65,28 @@ namespace Common.OpCode
         /// <summary>
         /// 停止匹配
         /// </summary>
-        StopMatch
+        StopMatch,
+        /// <summary>
+        /// 进入选人
+        /// </summary>
+        EnterSelect,
+        /// <summary>
+        /// 销毁选人的房间
+        /// </summary>
+        DestroySelect,
+        /// <summary>
+        /// 获取房间信息
+        /// </summary>
+        SelectGetInfo,
+        /// <summary>
+        /// 选人
+        /// </summary>
+        Selecting,
+        /// <summary>
+        /// 准备完毕
+        /// </summary>
+        BeReady
+
+        #endregion
     }
 }

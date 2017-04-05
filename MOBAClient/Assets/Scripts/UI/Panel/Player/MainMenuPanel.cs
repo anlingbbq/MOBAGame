@@ -32,7 +32,7 @@ public class MainMenuPanel : UIBasePanel
         base.Awake();
         m_InfoRequest = GetComponent<PlayerGetInfoRequest>();
         m_OnlineRequest = GetComponent<PlayerOnlineRequest>();
-        m_StartMatchRequest = GetComponent<PlayerStartMatchRequest>();
+        m_StartMatchRequest = GetComponent<StartMatchRequest>();
 
         SoundManager.Instance.StopBgMusic();
     }
@@ -195,7 +195,7 @@ public class MainMenuPanel : UIBasePanel
     private Button m_BtnMultiMatch;
 
     // 匹配的请求
-    private PlayerStartMatchRequest m_StartMatchRequest;
+    private StartMatchRequest m_StartMatchRequest;
 
     /// <summary>
     /// 设置匹配按钮的激活状态

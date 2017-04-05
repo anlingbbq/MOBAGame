@@ -11,6 +11,7 @@ using log4net.Config;
 using MOBAServer.Handler;
 using MOBAServer.Handler.Player;
 using MOBAServer.Handler.Account;
+using MOBAServer.Handler.Match;
 
 namespace MOBAServer
 {
@@ -71,8 +72,13 @@ namespace MOBAServer
             HandlerDict.Add(OperationCode.PlayerAddRequest, new PlayerAddRequestHandler());
             HandlerDict.Add(OperationCode.PlayerAddToClient, new PlayerAddToClientHandler());
             HandlerDict.Add(OperationCode.PlayerAddResult, new PlayerAddRequestHandler());
-            HandlerDict.Add(OperationCode.StartMatch, new PlayerStartMatchHandler());
-            HandlerDict.Add(OperationCode.StopMatch, new PlayerStopMatchHandler());
+
+            // 匹配操作
+            HandlerDict.Add(OperationCode.StartMatch, new StartMatchHandler());
+            HandlerDict.Add(OperationCode.StopMatch, new StopMatchHandler());
+            HandlerDict.Add(OperationCode.EnterSelect, new EnterSelectHandler());
+            HandlerDict.Add(OperationCode.Selecting, new SelectingHandler());
+            HandlerDict.Add(OperationCode.BeReady, new BeReadyHandler());
         }
 
         #region 日志功能

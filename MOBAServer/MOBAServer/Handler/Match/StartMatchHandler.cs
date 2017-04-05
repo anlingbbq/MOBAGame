@@ -10,12 +10,12 @@ using MOBAServer.DataBase.Manager;
 using MOBAServer.Room;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Player
+namespace MOBAServer.Handler.Match
 {
     /// <summary>
     /// 开始匹配
     /// </summary>
-    class PlayerStartMatchHandler : BaseHandler
+    class StartMatchHandler : BaseHandler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
@@ -33,8 +33,12 @@ namespace MOBAServer.Handler.Player
             // 如果房间满了 开始选人
             if (room.IsFull)
             {
-                // 通知房间内所有人进入选人界面
+                // 创建选人的房间
+                Caches.Select.CreateRoom(room.TeamOneIdList, room.TeamTwoIdList);
+
+                // 通知所有客户端进入选人的房间
                 room.Brocast(OperationCode.StartMatch, null);
+
                 // 摧毁房间
                 Caches.Match.DestoryRoom(room);
             }

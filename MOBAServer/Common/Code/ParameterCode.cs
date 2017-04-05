@@ -8,6 +8,8 @@ namespace Common.Code
     // 区分通信的参数类型
     public enum ParameterCode
     {
+        #region 用户
+
         /// <summary>
         /// 用户名
         /// </summary>
@@ -16,6 +18,11 @@ namespace Common.Code
         /// 密码
         /// </summary>
         Password,
+
+        #endregion
+
+        #region 玩家
+
         /// <summary>
         /// 玩家数据传输对象
         /// </summary>
@@ -39,6 +46,21 @@ namespace Common.Code
         /// <summary>
         /// 玩家id数组
         /// </summary>
-        PlayerIds
+        PlayerIds,
+
+        #endregion
+
+        #region 匹配
+
+        /// <summary>
+        /// 第一组的匹配数据
+        /// </summary>
+        TeamOneData,
+        /// <summary>
+        /// 第二组的匹配数据
+        /// </summary>
+        TeamTwoData,
+
+        #endregion
     }
 }

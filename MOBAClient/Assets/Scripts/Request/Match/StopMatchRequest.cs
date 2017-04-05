@@ -6,7 +6,7 @@ using Common.OpCode;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class PlayerStopMatchRequest : BaseRequest
+public class StopMatchRequest : BaseRequest
 {
     public override void Start()
     {

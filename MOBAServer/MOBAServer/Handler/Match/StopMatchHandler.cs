@@ -3,9 +3,9 @@ using Common.Code;
 using MOBAServer.Cache;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Player
+namespace MOBAServer.Handler.Match
 {
-    class PlayerStopMatchHandler : BaseHandler
+    class StopMatchHandler : BaseHandler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
