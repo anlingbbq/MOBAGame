@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Common.Code;
+using Common.Config;
 using Common.DTO;
 using ExitGames.Client.Photon;
 using LitJson;
@@ -27,7 +28,7 @@ public class MainMenuPanel : UIBasePanel
     // 玩家上线的消息处理
     private PlayerOnlineRequest m_OnlineRequest;
 
-    public override void Awake()
+    void Start()
     {
         base.Awake();
         m_InfoRequest = GetComponent<PlayerGetInfoRequest>();
@@ -35,6 +36,10 @@ public class MainMenuPanel : UIBasePanel
         m_StartMatchRequest = GetComponent<StartMatchRequest>();
 
         SoundManager.Instance.StopBgMusic();
+
+        UIManager.Instance.PushPanel(UIPanelType.Mask);
+        // 获取玩家信息的请求
+        m_InfoRequest.DefalutRequest();
     }
 
     /// <summary>
@@ -63,7 +68,7 @@ public class MainMenuPanel : UIBasePanel
     }
 
     /// <summary>
-    /// 获取玩家数据 处理玩家上线 实际上是主界面的初始化工作
+    /// 获取玩家数据 处理玩家上线 主要是主界面的初始化工作
     /// </summary>
     /// <param name="response"></param>
     public void OnOnline(OperationResponse response)
@@ -234,26 +239,36 @@ public class MainMenuPanel : UIBasePanel
     /// </summary>
     public void OnMatchComplete(OperationResponse response)
     {
-        if ((ReturnCode) response.ReturnCode == ReturnCode.Suceess)
-        {
-            // 停止匹配
-            m_MatchPanel.HidePanel();
-            SetMatchBtnActive(true);
-        }
+        // 隐藏匹配界面
+        m_MatchPanel.HidePanel();
+        // 恢复按钮
+        SetMatchBtnActive(true);
 
-        UIManager.Instance.PopPanel();
-        UIManager.Instance.PushPanel(UIPanelType.Select);
+        // 显示是否进入选人的提示界面
+        TipPanel.SetContent("点击进入选人界面\n" + ServerConfig.SelectRoomTimeOff + "秒后自动取消", () =>
+        {
+            // 清除界面
+            UIManager.Instance.ClearPanel();
+            // 打开选择界面
+            UIManager.Instance.PushPanel(UIPanelType.Select);
+        }, ServerConfig.SelectRoomTimeOff);
+
+        UIManager.Instance.PushPanel(UIPanelType.Tip);
+    }
+
+    /// <summary>
+    /// 选人房间销毁时
+    /// </summary>
+    /// <param name="response"></param>
+    public void OnDestroySelectRoom()
+    {
+        // 选人房间销毁时 可能处于选人界面也可能处于提示界面
+        // 直接清空栈 打开主界面
+        UIManager.Instance.ClearPanel();
+        UIManager.Instance.PushPanel(UIPanelType.MainMenu);
     }
 
     #endregion
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-
-        UIManager.Instance.PushPanel(UIPanelType.Mask);
-        m_InfoRequest.DefalutRequest();
-    }
 
     public override void OnPause()
     {
@@ -263,5 +278,16 @@ public class MainMenuPanel : UIBasePanel
     public override void OnResume()
     {
         // 打开子界面时 不屏蔽主界面
+    }
+
+    public override void OnExit()
+    {
+        base.OnExit();
+
+        // 隐藏所有的子界面
+        m_AddToClientPanel.HidePanel();
+        m_AddRequestPanel.HidePanel();
+        m_FriendListPanel.HidePanel();
+        m_MatchPanel.HidePanel();
     }
 }

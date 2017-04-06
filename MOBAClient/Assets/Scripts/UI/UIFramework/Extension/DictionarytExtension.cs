@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class DictionarytExtension {
     /// <summary>
-    /// 根据key得到value，没有返回null
+    /// 根据key得到value
     /// </summary>
     public static TValue ExTryGet<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
     {

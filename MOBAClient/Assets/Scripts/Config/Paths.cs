@@ -21,4 +21,14 @@ public class Paths
 
     #endregion
 
+    #region 头像
+
+    // 头像路径
+    public const string RES_HEAD_UI = "UI/Head/";
+
+    public const string HEAD_NO_CONNECT = RES_HEAD_UI +　"no-Connect";
+    public const string HEAD_ASHE = RES_HEAD_UI + "ashe";
+    public const string HEAD_GAREN = RES_SOUND_UI + "garen";
+
+    #endregion
 }

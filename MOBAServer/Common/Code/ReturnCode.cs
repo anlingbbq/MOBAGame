@@ -18,6 +18,6 @@ namespace Common.Code
         /// <summary>
         /// 空值
         /// </summary>
-        Empty
+        Empty,
     }
 }

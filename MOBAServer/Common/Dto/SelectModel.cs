@@ -31,6 +31,13 @@ namespace Common.Dto
         /// </summary>
         public bool IsReady;
 
+        public SelectModel()
+        {
+            this.HeroId = -1;
+            this.IsEnter = false;
+            this.IsReady = false;
+        }
+
         public SelectModel(int playerId, string name)
         {
             this.PlayerId = playerId;

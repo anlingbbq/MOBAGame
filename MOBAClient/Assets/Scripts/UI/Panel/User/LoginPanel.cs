@@ -13,7 +13,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 登陆用户的界面
 /// </summary>
-public class LoginPanel : UIBasePanel
+public class LoginPanel : UIBasePanel, IResourceListener
 {
     [SerializeField]
     private InputField InputUsername;
@@ -31,10 +31,19 @@ public class LoginPanel : UIBasePanel
 	void Start ()
 	{
 	    m_LoginRequest = GetComponent<UserLoginRequest>();
-        SoundManager.Instance.LoadUiSound();
+
+        LoadUiSound();
 	}
 
-    #region 点击回调
+    /// <summary>
+    /// 加载UI界面的声音文件 
+    /// </summary>
+    public void LoadUiSound()
+    {
+        ResourcesManager.Instance.Load(Paths.UI_LOGIN_BG, typeof(AudioClip), this, AssetType.SoundBGM);
+        ResourcesManager.Instance.Load(Paths.UI_ENTERGAME, typeof(AudioClip), this);
+        ResourcesManager.Instance.Load(Paths.UI_CLICK, typeof(AudioClip), this);
+    }
 
     /// <summary>
     /// 点击登陆
@@ -70,11 +79,6 @@ public class LoginPanel : UIBasePanel
         UIManager.Instance.PushPanel(UIPanelType.Register);
     }
 
-
-    #endregion
-
-    #region 服务器响应
-
     /// <summary>
     /// 登陆响应 
     /// </summary>
@@ -98,8 +102,6 @@ public class LoginPanel : UIBasePanel
         }
     }
 
-    #endregion
-
     public void ResetPanel()
     {
         InputUsername.text = "";
@@ -118,5 +120,14 @@ public class LoginPanel : UIBasePanel
         temp.y = Screen.height / 2 + GetComponent<RectTransform>().sizeDelta.y / 2;
         LoginLayer.localPosition = temp;
         LoginLayer.DOLocalMoveY(0, 1.5f).SetEase(Ease.OutBack);
+    }
+
+    public void OnLoaded(string assetName, object asset, AssetType assetType)
+    {
+        // 播放背景音乐
+        if (assetType == AssetType.SoundBGM)
+        {
+            SoundManager.Instance.PlayBgMusic(asset as AudioClip);
+        }
     }
 }

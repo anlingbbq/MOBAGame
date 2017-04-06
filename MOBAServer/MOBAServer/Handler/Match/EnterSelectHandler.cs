@@ -17,7 +17,7 @@ namespace MOBAServer.Handler.Match
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
-            MobaServer.LogInfo("处理进入选择的请求");
+            MobaServer.LogInfo("处理进入选择房间的请求");
 
             DataBase.Model.Player player = UserManager.GetPlayer(peer.Username);
             SelectRoom room = Caches.Select.EnterRoom(player.Identification, peer);
@@ -27,14 +27,13 @@ namespace MOBAServer.Handler.Match
             // 先给客户端发送已经进入房间的玩家数据(房间模型)
             response.OperationCode = (byte) OperationCode.SelectGetInfo;
             response.Parameters = new Dictionary<byte, object>();
-            response[(byte) ParameterCode.TeamOneData] = JsonMapper.ToJson(room.TeamOneDict.ToArray());
-            response[(byte) ParameterCode.TeamTwoData] = JsonMapper.ToJson(room.TeamTwoDict.ToArray());
+            response[(byte) ParameterCode.TeamOneData] = JsonMapper.ToJson(room.TeamOneDict.Values.ToArray());
+            response[(byte) ParameterCode.TeamTwoData] = JsonMapper.ToJson(room.TeamTwoDict.Values.ToArray());
             peer.SendOperationResponse(response, sendParameters);
 
             // 再给房间内的其他客户端发一条消息:有人进入了
             Dictionary<byte, object> data = new Dictionary<byte, object>();
             data.Add((byte)(ParameterCode.PlayerId), player.Identification);
-            data.Add((byte)(ParameterCode.PlayerName), player.Name);
             room.Brocast(OperationCode.EnterSelect, data);
         }
     }

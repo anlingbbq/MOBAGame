@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Code;
+using Common.Config;
 using Common.OpCode;
+using MOBAServer.DataBase.Manager;
 using MOBAServer.Extension;
 using MOBAServer.Room;
 
@@ -17,7 +19,6 @@ namespace MOBAServer.Cache
         /// </summary>
         public void CreateRoom(List<int> team1, List<int> team2)
         {
-
             SelectRoom room;
             // 获取房间
             if (RoomQue.Count <= 0)
@@ -42,16 +43,15 @@ namespace MOBAServer.Cache
             RoomDict.Add(room.Id, room);
 
             // 创建完成 开启定时任务 通知玩家在10s之内进入房间 否则 房间自动销毁
-            room.StartSchedule(DateTime.UtcNow.AddSeconds(10), () =>
+            room.StartSchedule(DateTime.UtcNow.AddSeconds(ServerConfig.SelectRoomTimeOff), () =>
             {
-                // 销毁房间
                 if (!room.IsAllEnter)
                 {
-                    Destroy(room.Id);
                     // 通知所有玩家房间被销毁了
-                    room.Brocast(OperationCode.DestroySelect, null, null, 0, "有玩家没有进入房间");
+                    room.Brocast(OperationCode.DestroySelect, null);
+                    // 销毁房间
+                    DestroyRoom(room.Id);
                 }
-                    
             });
         }
 
@@ -59,10 +59,11 @@ namespace MOBAServer.Cache
         /// 摧毁房间
         /// </summary>
         /// <param name="roomId"></param>
-        public void Destroy(int roomId)
+        public void DestroyRoom(int roomId)
         {
-            SelectRoom room = RoomDict.ExTryGet(roomId);
-            if (room == null) return;
+            SelectRoom room;
+            if (!RoomDict.TryGetValue(roomId, out room))
+                return;
 
             // 移除玩家id和房间id的映射
             foreach (int item in room.TeamOneDict.Keys)
@@ -81,6 +82,8 @@ namespace MOBAServer.Cache
 
             // 回收
             RoomQue.Enqueue(room);
+
+            MobaServer.LogInfo("选人房间销毁了");
         }
 
         /// <summary>
@@ -101,6 +104,29 @@ namespace MOBAServer.Cache
 
             room.EnterRoom(playerId, peer);
             return room;
+        }
+
+        /// <summary>
+        /// 玩家下线
+        /// </summary>
+        /// <param name="peer"></param>
+        public void Offline(MobaPeer peer)
+        {
+            int playerid = UserManager.GetPlayer(peer.Username).Identification;
+            int roomId;
+            if (!PlayerRoomDict.TryGetValue(playerid, out roomId))
+                return;
+
+            SelectRoom room = null;
+            if (!RoomDict.TryGetValue(roomId, out room))
+                return;
+
+            // 移除退出的客户端连接
+            room.PeerList.Remove(peer);
+            // 通知所有其他客户端：有人退出 房间解散 回到主界面
+            room.Brocast(OperationCode.DestroySelect, null);
+            // 销毁房间
+            DestroyRoom(roomId);
         }
     }
 }

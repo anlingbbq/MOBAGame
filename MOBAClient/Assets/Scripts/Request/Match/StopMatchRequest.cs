@@ -23,7 +23,6 @@ public class StopMatchRequest : BaseRequest
 
     public override void OnOperationResponse(OperationResponse response)
     {
-        Log.Debug(response.DebugMessage);
         // 什么也不需要做
     }
 }

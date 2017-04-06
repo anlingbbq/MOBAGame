@@ -6,12 +6,18 @@ using UnityEngine;
 
 public class DestroySelectRequest : BaseRequest
 {
-    void Start()
+    private MainMenuPanel m_MainMenuPanel;
+
+    public override void Start()
     {
         this.OpCode = OperationCode.DestroySelect;
         base.Start();
+        m_MainMenuPanel = GetComponent<MainMenuPanel>();
     }
 
+    /// <summary>
+    /// 不需要
+    /// </summary>
     public override void DefalutRequest()
     {
     }
@@ -22,5 +28,6 @@ public class DestroySelectRequest : BaseRequest
     /// <param name="response"></param>
     public override void OnOperationResponse(OperationResponse response)
     {
+        m_MainMenuPanel.OnDestroySelectRoom();
     }
 }

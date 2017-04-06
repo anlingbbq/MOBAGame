@@ -56,13 +56,16 @@ public class UIManager
     /// </summary>
     public void PushPanel(UIPanelType panelType)
     {
-        // 暂停上一级的页面
+        UIBasePanel panel = GetPanel(panelType);
+
         if (m_PanelStack.Count > 0)
         {
             UIBasePanel topPanel = m_PanelStack.Peek();
+            if (topPanel.name == panel.name)
+                return;
+
             topPanel.OnPause();
         }
-        UIBasePanel panel = GetPanel(panelType);
         panel.transform.SetAsLastSibling();
         m_PanelStack.Push(panel);
         panel.OnEnter();
@@ -80,6 +83,17 @@ public class UIManager
         if (m_PanelStack.Count <= 0) return;
         topPanel = m_PanelStack.Peek();
         topPanel.OnResume();
+    }
+
+    /// <summary>
+    /// 清除所有栈中的界面
+    /// </summary>
+    public void ClearPanel()
+    {
+        while (m_PanelStack.Count > 0)
+        {
+            m_PanelStack.Pop().OnExit();
+        }
     }
 
     /// <summary>

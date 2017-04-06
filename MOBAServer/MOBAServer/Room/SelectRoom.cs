@@ -55,17 +55,17 @@ namespace MOBAServer.Room
             // 创建选择模型
             Player player;
             SelectModel model;
-            foreach (int item in team1)
+            foreach (int playerId in team1)
             {
-                player = Caches.Player.GetPlayer(item);
-                model = new SelectModel(item, player.Name);
-                TeamOneDict.Add(item, model);
+                player = Caches.Player.GetPlayer(playerId);
+                model = new SelectModel(playerId, player.Name);
+                TeamOneDict.Add(playerId, model);
             }
-            foreach (int item in team2)
+            foreach (int playerId in team2)
             {
-                player = Caches.Player.GetPlayer(item);
-                model = new SelectModel(item, player.Name);
-                TeamTwoDict.Add(item, model);
+                player = Caches.Player.GetPlayer(playerId);
+                model = new SelectModel(playerId, player.Name);
+                TeamTwoDict.Add(playerId, model);
             }
         }
 

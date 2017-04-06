@@ -38,7 +38,7 @@ public class StartMatchRequest : BaseRequest
     }
 
     /// <summary>
-    /// 匹配完成 进入选择界面
+    /// 匹配完成 准备进入选择界面
     /// </summary>
     /// <param name="response"></param>
     public override void OnOperationResponse(OperationResponse response)
