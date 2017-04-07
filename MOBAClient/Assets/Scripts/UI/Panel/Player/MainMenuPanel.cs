@@ -39,7 +39,7 @@ public class MainMenuPanel : UIBasePanel
 
         UIManager.Instance.PushPanel(UIPanelType.Mask);
         // 获取玩家信息的请求
-        m_InfoRequest.DefalutRequest();
+        m_InfoRequest.SendRequest();
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public class MainMenuPanel : UIBasePanel
         if ((ReturnCode)response.ReturnCode == ReturnCode.Suceess)
         {
             // 存在角色 发送在线请求
-            m_OnlineRequest.DefalutRequest();
+            m_OnlineRequest.SendRequest();
         }
         else if ((ReturnCode)response.ReturnCode == ReturnCode.Empty)
         {
@@ -70,15 +70,9 @@ public class MainMenuPanel : UIBasePanel
     /// <summary>
     /// 获取玩家数据 处理玩家上线 主要是主界面的初始化工作
     /// </summary>
-    /// <param name="response"></param>
-    public void OnOnline(OperationResponse response)
+    /// <param name="dtoPlayer"></param>
+    public void OnOnline(DtoPlayer dtoPlayer)
     {
-        // 获取角色数据
-        DtoPlayer dtoPlayer = JsonMapper.ToObject<DtoPlayer>
-            (response.Parameters.ExTryGet((byte)ParameterCode.DtoPlayer) as string);
-
-        GameData.player = dtoPlayer;
-
         TextName.text = dtoPlayer.Name;
         TextLv.text = dtoPlayer.Lv.ToString();
         TextPower.text = dtoPlayer.Power.ToString();
@@ -220,7 +214,7 @@ public class MainMenuPanel : UIBasePanel
         SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
 
         m_MatchPanel.ShowPanel();
-        m_StartMatchRequest.DefalutRequest();
+        m_StartMatchRequest.SendStartMatchRequest();
         SetMatchBtnActive(false);
     }
 

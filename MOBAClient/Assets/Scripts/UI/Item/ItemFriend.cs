@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FriendItem : MonoBehaviour
+public class ItemFriend : MonoBehaviour
 {
     [SerializeField]
     private Text TextName;

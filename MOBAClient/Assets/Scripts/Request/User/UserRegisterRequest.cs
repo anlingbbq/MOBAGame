@@ -7,27 +7,20 @@ using UnityEngine;
 
 public class UserRegisterRequest : BaseRequest
 {
-    [HideInInspector]
-    public string Username;
-    [HideInInspector]
-    public string Password;
-
     private RegisterPanel m_RegisterPanel;
 
     public override void Start()
     {
-        this.OpCode = OperationCode.UserRegister;
         base.Start();
-
         m_RegisterPanel = GetComponent<RegisterPanel>();
     }
 
-    public override void DefalutRequest()
+    public void SendRegisterRequest(string username, string password)
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
-        data.Add((byte)ParameterCode.Username, Username);
-        data.Add((byte)ParameterCode.Password, Password);
-        PhotonEngine.Peer.OpCustom((byte) OpCode, data, true);
+        data.Add((byte)ParameterCode.Username, username);
+        data.Add((byte)ParameterCode.Password, password);
+        SendRequest(data);
     }
 
     public override void OnOperationResponse(OperationResponse response)

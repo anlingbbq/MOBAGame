@@ -60,6 +60,10 @@ namespace Common.Code
         /// 第二组的匹配数据
         /// </summary>
         TeamTwoData,
+        /// <summary>
+        /// 英雄id
+        /// </summary>
+        HeroId,
 
         #endregion
     }

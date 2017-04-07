@@ -59,7 +59,7 @@ public class MatchPanel : UIBasePanel
         panel.SetMatchBtnActive(true);
 
         // 发送停止的请求
-        m_StopMatchRequest.DefalutRequest();
+        m_StopMatchRequest.SendStopMatchRequest();
     }
 
     public override void OnEnter()

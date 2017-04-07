@@ -81,7 +81,7 @@ namespace Common.OpCode
         /// <summary>
         /// 选人
         /// </summary>
-        Selecting,
+        Selected,
         /// <summary>
         /// 准备完毕
         /// </summary>

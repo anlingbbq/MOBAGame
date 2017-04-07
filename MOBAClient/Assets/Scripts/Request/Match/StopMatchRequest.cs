@@ -8,17 +8,14 @@ using UnityEngine;
 
 public class StopMatchRequest : BaseRequest
 {
-    public override void Start()
-    {
-        this.OpCode = OperationCode.StopMatch;
-        base.Start();
-    }
-
-    public override void DefalutRequest()
+    /// <summary>
+    /// 发送停止匹配的请求
+    /// </summary>
+    public void SendStopMatchRequest()
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
         data.Add((byte)ParameterCode.PlayerId, GameData.player.Id);
-        PhotonEngine.Peer.OpCustom((byte) this.OpCode, data, true);
+        PhotonEngine.Peer.OpCustom((byte)this.OpCode, data, true);
     }
 
     public override void OnOperationResponse(OperationResponse response)

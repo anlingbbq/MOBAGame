@@ -28,8 +28,7 @@ public class AddRequestPanel : UIBasePanel
         if (String.IsNullOrEmpty(InputName.text))
             return;
 
-        m_AddRequest.Username = InputName.text;
-        m_AddRequest.DefalutRequest();
+        m_AddRequest.SendAddFriendRequest(InputName.text);
     }
 
     /// <summary>

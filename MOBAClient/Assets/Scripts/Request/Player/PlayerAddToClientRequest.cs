@@ -10,37 +10,24 @@ using UnityEngine;
 /// </summary>
 public class PlayerAddToClientRequest : BaseRequest
 {
-    [HideInInspector]
-    public bool isAccept;
-
-    // 请求的玩家名称
-    [HideInInspector]
-    public string FromName;
-
-    // 请求的玩家id
-    [HideInInspector]
-    public int FromId;
-
     private AddToClientPanel m_AddPenel;
 
     public override void Start()
     {
-        this.OpCode = OperationCode.PlayerAddToClient;
         base.Start();
-
         m_AddPenel = GetComponent<AddToClientPanel>();
     }
 
     /// <summary>
     /// 发送是否添加好友的数据
     /// </summary>
-    public override void DefalutRequest()
+    public void SendAddToClientRequest(bool isAccept, string name, int id)
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
         data.Add((byte)ParameterCode.AcceptAddFriend, isAccept);
-        data.Add((byte)ParameterCode.PlayerName, FromName);
-        data.Add((byte)ParameterCode.PlayerId, FromId);
-        PhotonEngine.Peer.OpCustom((byte) this.OpCode, data, true);
+        data.Add((byte)ParameterCode.PlayerName, name);
+        data.Add((byte)ParameterCode.PlayerId, id);
+        SendRequest(data);
     }
 
     /// <summary>

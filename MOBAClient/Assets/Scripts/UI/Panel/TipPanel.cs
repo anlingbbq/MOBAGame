@@ -55,7 +55,7 @@ public class TipPanel : UIBasePanel
         // 先隐藏界面
         UIManager.Instance.PopPanel();
         if (TimeOff != -1)
-            StopCoroutine(AutoHide(TimeOff));
+            StopAllCoroutines();
 
         // 再处理回掉函数
         if (OnCompleted != null)

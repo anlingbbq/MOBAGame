@@ -11,19 +11,10 @@ public class EnterSelectRequest : BaseRequest
 {
     private SelectPanel m_SelectPanel;
 
-    private SelectModel[] team1;
-    private SelectModel[] team2;
-
     public override void Start()
     {
-        this.OpCode = OperationCode.EnterSelect;
         base.Start();
         m_SelectPanel = GetComponent<SelectPanel>();
-    }
-
-    public override void DefalutRequest()
-    {
-        PhotonEngine.Peer.OpCustom((byte) OperationCode.EnterSelect, null, true);
     }
 
     /// <summary>

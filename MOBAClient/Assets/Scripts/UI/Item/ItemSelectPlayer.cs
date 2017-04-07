@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Common.Config;
 using Common.Dto;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectPlayerItem : MonoBehaviour
+public class ItemSelectPlayer : MonoBehaviour, IResourceListener
 {
     [SerializeField]
     private Text TextName;
@@ -26,8 +28,7 @@ public class SelectPlayerItem : MonoBehaviour
         if (!model.IsEnter)
         {
             ImageBg.color = Color.white;
-            ImageHead.sprite = (Sprite) ResourcesManager.Instance.
-                GetAsset(Paths.HEAD_NO_CONNECT);
+            ResourcesManager.Instance.Load(Paths.HEAD_NO_CONNECT, typeof(Sprite), this);
             return;
         }
         // 是否有选择的英雄
@@ -40,7 +41,8 @@ public class SelectPlayerItem : MonoBehaviour
         {
             // 显示头像
             ImageHead.color = Color.white;
-            //ImageHead.sprite.a
+            string headPath = Paths.RES_HEAD_UI + HeroData.GetHeroData(model.HeroId).Name;
+            ResourcesManager.Instance.Load(headPath, typeof(Sprite), this);
         }
         // 是否准备
         if (model.IsReady)
@@ -53,5 +55,10 @@ public class SelectPlayerItem : MonoBehaviour
             ImageBg.color = Color.white;
             TextState.text = "选择中";
         }
+    }
+
+    public void OnLoaded(string assetName, object asset, AssetType assetType)
+    {
+        ImageHead.sprite = asset as Sprite;
     }
 }

@@ -17,7 +17,7 @@ public class FriendListPanel : UIBasePanel
     private Transform GridLayout;
 
     // 保存好友列表
-    private List<FriendItem> m_friendList = new List<FriendItem>();
+    private List<ItemFriend> m_friendList = new List<ItemFriend>();
 
     void Start()
     {
@@ -27,7 +27,7 @@ public class FriendListPanel : UIBasePanel
         {
             go = Instantiate(ItemFriend);
             go.transform.SetParent(GridLayout);
-            FriendItem item = go.GetComponent<FriendItem>();
+            ItemFriend item = go.GetComponent<ItemFriend>();
             item.SetItem(friend.Name, friend.IsOnline);
 
             m_friendList.Add(item);
@@ -43,7 +43,7 @@ public class FriendListPanel : UIBasePanel
         GameObject go = null;
         go = Instantiate(ItemFriend);
         go.transform.SetParent(GridLayout);
-        FriendItem item = go.GetComponent<FriendItem>();
+        ItemFriend item = go.GetComponent<ItemFriend>();
         item.SetItem(friend.Name, friend.IsOnline);
 
         m_friendList.Add(item);
@@ -54,7 +54,7 @@ public class FriendListPanel : UIBasePanel
     /// </summary>
     public void UpdateFriendItem(DtoFriend friend)
     {
-        foreach (FriendItem item in m_friendList)
+        foreach (ItemFriend item in m_friendList)
         {
             if (item.Name == friend.Name)
             {

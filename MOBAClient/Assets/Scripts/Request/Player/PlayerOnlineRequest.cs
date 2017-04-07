@@ -1,5 +1,8 @@
-﻿using Common.OpCode;
+﻿using Common.Code;
+using Common.DTO;
+using Common.OpCode;
 using ExitGames.Client.Photon;
+using LitJson;
 
 public class PlayerOnlineRequest : BaseRequest
 {
@@ -7,15 +10,8 @@ public class PlayerOnlineRequest : BaseRequest
     
     public override void Start()
     {
-        OpCode = OperationCode.PlayerOnline;
         base.Start();
-
         m_MainPanel = GetComponent<MainMenuPanel>();
-    }
-
-    public override void DefalutRequest()
-    {
-        PhotonEngine.Peer.OpCustom((byte)OpCode, null, true);
     }
 
     /// <summary>
@@ -24,6 +20,11 @@ public class PlayerOnlineRequest : BaseRequest
     /// <param name="response"></param>
     public override void OnOperationResponse(OperationResponse response)
     {
-        m_MainPanel.OnOnline(response);
+        // 获取角色数据
+        DtoPlayer dtoPlayer = JsonMapper.ToObject<DtoPlayer>
+            (response.Parameters.ExTryGet((byte)ParameterCode.DtoPlayer) as string);
+
+        GameData.player = dtoPlayer;
+        m_MainPanel.OnOnline(dtoPlayer);
     }
 }

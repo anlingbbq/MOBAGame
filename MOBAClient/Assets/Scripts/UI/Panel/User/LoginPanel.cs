@@ -55,9 +55,7 @@ public class LoginPanel : UIBasePanel, IResourceListener
         if (!string.IsNullOrEmpty(InputUsername.text)
             && !string.IsNullOrEmpty(InputPassword.text))
         {
-            m_LoginRequest.Username = InputUsername.text;
-            m_LoginRequest.Password = InputPassword.text;
-            m_LoginRequest.DefalutRequest();
+            m_LoginRequest.SendLoginRequest(InputUsername.text, InputPassword.text);
 
             ResetPanel();
 

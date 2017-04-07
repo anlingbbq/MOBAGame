@@ -100,10 +100,32 @@ namespace MOBAServer.Cache
             }
 
             SelectRoom room = RoomDict.ExTryGet(roomId);
-            if (room == null) return null;
+            if (room == null)
+                return null;
 
             room.EnterRoom(playerId, peer);
             return room;
+        }
+
+        /// <summary>
+        /// 选择英雄
+        /// </summary>
+        /// <returns></returns>
+        public SelectRoom Select(int playerId, int heroId)
+        {
+            // 获取房间
+            int roomId;
+            if (!PlayerRoomDict.TryGetValue(playerId, out roomId))
+                return null;
+
+            SelectRoom room = RoomDict.ExTryGet(roomId);
+            if (room == null)
+                return null;
+
+            if (room.Select(playerId, heroId))
+                return room;
+
+            return null;
         }
 
         /// <summary>

@@ -107,6 +107,7 @@
     <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\Scripts\Config\Paths.cs" />
     <Compile Include="Assets\Scripts\Data\GameData.cs" />
+    <Compile Include="Assets\Scripts\Data\SelectData.cs" />
     <Compile Include="Assets\Scripts\Event\BaseEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\GameRoot.cs" />
     <Compile Include="Assets\Scripts\Manager\Log.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Assets\Scripts\Request\Match\DestroySelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\EnterSelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\SelectGetInfoRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Match\SelectedRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\StartMatchRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\StopMatchRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerAddFriendRequest.cs" />
@@ -132,8 +134,9 @@
     <Compile Include="Assets\Scripts\Request\User\UserLoginRequest.cs" />
     <Compile Include="Assets\Scripts\Request\User\UserRegisterRequest.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
-    <Compile Include="Assets\Scripts\UI\Item\FriendItem.cs" />
-    <Compile Include="Assets\Scripts\UI\Item\SelectPlayerItem.cs" />
+    <Compile Include="Assets\Scripts\UI\Item\ItemFriend.cs" />
+    <Compile Include="Assets\Scripts\UI\Item\ItemHero.cs" />
+    <Compile Include="Assets\Scripts\UI\Item\ItemSelectPlayer.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\MaskPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\Match\MatchPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\Match\SelectPanel.cs" />

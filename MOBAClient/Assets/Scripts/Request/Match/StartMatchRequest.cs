@@ -12,18 +12,18 @@ public class StartMatchRequest : BaseRequest
 
     public override void Start()
     {
-        this.OpCode = OperationCode.StartMatch;
         base.Start();
-
         m_MainMenuPanel = GetComponent<MainMenuPanel>();
     }
 
-
-    public override void DefalutRequest()
+    /// <summary>
+    /// 发送开始匹配的请求
+    /// </summary>
+    public void SendStartMatchRequest()
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
         data.Add((byte)ParameterCode.PlayerId, GameData.player.Id);
-        PhotonEngine.Peer.OpCustom((byte) OpCode, data, true);
+        SendRequest(data);
     }
 
     /// <summary>

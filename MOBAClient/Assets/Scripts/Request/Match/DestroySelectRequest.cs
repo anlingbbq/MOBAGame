@@ -10,16 +10,8 @@ public class DestroySelectRequest : BaseRequest
 
     public override void Start()
     {
-        this.OpCode = OperationCode.DestroySelect;
         base.Start();
         m_MainMenuPanel = GetComponent<MainMenuPanel>();
-    }
-
-    /// <summary>
-    /// 不需要
-    /// </summary>
-    public override void DefalutRequest()
-    {
     }
 
     /// <summary>

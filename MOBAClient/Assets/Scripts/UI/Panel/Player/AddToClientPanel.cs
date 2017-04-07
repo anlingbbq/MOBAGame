@@ -61,10 +61,7 @@ public class AddToClientPanel : UIBasePanel
     /// <param name="isAccept"></param>
     public void IsAcceptFriend(bool isAccept)
     {
-        m_AddRequest.isAccept = isAccept;
-        m_AddRequest.FromName = FromName;
-        m_AddRequest.FromId = FromId;
-        m_AddRequest.DefalutRequest();
+        m_AddRequest.SendAddToClientRequest(isAccept, FromName, FromId);
 
         this.HidePanel();
     }

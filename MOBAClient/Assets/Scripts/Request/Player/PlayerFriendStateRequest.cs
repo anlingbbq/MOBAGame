@@ -14,15 +14,8 @@ namespace Assets.Scripts.Request.Player
 
         public override void Start()
         {
-            this.OpCode = OperationCode.FriendStateChange;
             base.Start();
-
             m_MainPanel = GetComponent<MainMenuPanel>();
-        }
-
-        // 不需要
-        public override void DefalutRequest()
-        {
         }
 
         public override void OnOperationResponse(OperationResponse response)

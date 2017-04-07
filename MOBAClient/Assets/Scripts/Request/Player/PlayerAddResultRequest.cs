@@ -15,14 +15,8 @@ public class PlayerAddResultRequest : BaseRequest
 
     public override void Start()
     {
-        this.OpCode = OperationCode.PlayerAddResult;
         base.Start();
         m_MainPanel = GetComponent<MainMenuPanel>();
-    }
-
-    // 不需要
-    public override void DefalutRequest()
-    {
     }
 
     /// <summary>

@@ -92,7 +92,41 @@ namespace MOBAServer.Room
             EnterCount++;
         }
 
-        // 清空房间内数据
+        /// <summary>
+        /// 选择英雄
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="heroId"></param>
+        public bool Select(int playerId, int heroId)
+        {
+            // 队友有没有选择相同英雄
+            if (TeamOneDict.ContainsKey(playerId))
+            {
+                foreach (SelectModel model in TeamOneDict.Values)
+                {
+                    if (model.HeroId == heroId)
+                        return false;
+                }
+                // 可以选择
+                TeamOneDict[playerId].HeroId = heroId;
+            }
+            else if (TeamTwoDict.ContainsKey(playerId))
+            {
+                foreach (SelectModel model in TeamTwoDict.Values)
+                {
+                    if (model.HeroId == heroId)
+                        return false;
+                }
+                // 可以选择
+                TeamTwoDict[playerId].HeroId = heroId;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 清空房间数据 
+        /// </summary>
         public void Clear()
         {
             TeamOneDict.Clear();

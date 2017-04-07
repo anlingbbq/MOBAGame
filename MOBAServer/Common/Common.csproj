@@ -45,6 +45,7 @@
     <Compile Include="Code\OperationCode.cs" />
     <Compile Include="Code\ParameterCode.cs" />
     <Compile Include="Code\ReturnCode.cs" />
+    <Compile Include="Config\HeroData.cs" />
     <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="Dto\DtoFriend.cs" />
     <Compile Include="Dto\DtoPlayer.cs" />

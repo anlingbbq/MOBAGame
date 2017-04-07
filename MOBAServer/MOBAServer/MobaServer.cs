@@ -77,7 +77,7 @@ namespace MOBAServer
             HandlerDict.Add(OperationCode.StartMatch, new StartMatchHandler());
             HandlerDict.Add(OperationCode.StopMatch, new StopMatchHandler());
             HandlerDict.Add(OperationCode.EnterSelect, new EnterSelectHandler());
-            HandlerDict.Add(OperationCode.Selecting, new SelectingHandler());
+            HandlerDict.Add(OperationCode.Selected, new SelectedHandler());
             HandlerDict.Add(OperationCode.BeReady, new BeReadyHandler());
         }
 

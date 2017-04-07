@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Config;
 using Common.DTO;
 using MOBAServer.Cache;
 using MOBAServer.DataBase.Manager;
@@ -27,7 +28,7 @@ namespace MOBAServer.DataBase.Model
             RunCount = 0;
             WinCount = 0;
             LostCount = 0;
-            HeroIdList = "0, 1";
+            HeroIdList = HeroData.HeroId_Warrior + "," + HeroData.HeroId_Archer;
             FriendIdList = "";
         }
 

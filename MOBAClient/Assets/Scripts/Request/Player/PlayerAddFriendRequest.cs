@@ -12,25 +12,24 @@ using UnityEngine;
 public class PlayerAddFriendRequest : BaseRequest
 {
     private AddRequestPanel m_AddFriendPanel;
-
-    [HideInInspector]
-    public string Username;
-
+    
     public override void Start()
     {
-        this.OpCode = OperationCode.PlayerAddRequest;
         base.Start();
-
         m_AddFriendPanel = GetComponent<AddRequestPanel>();
     }
 
-    public override void DefalutRequest()
+    /// <summary>
+    /// 发送添加好友的请求
+    /// </summary>
+    /// <param name="name"></param>
+    public void SendAddFriendRequest(string name)
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
-        data.Add((byte)ParameterCode.PlayerName, Username);
-        PhotonEngine.Peer.OpCustom((byte) this.OpCode, data, true);
+        data.Add((byte)ParameterCode.PlayerName, name);
+        PhotonEngine.Peer.OpCustom((byte)this.OpCode, data, true);
     }
-
+    
     /// <summary>
     /// 这里处理的是能不能添加好友 而不是是否同意
     /// </summary>

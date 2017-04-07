@@ -7,29 +7,27 @@ using UnityEngine;
 
 public class UserLoginRequest : BaseRequest
 {
-    [HideInInspector]
-    public string Username;
-    [HideInInspector]
-    public string Password;
-
     private LoginPanel m_LoginPanel;
 
     public override void Start()
     {
-        this.OpCode = OperationCode.UserLogin;
         base.Start();
-        
         m_LoginPanel = GetComponent<LoginPanel>();
     }
 
-    public override void DefalutRequest()
+    /// <summary>
+    /// 发送登录请求
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="password"></param>
+    public void SendLoginRequest(string username, string password)
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
-        data.Add((byte)ParameterCode.Username, Username);
-        data.Add((byte)ParameterCode.Password, Password);
-        PhotonEngine.Peer.OpCustom((byte) OpCode, data, true);
+        data.Add((byte)ParameterCode.Username, username);
+        data.Add((byte)ParameterCode.Password, password);
+        SendRequest(data);
     }
-
+    
     public override void OnOperationResponse(OperationResponse response)
     {
         m_LoginPanel.OnLoginResponse(response);

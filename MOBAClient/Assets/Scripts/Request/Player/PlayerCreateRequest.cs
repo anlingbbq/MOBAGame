@@ -9,24 +9,23 @@ public class PlayerCreateRequest : BaseRequest
 {
     private CreatePlayerPanel m_CreatePlayerPanel;
 
-    [HideInInspector]
-    public string PlayerName;
-
     public override void Start()
     {
-        this.OpCode = OperationCode.PlayerCreate;
         base.Start();
-
         m_CreatePlayerPanel = GetComponent<CreatePlayerPanel>();
     }
 
-    public override void DefalutRequest()
+    /// <summary>
+    /// 发送创建玩家的请求
+    /// </summary>
+    /// <param name="name"></param>
+    public void SendCreateRequest(string name)
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
-        data.Add((byte)(ParameterCode.PlayerName), PlayerName);
-        PhotonEngine.Peer.OpCustom((byte)OpCode, data, true);
+        data.Add((byte)(ParameterCode.PlayerName), name);
+        SendRequest(data);
     }
-
+    
     public override void OnOperationResponse(OperationResponse response)
     {
         m_CreatePlayerPanel.OnCreateResponse(response);

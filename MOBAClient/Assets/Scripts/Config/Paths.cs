@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Paths
 {
-    #region UI音乐文件
+    #region 音乐文件
 
-    /** ========================UI音乐及对应文件名称======================== **/
     // UI声音资源文件路径
     public const string RES_SOUND_UI = "Sound/UI/";
 
@@ -17,7 +16,9 @@ public class Paths
     public const string UI_READY = RES_SOUND_UI + "Ready";
     public const string UI_SALE = RES_SOUND_UI + "Sale";
     public const string UI_SELECT = RES_SOUND_UI + "Select";
-    /** ===================================================================== **/
+
+    // 选择英雄的音效路径
+    public const string RES_SOUND_SELECT = "Sound/Select/";
 
     #endregion
 
@@ -27,8 +28,6 @@ public class Paths
     public const string RES_HEAD_UI = "UI/Head/";
 
     public const string HEAD_NO_CONNECT = RES_HEAD_UI +　"no-Connect";
-    public const string HEAD_ASHE = RES_HEAD_UI + "ashe";
-    public const string HEAD_GAREN = RES_SOUND_UI + "garen";
 
     #endregion
 }
