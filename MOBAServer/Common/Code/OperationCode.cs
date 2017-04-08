@@ -8,7 +8,7 @@ namespace Common.OpCode
     // 区分通信的操作类型
     public enum OperationCode
     {
-        Defalut,
+        Default,
 
         #region 用户
 
@@ -85,7 +85,11 @@ namespace Common.OpCode
         /// <summary>
         /// 准备完毕
         /// </summary>
-        BeReady
+        BeReady,
+        /// <summary>
+        /// 在选择界面聊天
+        /// </summary>
+        TalkInSelect
 
         #endregion
     }

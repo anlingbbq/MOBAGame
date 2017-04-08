@@ -83,6 +83,7 @@
     <Compile Include="Handler\Match\BeReadyHandler.cs" />
     <Compile Include="Handler\Match\SelectedHandler.cs" />
     <Compile Include="Handler\Match\EnterSelectHandler.cs" />
+    <Compile Include="Handler\Match\TalkInSelectHandler.cs" />
     <Compile Include="Handler\Player\PlayerAddRequestHandler.cs" />
     <Compile Include="Handler\Player\PlayerAddToClientHandler.cs" />
     <Compile Include="Handler\Player\PlayerGetInfoHandler.cs" />

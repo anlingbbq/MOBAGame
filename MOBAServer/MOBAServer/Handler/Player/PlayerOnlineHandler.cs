@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Code;
 using Common.DTO;
 using Common.OpCode;
@@ -11,7 +8,7 @@ using MOBAServer.Cache;
 using MOBAServer.DataBase.Manager;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Player
+namespace MOBAServer.Handler
 {
     /// <summary>
     /// 本来玩家和角色是一对多的关系

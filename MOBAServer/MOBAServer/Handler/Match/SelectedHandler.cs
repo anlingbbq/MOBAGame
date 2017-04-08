@@ -11,7 +11,7 @@ using MOBAServer.Extension;
 using MOBAServer.Room;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Match
+namespace MOBAServer.Handler
 {
     class SelectedHandler : BaseHandler
     {
@@ -36,7 +36,7 @@ namespace MOBAServer.Handler.Match
             Dictionary<byte, object> data = new Dictionary<byte, object>();
             data.Add((byte)ParameterCode.PlayerId, playerId);
             data.Add((byte)ParameterCode.HeroId, heroId);
-            room.Brocast(OperationCode.Selected, data, peer);
+            room.Brocast(OperationCode.Selected, data);
         }
     }
 }

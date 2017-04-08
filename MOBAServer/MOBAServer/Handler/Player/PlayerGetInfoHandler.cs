@@ -6,7 +6,7 @@ using MOBAServer.Cache;
 using MOBAServer.DataBase.Manager;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Player
+namespace MOBAServer.Handler
 {
     /// <summary>
     /// 获取玩家信息 这里只是判断玩家是否存在

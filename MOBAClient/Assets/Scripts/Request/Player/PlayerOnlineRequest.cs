@@ -8,7 +8,7 @@ public class PlayerOnlineRequest : BaseRequest
 {
     private MainMenuPanel m_MainPanel;
     
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         m_MainPanel = GetComponent<MainMenuPanel>();

@@ -9,7 +9,7 @@ public class PlayerCreateRequest : BaseRequest
 {
     private CreatePlayerPanel m_CreatePlayerPanel;
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         m_CreatePlayerPanel = GetComponent<CreatePlayerPanel>();

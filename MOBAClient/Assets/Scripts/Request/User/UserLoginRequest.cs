@@ -9,7 +9,7 @@ public class UserLoginRequest : BaseRequest
 {
     private LoginPanel m_LoginPanel;
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         m_LoginPanel = GetComponent<LoginPanel>();

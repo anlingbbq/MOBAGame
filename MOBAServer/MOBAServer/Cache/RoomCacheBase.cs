@@ -29,5 +29,24 @@ namespace MOBAServer.Cache
         /// 主键的id
         /// </summary>
         protected int Index = 0;
+
+        /// <summary>
+        /// 通过玩家id获取房间
+        /// </summary>
+        /// <param name="playerId"></param>
+        public TRoom GetRoomByPlayerId(int playerId)
+        {
+            int roomId;
+            if (PlayerRoomDict.TryGetValue(playerId, out roomId))
+            {
+                TRoom room;
+                if (RoomDict.TryGetValue(roomId, out room))
+                {
+                    return room;
+                }
+                return null;
+            }
+            return null;
+        }
     }
 }

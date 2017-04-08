@@ -10,7 +10,7 @@ using MOBAServer.DataBase.Manager;
 using MOBAServer.Extension;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Player
+namespace MOBAServer.Handler
 {
     /// <summary>
     /// 处理客户端是否同意添加好友的反馈

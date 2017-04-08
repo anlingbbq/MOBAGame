@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Common.Code;
-using Common.OpCode;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ public class UserRegisterRequest : BaseRequest
 {
     private RegisterPanel m_RegisterPanel;
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         m_RegisterPanel = GetComponent<RegisterPanel>();

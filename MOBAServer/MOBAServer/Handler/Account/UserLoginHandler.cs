@@ -7,7 +7,7 @@ using MOBAServer.DataBase.Manager;
 using MOBAServer.DataBase.Model;
 using MOBAServer.Extension;
 
-namespace MOBAServer.Handler.Account
+namespace MOBAServer.Handler
 {
     public class UserLoginHandler : BaseHandler
     {

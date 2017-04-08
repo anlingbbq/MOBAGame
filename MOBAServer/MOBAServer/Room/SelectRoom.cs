@@ -36,6 +36,14 @@ namespace MOBAServer.Room
         /// </summary>
         private int ReadyCount;
 
+        /// <summary>
+        /// 是否全部准备
+        /// </summary>
+        public bool IsAllReady
+        {
+            get { return ReadyCount == EnterCount; }
+        }
+
         public SelectRoom(int id, int count) : base(id, count)
         {
             TeamOneDict = new Dictionary<int, SelectModel>();
@@ -122,6 +130,36 @@ namespace MOBAServer.Room
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 确认选择
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public bool Ready(int playerId)
+        {
+            if (TeamOneDict.ContainsKey(playerId))
+            {
+                SelectModel model = TeamOneDict[playerId];
+                // 没有选择的英雄
+                if (model.PlayerId == -1)
+                    return false;
+                model.IsReady = true;
+                ReadyCount++;
+                return true;
+            }
+            else if (TeamTwoDict.ContainsKey(playerId))
+            {
+                SelectModel model = TeamTwoDict[playerId];
+                // 没有选择的英雄
+                if (model.PlayerId == -1)
+                    return false;
+                model.IsReady = true;
+                ReadyCount++;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>

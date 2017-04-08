@@ -10,7 +10,7 @@ using MOBAServer.DataBase.Manager;
 using MOBAServer.Room;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Match
+namespace MOBAServer.Handler
 {
     /// <summary>
     /// 开始匹配

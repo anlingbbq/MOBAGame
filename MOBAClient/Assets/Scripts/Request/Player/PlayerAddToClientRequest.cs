@@ -12,7 +12,7 @@ public class PlayerAddToClientRequest : BaseRequest
 {
     private AddToClientPanel m_AddPenel;
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         m_AddPenel = GetComponent<AddToClientPanel>();

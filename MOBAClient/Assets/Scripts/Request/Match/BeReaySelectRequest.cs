@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Common.Code;
-using Common.Dto;
-using Common.OpCode;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class EnterSelectRequest : BaseRequest
+public class BeReaySelectRequest : BaseRequest
 {
     private SelectPanel m_SelectPanel;
 
@@ -18,12 +15,17 @@ public class EnterSelectRequest : BaseRequest
     }
 
     /// <summary>
-    /// 当有其他客户端进入时
+    /// 接收确认选择的响应
     /// </summary>
     /// <param name="response"></param>
     public override void OnOperationResponse(OperationResponse response)
     {
-        int playerId = (int)response.Parameters[(byte)ParameterCode.PlayerId];
-        m_SelectPanel.OnEnterSelect(playerId);
+        if (response.ReturnCode != (short) ReturnCode.Falied)
+        {
+            int playerId = (int) response.Parameters[(byte) ParameterCode.PlayerId];
+            // 刷新准备的数据
+            m_SelectPanel.SelectData.OnReady(playerId);
+            m_SelectPanel.UpdateView();
+        }
     }
 }

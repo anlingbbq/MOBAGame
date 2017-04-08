@@ -93,16 +93,11 @@ namespace MOBAServer.Cache
         /// <param name="peer"></param>
         public SelectRoom EnterRoom(int playerId, MobaPeer peer)
         {
-            int roomId;
-            if (!PlayerRoomDict.TryGetValue(playerId, out roomId))
-            {
-                return null;
-            }
+            // 获取房间
+            SelectRoom room = GetRoomByPlayerId(playerId);
+            if (room == null) return null;
 
-            SelectRoom room = RoomDict.ExTryGet(roomId);
-            if (room == null)
-                return null;
-
+            // 进入房间
             room.EnterRoom(playerId, peer);
             return room;
         }
@@ -114,18 +109,25 @@ namespace MOBAServer.Cache
         public SelectRoom Select(int playerId, int heroId)
         {
             // 获取房间
-            int roomId;
-            if (!PlayerRoomDict.TryGetValue(playerId, out roomId))
-                return null;
+            SelectRoom room = GetRoomByPlayerId(playerId);
+            if (room == null) return null;
 
-            SelectRoom room = RoomDict.ExTryGet(roomId);
-            if (room == null)
-                return null;
+            // 选择英雄
+            return room.Select(playerId, heroId) ? room : null;
+        }
 
-            if (room.Select(playerId, heroId))
-                return room;
+        /// <summary>
+        /// 确认选择
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public SelectRoom Ready(int playerId)
+        {
+            // 获取房间
+            SelectRoom room = GetRoomByPlayerId(playerId);
 
-            return null;
+            // 确认选择
+            return room.Ready(playerId) ? room : null;
         }
 
         /// <summary>

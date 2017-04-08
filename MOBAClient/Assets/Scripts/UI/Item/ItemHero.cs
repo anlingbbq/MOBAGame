@@ -53,7 +53,7 @@ public class ItemHero : MonoBehaviour, IResourceListener
 
         // 发送选人的请求
         SelectPanel panel = UIManager.Instance.GetPanel(UIPanelType.Select) as SelectPanel;
-        panel.SendSelectedRequest(HeroId);
+        panel.OnSelectHeroClick(HeroId);
     }
 
     public void OnLoaded(string assetName, object asset, AssetType assetType)

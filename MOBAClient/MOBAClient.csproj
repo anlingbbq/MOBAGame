@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -118,12 +116,14 @@
     <Compile Include="Assets\Scripts\Manager\Resource\ResourcesManager.cs" />
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Match\BeReaySelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\DestroySelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\EnterSelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\SelectGetInfoRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\SelectedRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\StartMatchRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\StopMatchRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Match\TalkInSelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerAddFriendRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerAddResultRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Player\PlayerAddToClientRequest.cs" />

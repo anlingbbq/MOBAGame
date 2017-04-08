@@ -10,7 +10,7 @@ public class SelectedRequest : BaseRequest
 {
     private SelectPanel m_SelectPanel;
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         m_SelectPanel = GetComponent<SelectPanel>();
@@ -32,6 +32,13 @@ public class SelectedRequest : BaseRequest
     /// <param name="response"></param>
     public override void OnOperationResponse(OperationResponse response)
     {
-        m_SelectPanel.OnSelected(response);
+        if (response.ReturnCode != (short)ReturnCode.Falied)
+        {
+            int playerId = (int)response.Parameters[(byte)ParameterCode.PlayerId];
+            int heroId = (int)response.Parameters[(byte)ParameterCode.HeroId];
+            // 刷新队伍数据
+            m_SelectPanel.SelectData.OnSelected(playerId, heroId);
+            m_SelectPanel.UpdateView();
+        }
     }
 }

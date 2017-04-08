@@ -68,17 +68,9 @@ namespace MOBAServer.Cache
         /// <returns>是否离开成功</returns>
         public bool StopMatch(MobaPeer peer, int playerId)
         {
-            // 安全检测
-            if (!PlayerRoomDict.ContainsKey(playerId))
-                return false;
-
-            int roomId = PlayerRoomDict[playerId];
-            MatchRoom room = null;
-            // 检测 防止多线程造成不必要的错误
-            if (!RoomDict.TryGetValue(roomId, out room))
-            {
-                return false;
-            }
+            // 获取房间
+            MatchRoom room = GetRoomByPlayerId(playerId);
+            if (room == null) return false;
 
             room.LeaveRoom(peer, playerId);
             PlayerRoomDict.Remove(playerId);

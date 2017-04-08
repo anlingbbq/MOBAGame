@@ -11,7 +11,7 @@ using MOBAServer.DataBase.Manager;
 using MOBAServer.Room;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Match
+namespace MOBAServer.Handler
 {
     public class EnterSelectHandler : BaseHandler
     {

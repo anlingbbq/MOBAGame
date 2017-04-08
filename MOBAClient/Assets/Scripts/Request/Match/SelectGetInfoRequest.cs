@@ -14,7 +14,7 @@ public class SelectGetInfoRequest : BaseRequest
 {
     private SelectPanel m_SelectPanel;
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         m_SelectPanel = GetComponent<SelectPanel>();

@@ -117,5 +117,29 @@ namespace Assets.Scripts.Data
                 }
             }
         }
+
+        /// <summary>
+        /// 当玩家准备完毕
+        /// </summary>
+        /// <param name="playerId"></param>
+        public void OnReady(int playerId)
+        {
+            foreach (SelectModel model in Team1)
+            {
+                if (model.PlayerId == playerId)
+                {
+                    model.IsReady = true;
+                    return;
+                }
+            }
+            foreach (SelectModel model in Team2)
+            {
+                if (model.PlayerId == playerId)
+                {
+                    model.IsReady = true;
+                    return;
+                }
+            }
+        }
     }
 }

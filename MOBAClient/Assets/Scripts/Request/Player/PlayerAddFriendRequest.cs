@@ -13,7 +13,7 @@ public class PlayerAddFriendRequest : BaseRequest
 {
     private AddRequestPanel m_AddFriendPanel;
     
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         m_AddFriendPanel = GetComponent<AddRequestPanel>();

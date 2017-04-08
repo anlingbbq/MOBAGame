@@ -25,7 +25,8 @@ public abstract class BaseRequest : MonoBehaviour
     /// <param name="response"></param>
     public abstract void OnOperationResponse(OperationResponse response);
 
-    public virtual void Start () {
+    protected virtual void Start ()
+    {
 		PhotonEngine.Instance.AddRequest(this);
 	}
 

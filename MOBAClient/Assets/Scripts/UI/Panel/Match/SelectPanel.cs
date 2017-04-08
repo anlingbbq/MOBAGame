@@ -24,34 +24,59 @@ public class SelectPanel : UIBasePanel
     private ItemSelectPlayer[] EnemyTeam;
 
     /// <summary>
-    /// 聊天内容
+    /// 确认按钮
+    /// </summary>
+    [Header("其他")]
+    [SerializeField]
+    private Button BtnReady;
+    /// <summary>
+    /// 聊天的所有内容
     /// </summary>
     [SerializeField]
     private Text TextContent;
+    /// <summary>
+    /// 聊天输入框
+    /// </summary>
+    [SerializeField]
+    private InputField InputTalk;
+    /// <summary>
+    /// 发送聊天按钮
+    /// </summary>
+    [SerializeField]
+    private Button BtnTalk;
 
     /// <summary>
     /// 进入房间的请求
     /// </summary>
     private EnterSelectRequest m_EnterRequest;
-
     /// <summary>
     /// 选择角色的请求
     /// </summary>
     private SelectedRequest m_SelectedRequest;
+    /// <summary>
+    /// 准备完成的消息
+    /// </summary>
+    private BeReaySelectRequest m_BeReadyRequest;
+    /// <summary>
+    /// 聊天消息
+    /// </summary>
+    private TalkInSelectRequest m_TalkReqeust;
 
     /// <summary>
     /// 保存和管理选人的数据
     /// </summary>
     public SelectData SelectData;
 
-	public override void Awake()
+    public override void Awake()
     {
         base.Awake();
         m_EnterRequest = GetComponent<EnterSelectRequest>();
         m_SelectedRequest = GetComponent<SelectedRequest>();
+        m_BeReadyRequest = GetComponent<BeReaySelectRequest>();
+        m_TalkReqeust = GetComponent<TalkInSelectRequest>();
 
         SelectData = new SelectData();
-	}
+    }
 
     [Header("英雄")]
     [SerializeField]
@@ -153,6 +178,13 @@ public class SelectPanel : UIBasePanel
         // 禁用英雄
         foreach (ItemHero hero in ItemHeroDict.Values)
         {
+            // 如果玩家已经准备了
+            if (BtnReady.interactable == false)
+            {
+                hero.Interactable = false;
+                continue;
+            }
+
             // 如果这个英雄已经被选择了
             if (selectedHero.Contains(hero.HeroId))
                 hero.Interactable = false;
@@ -162,27 +194,47 @@ public class SelectPanel : UIBasePanel
     }
 
     /// <summary>
-    /// 发送选人的请求
+    /// 点击英雄头像的回调
     /// </summary>
     /// <param name="heroId"></param>
-    public void SendSelectedRequest(int heroId)
+    public void OnSelectHeroClick(int heroId)
     {
         m_SelectedRequest.SendSelectedRequest(heroId);
     }
 
     /// <summary>
-    /// 处理选人的响应
+    /// 点击准备按钮的回调
     /// </summary>
-    public void OnSelected(OperationResponse response)
+    public void OnReadyClick()
     {
-        if (response.ReturnCode != (short) ReturnCode.Falied)
-        {
-            int playerId = (int)response.Parameters[(byte)ParameterCode.PlayerId];
-            int heroId = (int)response.Parameters[(byte)ParameterCode.HeroId];
-            // 刷新队伍数据
-            SelectData.OnSelected(playerId, heroId);
-            UpdateView();
-        }
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
+        m_BeReadyRequest.SendRequest();
+        BtnReady.interactable = false;
+    }
+
+    /// <summary>
+    /// 点击聊天按钮的huidio
+    /// </summary>
+    public void OnTalkClick()
+    {
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+
+        m_TalkReqeust.SendTalkRequesst(SelectData.TeamId, 
+            GameData.player.Name + ":" + InputTalk.text);
+
+        InputTalk.text = "";
+    }
+
+    /// <summary>
+    /// 添加聊天内容
+    /// </summary>
+    public void OnTalk(int teamId, string str)
+    {
+        if (SelectData.TeamId == teamId)
+            TextContent.text += str + "\n";
+        else
+            TextContent.text += "<color=#ff0000>" + str + "</color>\n";
     }
 
     public override void OnEnter()

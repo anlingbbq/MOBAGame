@@ -9,7 +9,7 @@ using MOBAServer.DataBase.Model;
 using MOBAServer.Extension;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Player
+namespace MOBAServer.Handler
 {
     /// <summary>
     /// 创建玩家

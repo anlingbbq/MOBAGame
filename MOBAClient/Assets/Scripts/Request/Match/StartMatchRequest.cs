@@ -10,7 +10,7 @@ public class StartMatchRequest : BaseRequest
 {
     private MainMenuPanel m_MainMenuPanel;
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         m_MainMenuPanel = GetComponent<MainMenuPanel>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Common.OpCode;
 using ExitGames.Logging;
 using ExitGames.Logging.Log4Net;
@@ -9,9 +10,6 @@ using Photon.SocketServer;
 using LogManager = ExitGames.Logging.LogManager;
 using log4net.Config;
 using MOBAServer.Handler;
-using MOBAServer.Handler.Player;
-using MOBAServer.Handler.Account;
-using MOBAServer.Handler.Match;
 
 namespace MOBAServer
 {
@@ -44,6 +42,7 @@ namespace MOBAServer
             LogInfo("服务器开启");
 
             InitHandler();
+            LogInfo("初始化完成");
         }
 
         /// <summary>
@@ -59,26 +58,32 @@ namespace MOBAServer
         /// </summary>
         private void InitHandler()
         {
-            /** ================== 创建所有handler对象并保存起来 ================== **/
+            // 遍历操作码枚举 动态创建对应的Handler类
+            foreach (int code in Enum.GetValues(typeof(OperationCode)))
+            { 
+                AddHandler((OperationCode) Enum.Parse(typeof(OperationCode), code.ToString()));
+            }
+        }
 
-            // 用户操作
-            HandlerDict.Add(OperationCode.UserLogin, new UserLoginHandler());
-            HandlerDict.Add(OperationCode.UserRegister, new UserRegisterHandler());
+        /// <summary>
+        /// 根据操作码动态创建Hanlder类
+        /// </summary>
+        /// <param name="opCode"></param>
+        private void AddHandler(OperationCode opCode)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string handerName = "MOBAServer.Handler." + Enum.GetName(typeof(OperationCode), opCode) + "Handler";
+            BaseHandler handler = (BaseHandler) assembly.CreateInstance(handerName);
 
-            // 玩家操作
-            HandlerDict.Add(OperationCode.PlayerCreate, new PlayerCreateHandler());
-            HandlerDict.Add(OperationCode.PlayerGetInfo, new PlayerGetInfoHandler());
-            HandlerDict.Add(OperationCode.PlayerOnline, new PlayerOnlineHandler());
-            HandlerDict.Add(OperationCode.PlayerAddRequest, new PlayerAddRequestHandler());
-            HandlerDict.Add(OperationCode.PlayerAddToClient, new PlayerAddToClientHandler());
-            HandlerDict.Add(OperationCode.PlayerAddResult, new PlayerAddRequestHandler());
+            if (handler == null)
+            {
+                LogWarn("init handler not found : " + handerName);
+                return;
+            }
+            handler.OpCode = opCode;
 
-            // 匹配操作
-            HandlerDict.Add(OperationCode.StartMatch, new StartMatchHandler());
-            HandlerDict.Add(OperationCode.StopMatch, new StopMatchHandler());
-            HandlerDict.Add(OperationCode.EnterSelect, new EnterSelectHandler());
-            HandlerDict.Add(OperationCode.Selected, new SelectedHandler());
-            HandlerDict.Add(OperationCode.BeReady, new BeReadyHandler());
+            // 添加处理类
+            HandlerDict.Add(opCode, handler);
         }
 
         #region 日志功能

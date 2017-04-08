@@ -64,6 +64,14 @@ namespace Common.Code
         /// 英雄id
         /// </summary>
         HeroId,
+        /// <summary>
+        /// 队伍id
+        /// </summary>
+        TeamId,
+        /// <summary>
+        /// 聊天内容
+        /// </summary>
+        TalkContent,
 
         #endregion
     }

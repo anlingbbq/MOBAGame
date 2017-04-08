@@ -3,7 +3,7 @@ using Common.Code;
 using MOBAServer.Cache;
 using Photon.SocketServer;
 
-namespace MOBAServer.Handler.Match
+namespace MOBAServer.Handler
 {
     class StopMatchHandler : BaseHandler
     {
