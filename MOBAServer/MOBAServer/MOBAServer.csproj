@@ -67,11 +67,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\Room\BattleRoomCache.cs" />
     <Compile Include="Cache\Caches.cs" />
-    <Compile Include="Cache\MatchCache.cs" />
+    <Compile Include="Cache\Room\MatchRoomCache.cs" />
     <Compile Include="Cache\PlayerCache.cs" />
-    <Compile Include="Cache\RoomCacheBase.cs" />
-    <Compile Include="Cache\SelectCache.cs" />
+    <Compile Include="Cache\Room\RoomCacheBase.cs" />
+    <Compile Include="Cache\Room\SelectRoomCache.cs" />
     <Compile Include="Cache\UserCache.cs" />
     <Compile Include="DataBase\Manager\BaseManager.cs" />
     <Compile Include="DataBase\Manager\PlayerManager.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="DataBase\NhibernateHelper.cs" />
     <Compile Include="Extension\DictEx.cs" />
     <Compile Include="Handler\BaseHandler.cs" />
+    <Compile Include="Handler\Battle\StartBattleHandler.cs" />
     <Compile Include="Handler\Match\BeReadyHandler.cs" />
     <Compile Include="Handler\Match\SelectedHandler.cs" />
     <Compile Include="Handler\Match\EnterSelectHandler.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="MobaServer.cs" />
     <Compile Include="DataBase\Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Room\BattleRoom.cs" />
     <Compile Include="Room\MatchRoom.cs" />
     <Compile Include="Room\RoomBase.cs" />
     <Compile Include="Room\SelectRoom.cs" />

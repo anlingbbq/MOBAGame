@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace MOBAServer.Cache
 {
     /// <summary>
     /// 缓存层
-    /// TODO 所有的缓存均没有释放
     /// </summary>
     public class Caches
     {
+        // TODO User,Player的数据没有做过释放的处理
         public static UserCache User;
         public static PlayerCache Player;
-        public static MatchCache Match;
-        public static SelectCache Select;
+
+        public static MatchRoomCache Match;
+        public static SelectRoomCache Select;
+        public static BattleRoomCache Battle;
 
         static Caches()
         {
             User = new UserCache();
             Player = new PlayerCache();
-            Match = new MatchCache();
-            Select = new SelectCache();
+            Match = new MatchRoomCache();
+            Select = new SelectRoomCache();
+            Battle = new BattleRoomCache();
         }
     }
 }

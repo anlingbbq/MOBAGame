@@ -35,12 +35,10 @@ namespace MOBAServer.Handler
             {
                 // 创建选人的房间
                 Caches.Select.CreateRoom(room.TeamOneIdList, room.TeamTwoIdList);
-
                 // 通知所有客户端进入选人的房间
                 room.Brocast(OperationCode.StartMatch, null);
-
                 // 摧毁房间
-                Caches.Match.DestoryRoom(room);
+                Caches.Match.DestroyRoom(room);
             }
         }
     }

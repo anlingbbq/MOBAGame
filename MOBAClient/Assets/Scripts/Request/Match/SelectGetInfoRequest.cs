@@ -27,9 +27,9 @@ public class SelectGetInfoRequest : BaseRequest
     public override void OnOperationResponse(OperationResponse response)
     {
         // 获取队伍数据
-        SelectModel[] team1 = JsonMapper.ToObject<SelectModel[]>(
+        DtoSelect[] team1 = JsonMapper.ToObject<DtoSelect[]>(
           response.Parameters[(byte)ParameterCode.TeamOneData] as string);
-        SelectModel[] team2 = JsonMapper.ToObject<SelectModel[]>(
+        DtoSelect[] team2 = JsonMapper.ToObject<DtoSelect[]>(
             response.Parameters[(byte)ParameterCode.TeamTwoData] as string);
         
         // 初始化选人数据

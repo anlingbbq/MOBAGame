@@ -17,11 +17,11 @@ namespace Common.Config
         /// <summary>
         /// 战士id
         /// </summary>
-        public const int HeroId_Warrior = 1;
+        public const int HeroId_Warrior = ServerConfig.HeroId + 1;
         /// <summary>
         /// 弓箭手id
         /// </summary>
-        public const int HeroId_Archer = 2;
+        public const int HeroId_Archer = ServerConfig.HeroId + 2;
 
         /// <summary>
         /// 根据id保存英雄数据
@@ -31,11 +31,8 @@ namespace Common.Config
         static HeroData()
         {
             // 创建临时的英雄数据
-            createHero(HeroId_Warrior, "战士", 60, 20, 300, 100, 10, 3, 50, 10, 1,
-                new int[] { 1001, 1002, 1003, 1004});
-
-            createHero(HeroId_Archer, "弓箭手", 50, 10, 200, 80, 15, 2, 30, 5, 5,
-                new int[] { 2001, 2002, 2003, 2004 });
+            createHero(HeroId_Warrior, "战士", 60, 20, 300, 100, 10, 3, 50, 10, 1);
+            createHero(HeroId_Archer, "弓箭手", 50, 10, 200, 80, 15, 2, 30, 5, 5);
         }
 
         /// <summary>
@@ -43,12 +40,12 @@ namespace Common.Config
         /// </summary>
         public static void createHero(int id, string name, int baseAttack, int baseDefense, int hp,
             int mp, int growAttack, int growDefense, int growHp, int growMp,
-            double attackDistance, int[] skillIds)
+            double attackDistance)
         {
             HeroModel hero = new HeroModel(id, name, baseAttack, baseDefense, hp,
-                mp, growAttack, growDefense, growHp, growMp,attackDistance, skillIds);
+                mp, growAttack, growDefense, growHp, growMp,attackDistance);
 
-            HeroDict.Add(hero.Id, hero);
+            HeroDict.Add(hero.TypeId, hero);
         }
 
         /// <summary>
@@ -72,7 +69,7 @@ namespace Common.Config
         /// <summary>
         /// 英雄编号
         /// </summary>
-        public int Id;
+        public int TypeId;
 
         /// <summary>
         /// 英雄名字
@@ -134,11 +131,11 @@ namespace Common.Config
             
         }
 
-        public HeroModel(int id, string name, int baseAttack, int baseDefense, int hp,
+        public HeroModel(int typeId, string name, int baseAttack, int baseDefense, int hp,
             int mp, int growAttack, int growDefense, int growHp, int growMp, 
-            double attackDistance, int[] skillIds)
+            double attackDistance)
         {
-            Id = id;
+            TypeId = typeId;
             Name = name;
             BaseAttack = baseAttack;
             BaseDefens = baseDefense;
@@ -149,7 +146,14 @@ namespace Common.Config
             GrowHp = growHp;
             GrowMp = growMp;
             AttackDistance = attackDistance;
-            SkillIds = skillIds;
+
+            SkillIds = new []
+            {
+                typeId * ServerConfig.SkillId + 1,
+                typeId * ServerConfig.SkillId + 2,
+                typeId * ServerConfig.SkillId + 3,
+                typeId * ServerConfig.SkillId + 4
+            };
         }
     }
 }

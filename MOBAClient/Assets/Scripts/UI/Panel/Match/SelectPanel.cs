@@ -151,7 +151,7 @@ public class SelectPanel : UIBasePanel
                 EnemyTeam[i].UpdateView(SelectData.Team2[i]);
             }
             // 添加到已选择的链表中
-            foreach (SelectModel model in SelectData.Team1)
+            foreach (DtoSelect model in SelectData.Team1)
             {
                 if (model.HeroId != -1)
                     selectedHero.Add(model.HeroId);
@@ -168,7 +168,7 @@ public class SelectPanel : UIBasePanel
                 OurTeam[i].UpdateView(SelectData.Team2[i]);
             }
             // 添加到已选择的链表中
-            foreach (SelectModel model in SelectData.Team2)
+            foreach (DtoSelect model in SelectData.Team2)
             {
                 if (model.HeroId != -1)
                     selectedHero.Add(model.HeroId);

@@ -45,11 +45,15 @@
     <Compile Include="Code\OperationCode.cs" />
     <Compile Include="Code\ParameterCode.cs" />
     <Compile Include="Code\ReturnCode.cs" />
+    <Compile Include="Config\BuildData.cs" />
     <Compile Include="Config\HeroData.cs" />
     <Compile Include="Config\ServerConfig.cs" />
+    <Compile Include="Dto\DtoBuild.cs" />
     <Compile Include="Dto\DtoFriend.cs" />
     <Compile Include="Dto\DtoPlayer.cs" />
-    <Compile Include="Dto\SelectModel.cs" />
+    <Compile Include="Dto\DtoHero.cs" />
+    <Compile Include="Dto\DtoMinion.cs" />
+    <Compile Include="Dto\DtoSelect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

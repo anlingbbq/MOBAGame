@@ -14,12 +14,12 @@ namespace MOBAServer.Room
         /// <summary>
         /// 队伍1的玩家id和选择模型
         /// </summary>
-        public Dictionary<int, SelectModel> TeamOneDict;
+        public Dictionary<int, DtoSelect> TeamOneDict;
 
         /// <summary>
         /// 队伍2的玩家id和选择模型
         /// </summary>
-        public Dictionary<int, SelectModel> TeamTwoDict;
+        public Dictionary<int, DtoSelect> TeamTwoDict;
 
         /// <summary>
         ///  进入的数量
@@ -46,8 +46,8 @@ namespace MOBAServer.Room
 
         public SelectRoom(int id, int count) : base(id, count)
         {
-            TeamOneDict = new Dictionary<int, SelectModel>();
-            TeamTwoDict = new Dictionary<int, SelectModel>();
+            TeamOneDict = new Dictionary<int, DtoSelect>();
+            TeamTwoDict = new Dictionary<int, DtoSelect>();
 
             EnterCount = 0;
             ReadyCount = 0;
@@ -62,17 +62,17 @@ namespace MOBAServer.Room
         {   
             // 创建选择模型
             Player player;
-            SelectModel model;
+            DtoSelect model;
             foreach (int playerId in team1)
             {
                 player = Caches.Player.GetPlayer(playerId);
-                model = new SelectModel(playerId, player.Name);
+                model = new DtoSelect(playerId, player.Name);
                 TeamOneDict.Add(playerId, model);
             }
             foreach (int playerId in team2)
             {
                 player = Caches.Player.GetPlayer(playerId);
-                model = new SelectModel(playerId, player.Name);
+                model = new DtoSelect(playerId, player.Name);
                 TeamTwoDict.Add(playerId, model);
             }
         }
@@ -110,7 +110,7 @@ namespace MOBAServer.Room
             // 队友有没有选择相同英雄
             if (TeamOneDict.ContainsKey(playerId))
             {
-                foreach (SelectModel model in TeamOneDict.Values)
+                foreach (DtoSelect model in TeamOneDict.Values)
                 {
                     if (model.HeroId == heroId)
                         return false;
@@ -120,7 +120,7 @@ namespace MOBAServer.Room
             }
             else if (TeamTwoDict.ContainsKey(playerId))
             {
-                foreach (SelectModel model in TeamTwoDict.Values)
+                foreach (DtoSelect model in TeamTwoDict.Values)
                 {
                     if (model.HeroId == heroId)
                         return false;
@@ -141,7 +141,7 @@ namespace MOBAServer.Room
         {
             if (TeamOneDict.ContainsKey(playerId))
             {
-                SelectModel model = TeamOneDict[playerId];
+                DtoSelect model = TeamOneDict[playerId];
                 // 没有选择的英雄
                 if (model.PlayerId == -1)
                     return false;
@@ -151,7 +151,7 @@ namespace MOBAServer.Room
             }
             else if (TeamTwoDict.ContainsKey(playerId))
             {
-                SelectModel model = TeamTwoDict[playerId];
+                DtoSelect model = TeamTwoDict[playerId];
                 // 没有选择的英雄
                 if (model.PlayerId == -1)
                     return false;

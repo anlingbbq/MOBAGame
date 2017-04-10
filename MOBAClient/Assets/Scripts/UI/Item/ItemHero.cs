@@ -23,7 +23,7 @@ public class ItemHero : MonoBehaviour, IResourceListener
     public void InitView(HeroModel hero)
     {
         // 保存英雄id
-        HeroId = hero.Id;
+        HeroId = hero.TypeId;
 
         // 加载选择的音效资源
         ResourcesManager.Instance.Load(Paths.RES_SOUND_SELECT + hero.Name,

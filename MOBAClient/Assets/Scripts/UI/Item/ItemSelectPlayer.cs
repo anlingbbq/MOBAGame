@@ -21,7 +21,7 @@ public class ItemSelectPlayer : MonoBehaviour, IResourceListener
     /// 更新视图
     /// </summary>
     /// <param name="model"></param>
-    public void UpdateView(SelectModel model)
+    public void UpdateView(DtoSelect model)
     {
         TextName.text = model.PlayerName;
         // 是否进入

@@ -14,11 +14,11 @@ namespace Assets.Scripts.Data
         /// <summary>
         /// 保存队伍1的数据
         /// </summary>
-        public SelectModel[] Team1;
+        public DtoSelect[] Team1;
         /// <summary>
         /// 保存队伍2的数据
         /// </summary>
-        public SelectModel[] Team2;
+        public DtoSelect[] Team2;
         /// <summary>
         /// 玩家的队伍id
         /// </summary>
@@ -29,7 +29,7 @@ namespace Assets.Scripts.Data
         /// </summary>
         /// <param name="team1"></param>
         /// <param name="team2"></param>
-        public void InitData(SelectModel[] team1, SelectModel[] team2)
+        public void InitData(DtoSelect[] team1, DtoSelect[] team2)
         {
             Team1 = team1;
             Team2 = team2;
@@ -70,7 +70,7 @@ namespace Assets.Scripts.Data
         /// <returns>返回同组的玩家名</returns>
         public string OnEnterSelect(int playerId)
         {
-            foreach (SelectModel model in Team1)
+            foreach (DtoSelect model in Team1)
             {
                 if (model.PlayerId == playerId)
                 {
@@ -80,7 +80,7 @@ namespace Assets.Scripts.Data
                     return null;
                 }
             }
-            foreach (SelectModel model in Team2)
+            foreach (DtoSelect model in Team2)
             {
                 if (model.PlayerId == playerId)
                 {
@@ -100,7 +100,7 @@ namespace Assets.Scripts.Data
         /// <param name="heroId"></param>
         public void OnSelected(int playerId, int heroId)
         {
-            foreach (SelectModel model in Team1)
+            foreach (DtoSelect model in Team1)
             {
                 if (model.PlayerId == playerId)
                 {
@@ -108,7 +108,7 @@ namespace Assets.Scripts.Data
                     return;
                 }
             }
-            foreach (SelectModel model in Team2)
+            foreach (DtoSelect model in Team2)
             {
                 if (model.PlayerId == playerId)
                 {
@@ -124,7 +124,7 @@ namespace Assets.Scripts.Data
         /// <param name="playerId"></param>
         public void OnReady(int playerId)
         {
-            foreach (SelectModel model in Team1)
+            foreach (DtoSelect model in Team1)
             {
                 if (model.PlayerId == playerId)
                 {
@@ -132,7 +132,7 @@ namespace Assets.Scripts.Data
                     return;
                 }
             }
-            foreach (SelectModel model in Team2)
+            foreach (DtoSelect model in Team2)
             {
                 if (model.PlayerId == playerId)
                 {

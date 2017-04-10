@@ -89,7 +89,13 @@ namespace Common.OpCode
         /// <summary>
         /// 在选择界面聊天
         /// </summary>
-        TalkInSelect
+        TalkInSelect,
+
+        #endregion
+
+        #region 战斗
+
+        StartBattle,
 
         #endregion
     }
