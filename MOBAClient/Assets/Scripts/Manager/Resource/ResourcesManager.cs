@@ -51,13 +51,14 @@ public class ResourcesManager : Singleton<ResourcesManager>
     /// <param name="type">资源类型</param>
     /// <param name="listener">回掉</param>
     /// <param name="assetType">自定义的资源类型</param>
-    public void Load(string assetName, Type type, IResourceListener listener, 
+    public void Load(string assetName, Type type, IResourceListener listener = null, 
         AssetType assetType = AssetType.Default)
     {
         // 资源已存在 直接完成回掉
         if (m_AssetDict.ContainsKey(assetName))
         {
-            listener.OnLoaded(assetName, m_AssetDict[assetName], assetType);
+            if (listener != null)
+                listener.OnLoaded(assetName, m_AssetDict[assetName], assetType);
             return;
         }
         // 进行异步加载
@@ -76,27 +77,32 @@ public class ResourcesManager : Singleton<ResourcesManager>
     /// <param name="assetType">自定义的资源类型</param>
     private void LoadAsync(string assetName, Type type, IResourceListener listener, AssetType assetType)
     {
-        // 如果正在加载中 添加回掉
-        for (int i = 0; i < m_LoadingList.Count; i++)
+        // 如果需要回调
+        if (listener != null)
         {
-            LoadAsset item = m_LoadingList[i];
-            if (item.AssetName == assetName)
+            // 如果正在加载中 添加回掉
+            for (int i = 0; i < m_LoadingList.Count; i++)
             {
-                item.AddListener(listener);
-                return;
+                LoadAsset item = m_LoadingList[i];
+                if (item.AssetName == assetName)
+                {
+                    item.AddListener(listener);
+                    return;
+                }
             }
-        }
 
-        // 如果在等待的队列中 添加回掉
-        for (int i = 0; i < m_WaitingQueue.Count; i++)
-        {
-            LoadAsset item = m_WaitingQueue.Peek();
-            if (item.AssetName == assetName)
+            // 如果在等待的队列中 添加回掉
+            for (int i = 0; i < m_WaitingQueue.Count; i++)
             {
-                item.AddListener(listener);
-                return;
+                LoadAsset item = m_WaitingQueue.Peek();
+                if (item.AssetName == assetName)
+                {
+                    item.AddListener(listener);
+                    return;
+                }
             }
         }
+    
 
         // 都没有 则创建资源
         LoadAsset asset = new LoadAsset();

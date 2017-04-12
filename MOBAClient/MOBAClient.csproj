@@ -73,6 +73,24 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>Assets\Others\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Others\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\Others\Demigiant\DOTween\DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets\Others\Demigiant\DOTween\DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\Others\Demigiant\DOTween\DOTween50.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenPro">
+      <HintPath>Assets\Others\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+    </Reference>
     <Reference Include="Common">
       <HintPath>Assets\Plugins\Common.dll</HintPath>
     </Reference>
@@ -82,28 +100,11 @@
     <Reference Include="Photon3Unity3D">
       <HintPath>Assets\Plugins\Photon3Unity3D.dll</HintPath>
     </Reference>
-    <Reference Include="DOTween46">
-      <HintPath>Assets\Others\Demigiant\DOTween\DOTween46.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween50">
-      <HintPath>Assets\Others\Demigiant\DOTween\DOTween50.dll</HintPath>
-    </Reference>
-    <Reference Include="DemiLib">
-      <HintPath>Assets\Others\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween43">
-      <HintPath>Assets\Others\Demigiant\DOTween\DOTween43.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>Assets\Others\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTweenPro">
-      <HintPath>Assets\Others\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Others\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\Scripts\Config\Paths.cs" />
+    <Compile Include="Assets\Scripts\Data\BattleData.cs" />
     <Compile Include="Assets\Scripts\Data\GameData.cs" />
     <Compile Include="Assets\Scripts\Data\SelectData.cs" />
     <Compile Include="Assets\Scripts\Event\BaseEvent.cs" />
@@ -116,7 +117,8 @@
     <Compile Include="Assets\Scripts\Manager\Resource\ResourcesManager.cs" />
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
-    <Compile Include="Assets\Scripts\Request\Battle\StartBattleRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\EnterBattleRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\ReadyBattleRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\BeReaySelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\DestroySelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\EnterSelectRequest.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Assets\Scripts\UI\Item\ItemFriend.cs" />
     <Compile Include="Assets\Scripts\UI\Item\ItemHero.cs" />
     <Compile Include="Assets\Scripts\UI\Item\ItemSelectPlayer.cs" />
+    <Compile Include="Assets\Scripts\UI\Panel\Battle\BattlePanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\MaskPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\Match\MatchPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panel\Match\SelectPanel.cs" />

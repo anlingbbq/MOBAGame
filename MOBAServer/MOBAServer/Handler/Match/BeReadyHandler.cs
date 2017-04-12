@@ -9,6 +9,10 @@ using Photon.SocketServer;
 
 namespace MOBAServer.Handler
 {
+    /// <summary>
+    /// 进入战斗房间的最后一步
+    /// 当所有玩家准备好后转到战斗房间
+    /// </summary>
     public class BeReadyHandler : BaseHandler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
@@ -32,10 +36,11 @@ namespace MOBAServer.Handler
             // 如果全部准备好了 则开始战斗
             if (room.IsAllReady)
             {
+                // 创建战斗的房间
+                Caches.Battle.CreateRoom(room.TeamOneDict.Values.ToList(), room.TeamTwoDict.Values.ToList());
                 // 通知所有客户端准备战斗
-                room.Brocast(OperationCode.StartBattle, null);
-
-                // 销毁房间
+                room.Brocast(OperationCode.ReadyBattle, null);
+                // 销毁选择的房间
                 Caches.Select.DestroyRoom(room.Id);
             }
         }

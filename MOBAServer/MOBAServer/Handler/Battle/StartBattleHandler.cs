@@ -11,6 +11,7 @@ namespace MOBAServer.Handler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
+
         }
     }
 }

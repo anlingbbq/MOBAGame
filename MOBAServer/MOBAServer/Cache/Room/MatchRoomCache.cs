@@ -64,7 +64,8 @@ namespace MOBAServer.Cache
         {
             // 获取房间
             MatchRoom room = GetRoomByPlayerId(playerId);
-            if (room == null) return false;
+            if (room == null)
+                return false;
 
             room.LeaveRoom(peer, playerId);
             PlayerRoomDict.Remove(playerId);

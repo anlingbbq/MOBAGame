@@ -13,7 +13,7 @@ public class ItemHero : MonoBehaviour, IResourceListener
     private Button BtnHead;
     public int HeroId;
     
-    private AudioClip Sound;
+    private AudioClip m_HeroSound;
 
     void Start()
     {
@@ -48,8 +48,8 @@ public class ItemHero : MonoBehaviour, IResourceListener
     /// </summary>
     public void OnClick()
     {
-        // 播放音效
-        SoundManager.Instance.PlayEffectMusic(Sound);
+        // 播放英雄音效
+        SoundManager.Instance.PlayEffectMusic(m_HeroSound);
 
         // 发送选人的请求
         SelectPanel panel = UIManager.Instance.GetPanel(UIPanelType.Select) as SelectPanel;
@@ -60,7 +60,7 @@ public class ItemHero : MonoBehaviour, IResourceListener
     {
         if (assetType == AssetType.SoundEffect)
         {
-            Sound = asset as AudioClip;
+            m_HeroSound = asset as AudioClip;
         }
         else if (assetType == AssetType.Sprite)
         {

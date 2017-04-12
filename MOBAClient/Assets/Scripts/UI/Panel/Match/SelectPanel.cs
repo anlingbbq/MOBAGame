@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Data;
-using Common.Code;
 using Common.Config;
 using Common.Dto;
-using Common.OpCode;
-using ExitGames.Client.Photon;
-using LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,12 +10,21 @@ using UnityEngine.UI;
 /// </summary>
 public class SelectPanel : UIBasePanel
 {
+    #region UI
+
+    /// <summary>
+    /// 我方队伍ui
+    /// </summary>
     [Header("队伍")]
     [SerializeField]
     private ItemSelectPlayer[] OurTeam;
 
+    /// <summary>
+    /// 地方队伍ui
+    /// </summary>
     [SerializeField]
     private ItemSelectPlayer[] EnemyTeam;
+
 
     /// <summary>
     /// 确认按钮
@@ -45,6 +48,10 @@ public class SelectPanel : UIBasePanel
     [SerializeField]
     private Button BtnTalk;
 
+    #endregion
+
+    #region 请求
+
     /// <summary>
     /// 进入房间的请求
     /// </summary>
@@ -58,14 +65,11 @@ public class SelectPanel : UIBasePanel
     /// </summary>
     private BeReaySelectRequest m_BeReadyRequest;
     /// <summary>
-    /// 聊天消息
+    /// 聊天消息的请求
     /// </summary>
     private TalkInSelectRequest m_TalkReqeust;
 
-    /// <summary>
-    /// 保存和管理选人的数据
-    /// </summary>
-    public SelectData SelectData;
+    #endregion
 
     public override void Awake()
     {
@@ -75,7 +79,6 @@ public class SelectPanel : UIBasePanel
         m_BeReadyRequest = GetComponent<BeReaySelectRequest>();
         m_TalkReqeust = GetComponent<TalkInSelectRequest>();
 
-        SelectData = new SelectData();
     }
 
     [Header("英雄")]
@@ -115,7 +118,7 @@ public class SelectPanel : UIBasePanel
     /// </summary>
     public void OnEnterSelect(int playerId)
     {
-        string name = SelectData.OnEnterSelect(playerId);
+        string name = SelectData.Instance.OnEnterSelect(playerId);
         if (name != null) EnterTextPrompt(name);
         UpdateView();
     }
@@ -140,35 +143,35 @@ public class SelectPanel : UIBasePanel
         // 已经选择的英雄
         List<int> selectedHero = new List<int>();
 
-        if (SelectData.TeamId == 1)
+        if (SelectData.Instance.TeamId == 1)
         {
-            for (int i = 0; i < SelectData.Team1.Length; i++)
+            for (int i = 0; i < SelectData.Instance.Team1.Length; i++)
             {
-                OurTeam[i].UpdateView(SelectData.Team1[i]);
+                OurTeam[i].UpdateView(SelectData.Instance.Team1[i]);
             }
-            for (int i = 0; i < SelectData.Team2.Length; i++)
+            for (int i = 0; i < SelectData.Instance.Team2.Length; i++)
             {
-                EnemyTeam[i].UpdateView(SelectData.Team2[i]);
+                EnemyTeam[i].UpdateView(SelectData.Instance.Team2[i]);
             }
             // 添加到已选择的链表中
-            foreach (DtoSelect model in SelectData.Team1)
+            foreach (DtoSelect model in SelectData.Instance.Team1)
             {
                 if (model.HeroId != -1)
                     selectedHero.Add(model.HeroId);
             }
         }
-        else if (SelectData.TeamId == 2)
+        else if (SelectData.Instance.TeamId == 2)
         {
-            for (int i = 0; i < SelectData.Team1.Length; i++)
+            for (int i = 0; i < SelectData.Instance.Team1.Length; i++)
             {
-                EnemyTeam[i].UpdateView(SelectData.Team1[i]);
+                EnemyTeam[i].UpdateView(SelectData.Instance.Team1[i]);
             }
-            for (int i = 0; i < SelectData.Team2.Length; i++)
+            for (int i = 0; i < SelectData.Instance.Team2.Length; i++)
             {
-                OurTeam[i].UpdateView(SelectData.Team2[i]);
+                OurTeam[i].UpdateView(SelectData.Instance.Team2[i]);
             }
             // 添加到已选择的链表中
-            foreach (DtoSelect model in SelectData.Team2)
+            foreach (DtoSelect model in SelectData.Instance.Team2)
             {
                 if (model.HeroId != -1)
                     selectedHero.Add(model.HeroId);
@@ -207,20 +210,20 @@ public class SelectPanel : UIBasePanel
     /// </summary>
     public void OnReadyClick()
     {
-        SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
+        SoundManager.Instance.PlayEffectMusic(Paths.UI_READY);
 
         m_BeReadyRequest.SendRequest();
         BtnReady.interactable = false;
     }
 
     /// <summary>
-    /// 点击聊天按钮的huidio
+    /// 点击聊天按钮的回调
     /// </summary>
     public void OnTalkClick()
     {
         SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
 
-        m_TalkReqeust.SendTalkRequesst(SelectData.TeamId, 
+        m_TalkReqeust.SendTalkRequesst(SelectData.Instance.TeamId, 
             GameData.player.Name + ":" + InputTalk.text);
 
         InputTalk.text = "";
@@ -231,7 +234,7 @@ public class SelectPanel : UIBasePanel
     /// </summary>
     public void OnTalk(int teamId, string str)
     {
-        if (SelectData.TeamId == teamId)
+        if (SelectData.Instance.TeamId == teamId)
             TextContent.text += str + "\n";
         else
             TextContent.text += "<color=#ff0000>" + str + "</color>\n";

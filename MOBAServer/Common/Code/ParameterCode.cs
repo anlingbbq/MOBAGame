@@ -53,13 +53,13 @@ namespace Common.Code
         #region 匹配
 
         /// <summary>
-        /// 第一组的匹配数据
+        /// 第一组的选择数据
         /// </summary>
-        TeamOneData,
+        TeamOneSelectData,
         /// <summary>
-        /// 第二组的匹配数据
+        /// 第二组的选择数据
         /// </summary>
-        TeamTwoData,
+        TeamTwoSelectData,
         /// <summary>
         /// 英雄id
         /// </summary>
@@ -72,6 +72,19 @@ namespace Common.Code
         /// 聊天内容
         /// </summary>
         TalkContent,
+
+        #endregion
+
+        #region 战斗
+
+        /// <summary>
+        /// 英雄数组
+        /// </summary>
+        HerosArray,
+        /// <summary>
+        /// 建筑数组
+        /// </summary>
+        BuildsArray,
 
         #endregion
     }

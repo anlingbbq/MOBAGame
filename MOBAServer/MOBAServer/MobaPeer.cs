@@ -47,6 +47,7 @@ namespace MOBAServer
             if (Username != null)
             {
                 // 这里下线的顺序 要从内到外
+                Caches.Battle.Offline(this);
                 Caches.Select.Offline(this);
                 Caches.Match.Offline(this);
                 Caches.Player.Offline(this);

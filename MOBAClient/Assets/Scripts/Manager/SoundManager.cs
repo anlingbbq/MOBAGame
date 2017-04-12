@@ -6,19 +6,19 @@ public class SoundManager : Singleton<SoundManager>
 {
     // 用于播放背景音效
     [SerializeField]
-    private AudioSource BgmAudioSource;
+    private AudioSource m_BgmAudioSource;
 
     // 用于播放特效音乐
     [SerializeField]
-    private AudioSource EffectAudioSource;
+    private AudioSource m_EffectAudioSource;
 
     void Start()
     {
-        BgmAudioSource.loop = true;
-        BgmAudioSource.playOnAwake = true;
+        m_BgmAudioSource.loop = true;
+        m_BgmAudioSource.playOnAwake = true;
 
-        EffectAudioSource.loop = false;
-        EffectAudioSource.playOnAwake = false;
+        m_EffectAudioSource.loop = false;
+        m_EffectAudioSource.playOnAwake = false;
     }
 
     #region 背景音乐
@@ -35,8 +35,8 @@ public class SoundManager : Singleton<SoundManager>
             return;
         }
 
-        BgmAudioSource.clip = clip;
-        BgmAudioSource.Play();
+        m_BgmAudioSource.clip = clip;
+        m_BgmAudioSource.Play();
     }
 
     /// <summary>
@@ -44,8 +44,8 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     public void StopBgMusic()
     {
-        BgmAudioSource.clip = null;
-        BgmAudioSource.Stop();
+        m_BgmAudioSource.clip = null;
+        m_BgmAudioSource.Stop();
     }
 
     #endregion
@@ -53,7 +53,7 @@ public class SoundManager : Singleton<SoundManager>
     #region 音效音乐
 
     /// <summary>
-    /// 播放音效 
+    /// 根据资源名称播放音效 
     /// </summary>
     /// <param name="name"></param>
     public void PlayEffectMusic(string name)
@@ -67,10 +67,23 @@ public class SoundManager : Singleton<SoundManager>
         PlayEffectMusic(asset);
     }
 
+    /// <summary>
+    /// 播放音效
+    /// </summary>
+    /// <param name="clip"></param>
     public void PlayEffectMusic(AudioClip clip)
     {
-        EffectAudioSource.clip = clip;
-        EffectAudioSource.Play();
+        m_EffectAudioSource.clip = clip;
+        m_EffectAudioSource.Play();
+    }
+
+    /// <summary>
+    /// 停止播放音效
+    /// </summary>
+    public void StopEffectMusic()
+    {
+        m_EffectAudioSource.Stop();
+        m_EffectAudioSource.clip = null;
     }
 
     #endregion

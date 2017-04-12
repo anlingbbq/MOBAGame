@@ -24,7 +24,7 @@ public class MatchPanel : UIBasePanel
 
     public void StartMatch()
     {
-        TextTime.text = "00:01";
+        TextTime.text = "00:00";
         m_Start = true;
     }
 
@@ -40,9 +40,10 @@ public class MatchPanel : UIBasePanel
         if (m_Start)
         {
             m_Second += Time.deltaTime;
-            if (m_Second >= 60)
+            if (m_Second >= 59)
             {
                 m_Minute += 1;
+                m_Second = 0;
             }
             TextTime.text = m_Minute.ToString("00") + " : " + m_Second.ToString("00");
         }

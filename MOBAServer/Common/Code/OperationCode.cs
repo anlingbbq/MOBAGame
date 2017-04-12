@@ -95,7 +95,18 @@ namespace Common.OpCode
 
         #region 战斗
 
-        StartBattle,
+        /// <summary>
+        /// 准备战斗
+        /// </summary>
+        ReadyBattle,
+        /// <summary>
+        /// 进入战斗
+        /// </summary>
+        EnterBattle,
+        /// <summary>
+        /// 获取战斗数据
+        /// </summary>
+        BattleGetInfo,
 
         #endregion
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Dto;
+using Common.OpCode;
 using MOBAServer.Cache;
 using MOBAServer.DataBase.Model;
 
@@ -160,6 +161,18 @@ namespace MOBAServer.Room
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// 离开房间
+        /// </summary>
+        /// <param name="peer"></param>
+        public void Leave(MobaPeer peer)
+        {
+            // 移除退出的客户端连接
+            PeerList.Remove(peer);
+            // 通知所有其他客户端：有人退出 房间解散 回到主界面
+            Brocast(OperationCode.DestroySelect, null);
         }
 
         /// <summary>

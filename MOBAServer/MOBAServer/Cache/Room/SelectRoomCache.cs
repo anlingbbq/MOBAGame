@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Code;
 using Common.Config;
 using Common.OpCode;
 using MOBAServer.DataBase.Manager;
-using MOBAServer.Extension;
 using MOBAServer.Room;
 
 namespace MOBAServer.Cache
@@ -136,21 +131,15 @@ namespace MOBAServer.Cache
         /// <param name="peer"></param>
         public void Offline(MobaPeer peer)
         {
-            int playerid = UserManager.GetPlayer(peer.Username).Identification;
-            int roomId;
-            if (!PlayerRoomDict.TryGetValue(playerid, out roomId))
+            int playerId = UserManager.GetPlayer(peer.Username).Identification;
+            SelectRoom room = GetRoomByPlayerId(playerId);
+            if (room == null)
                 return;
 
-            SelectRoom room = null;
-            if (!RoomDict.TryGetValue(roomId, out room))
-                return;
-
-            // 移除退出的客户端连接
-            room.PeerList.Remove(peer);
-            // 通知所有其他客户端：有人退出 房间解散 回到主界面
-            room.Brocast(OperationCode.DestroySelect, null);
+            // 房间处理
+            room.Leave(peer);
             // 销毁房间
-            DestroyRoom(roomId);
+            DestroyRoom(room.Id);
         }
     }
 }

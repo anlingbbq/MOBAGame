@@ -28,12 +28,12 @@ public class SelectGetInfoRequest : BaseRequest
     {
         // 获取队伍数据
         DtoSelect[] team1 = JsonMapper.ToObject<DtoSelect[]>(
-          response.Parameters[(byte)ParameterCode.TeamOneData] as string);
+          response.Parameters[(byte)ParameterCode.TeamOneSelectData] as string);
         DtoSelect[] team2 = JsonMapper.ToObject<DtoSelect[]>(
-            response.Parameters[(byte)ParameterCode.TeamTwoData] as string);
+            response.Parameters[(byte)ParameterCode.TeamOneSelectData] as string);
         
         // 初始化选人数据
-        m_SelectPanel.SelectData.InitData(team1, team2);
+        SelectData.Instance.InitData(team1, team2);
 
         // 更新界面
         m_SelectPanel.UpdateView();

@@ -40,9 +40,10 @@ public class LoginPanel : UIBasePanel, IResourceListener
     /// </summary>
     public void LoadUiSound()
     {
+        ResourcesManager.Instance.Load(Paths.UI_ENTERGAME, typeof(AudioClip));
+        ResourcesManager.Instance.Load(Paths.UI_CLICK, typeof(AudioClip));
+        ResourcesManager.Instance.Load(Paths.UI_READY, typeof(AudioClip));
         ResourcesManager.Instance.Load(Paths.UI_LOGIN_BG, typeof(AudioClip), this, AssetType.SoundBGM);
-        ResourcesManager.Instance.Load(Paths.UI_ENTERGAME, typeof(AudioClip), this);
-        ResourcesManager.Instance.Load(Paths.UI_CLICK, typeof(AudioClip), this);
     }
 
     /// <summary>

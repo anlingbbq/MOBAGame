@@ -24,7 +24,7 @@ public class BeReaySelectRequest : BaseRequest
         {
             int playerId = (int) response.Parameters[(byte) ParameterCode.PlayerId];
             // 刷新准备的数据
-            m_SelectPanel.SelectData.OnReady(playerId);
+            SelectData.Instance.OnReady(playerId);
             m_SelectPanel.UpdateView();
         }
     }

@@ -11,7 +11,6 @@ public class Paths
 
     public const string UI_LOGIN_BG = RES_SOUND_UI + "Welcome to Planet Urf";
     public const string UI_CLICK = RES_SOUND_UI + "Click";
-    public const string UI_COUNTDOEN = RES_SOUND_UI + "CountDown";
     public const string UI_ENTERGAME = RES_SOUND_UI + "EnterGame";
     public const string UI_READY = RES_SOUND_UI + "Ready";
     public const string UI_SALE = RES_SOUND_UI + "Sale";
@@ -22,12 +21,10 @@ public class Paths
 
     #endregion
 
-    #region 头像
-
     // 头像路径
     public const string RES_HEAD_UI = "UI/Head/";
-
     public const string HEAD_NO_CONNECT = RES_HEAD_UI +　"no-Connect";
 
-    #endregion
+    // 英雄预设路径
+    public const string RES_MODEL_HERO = "Model/Hero/";
 }

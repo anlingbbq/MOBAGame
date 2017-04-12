@@ -55,14 +55,13 @@ public class LoadAsset
     public void AddListener(IResourceListener listener)
     {
         if (ListenerList == null)
-        {
             ListenerList = new List<IResourceListener>();
-        }
+
+        if (listener == null)
+            return;
 
         if (ListenerList.Contains(listener))
-        {
             return;
-        }
 
         ListenerList.Add(listener);
     }

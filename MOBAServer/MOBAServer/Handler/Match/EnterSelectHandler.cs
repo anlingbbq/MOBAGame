@@ -27,8 +27,8 @@ namespace MOBAServer.Handler
             // 先给客户端发送已经进入房间的玩家数据(房间模型)
             response.OperationCode = (byte) OperationCode.SelectGetInfo;
             response.Parameters = new Dictionary<byte, object>();
-            response[(byte) ParameterCode.TeamOneData] = JsonMapper.ToJson(room.TeamOneDict.Values.ToArray());
-            response[(byte) ParameterCode.TeamTwoData] = JsonMapper.ToJson(room.TeamTwoDict.Values.ToArray());
+            response[(byte) ParameterCode.TeamOneSelectData] = JsonMapper.ToJson(room.TeamOneDict.Values.ToArray());
+            response[(byte) ParameterCode.TeamTwoSelectData] = JsonMapper.ToJson(room.TeamTwoDict.Values.ToArray());
             peer.SendOperationResponse(response, sendParameters);
 
             // 再给房间内的其他客户端发一条消息:有人进入了

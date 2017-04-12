@@ -37,7 +37,7 @@ public class SelectedRequest : BaseRequest
             int playerId = (int)response.Parameters[(byte)ParameterCode.PlayerId];
             int heroId = (int)response.Parameters[(byte)ParameterCode.HeroId];
             // 刷新队伍数据
-            m_SelectPanel.SelectData.OnSelected(playerId, heroId);
+            SelectData.Instance.OnSelected(playerId, heroId);
             m_SelectPanel.UpdateView();
         }
     }
