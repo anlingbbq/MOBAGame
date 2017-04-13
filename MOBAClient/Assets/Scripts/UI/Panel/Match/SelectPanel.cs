@@ -244,6 +244,9 @@ public class SelectPanel : UIBasePanel
     {
         base.OnEnter();
 
+        // 清空聊天框
+        TextContent.text = "";
+
         // 发送进入选人房间的消息
         m_EnterRequest.SendRequest();
     }

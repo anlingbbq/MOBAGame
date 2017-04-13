@@ -65,6 +65,7 @@ namespace MOBAServer.Cache
 
             // 移除房间id和房间的映射
             RoomDict.Remove(roomId);
+
             // 清空房间内的数据
             room.Clear();
             // 回收

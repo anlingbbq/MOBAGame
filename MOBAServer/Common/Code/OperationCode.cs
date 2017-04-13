@@ -85,7 +85,7 @@ namespace Common.OpCode
         /// <summary>
         /// 准备完毕
         /// </summary>
-        BeReady,
+        BeReadySelect,
         /// <summary>
         /// 在选择界面聊天
         /// </summary>

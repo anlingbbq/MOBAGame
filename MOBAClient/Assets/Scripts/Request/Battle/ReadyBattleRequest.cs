@@ -12,6 +12,8 @@ public class ReadyBattleRequest : BaseRequest
     /// <param name="response"></param>
     public override void OnOperationResponse(OperationResponse response)
     {
+        UIManager.Instance.ClearPanel();
+
         SceneManager.LoadScene("Battle");
     }
 }

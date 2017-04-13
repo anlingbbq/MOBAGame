@@ -141,7 +141,7 @@ public class ResourcesManager : Singleton<ResourcesManager>
     }
 
     /// <summary>
-    /// 释放所有资源 
+    /// 释放所有未使用的资源 
     /// </summary>
     public void ReleaseAll()
     {

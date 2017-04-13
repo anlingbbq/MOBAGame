@@ -27,6 +27,7 @@ public class FriendListPanel : UIBasePanel
         {
             go = Instantiate(ItemFriend);
             go.transform.SetParent(GridLayout);
+            go.transform.localScale = Vector3.one;
             ItemFriend item = go.GetComponent<ItemFriend>();
             item.SetItem(friend.Name, friend.IsOnline);
 
@@ -43,6 +44,7 @@ public class FriendListPanel : UIBasePanel
         GameObject go = null;
         go = Instantiate(ItemFriend);
         go.transform.SetParent(GridLayout);
+        go.transform.localScale = Vector3.one;
         ItemFriend item = go.GetComponent<ItemFriend>();
         item.SetItem(friend.Name, friend.IsOnline);
 

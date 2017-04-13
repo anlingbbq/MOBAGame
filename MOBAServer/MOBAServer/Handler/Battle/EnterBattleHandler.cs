@@ -21,10 +21,8 @@ namespace MOBAServer.Handler
             MobaServer.LogInfo("处理进入战斗房间的请求");
 
             int plyaerId = (int) UserManager.GetPlayer(peer.Username).Identification;
-            MobaServer.LogInfo("PlayerId " + plyaerId);
             BattleRoom room = Caches.Battle.Enter(plyaerId, peer);
 
-            MobaServer.LogWarn("count : " + room.Count + " PeerList : " + room.PeerList.Count);
             // 判断是否全部进入
             if (!room.IsAllEnter)
                 return;

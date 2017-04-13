@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Common.Code;
+﻿using Common.Code;
 using ExitGames.Client.Photon;
 using UnityEngine;
 

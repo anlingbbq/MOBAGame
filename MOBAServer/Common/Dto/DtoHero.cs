@@ -50,6 +50,16 @@ namespace Common.Dto
         /// </summary>
         public int SP { get; set; }
 
+        /// <summary>
+        /// 击杀
+        /// </summary>
+        public int Kill { get; set; }
+
+        /// <summary>
+        /// 死亡
+        /// </summary>
+        public int Death { get; set; }
+
         public DtoHero()
         {
             
@@ -66,6 +76,8 @@ namespace Common.Dto
             Equipments = new int[6];
             Skills = skills;
             SP = 1;
+            Kill = 0;
+            Death = 0;
         }
     }
 }

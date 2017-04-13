@@ -84,7 +84,7 @@
     <Compile Include="Handler\Battle\BattleGetInfoHandler.cs" />
     <Compile Include="Handler\Battle\EnterBattleHandler.cs" />
     <Compile Include="Handler\Battle\StartBattleHandler.cs" />
-    <Compile Include="Handler\Match\BeReadyHandler.cs" />
+    <Compile Include="Handler\Match\BeReadySelectHandler.cs" />
     <Compile Include="Handler\Match\SelectedHandler.cs" />
     <Compile Include="Handler\Match\EnterSelectHandler.cs" />
     <Compile Include="Handler\Match\TalkInSelectHandler.cs" />

@@ -87,6 +87,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
         }
         else
         {
+            // 这里有可能是正常的 比如在战斗中的玩家会找不到好友下线的处理
             Log.Error("找不到响应的对相应处理对象 ："
                 + Enum.GetName(typeof(OperationCode), operationResponse.OperationCode));
         }

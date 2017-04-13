@@ -30,7 +30,7 @@ public class SelectGetInfoRequest : BaseRequest
         DtoSelect[] team1 = JsonMapper.ToObject<DtoSelect[]>(
           response.Parameters[(byte)ParameterCode.TeamOneSelectData] as string);
         DtoSelect[] team2 = JsonMapper.ToObject<DtoSelect[]>(
-            response.Parameters[(byte)ParameterCode.TeamOneSelectData] as string);
+            response.Parameters[(byte)ParameterCode.TeamTwoSelectData] as string);
         
         // 初始化选人数据
         SelectData.Instance.InitData(team1, team2);

@@ -52,7 +52,7 @@ namespace MOBAServer.Room
                 List<DtoHero> list = new List<DtoHero>();
                 list.AddRange(TeamOneHeros.Values);
                 list.AddRange(TeamTwoHeros.Values);
-                return TeamTwoHeros.Values.ToArray();
+                return list.ToArray();
             }
         }
         /// <summary>
@@ -104,33 +104,38 @@ namespace MOBAServer.Room
                 TeamTwoHeros.Add(item.PlayerId, GetDtoHero(item, 2));
 
             // 初始化建筑
-            InitBuild();
+            // 主基地
+            AddBuild(ServerConfig.MainBaseId, 1);
+            AddBuild(ServerConfig.MainBaseId, 2);
+            // 兵营
+            AddBuild(ServerConfig.CampId, 1);
+            AddBuild(ServerConfig.CampId, 2);
+            // 防御塔
+            AddBuild(ServerConfig.TowerId, 1);
+            AddBuild(ServerConfig.TowerId, 2);
         }
 
-        private void InitBuild()
+        /// <summary>
+        /// 记录当前建筑id
+        /// </summary>
+        private int m_CurBuild1Id = ServerConfig.TeamOneBuildId;
+        private int m_CurBuild2Id = ServerConfig.TeamTwoBuildId;
+        /// <summary>
+        /// 添加建筑
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="team"></param>
+        private void AddBuild(int type, int team)
         {
-            int teamOneBuildId = ServerConfig.TeamOneBuildId;
-            int teamTwoBuildId = ServerConfig.TeamTwoBuildId;
-            // 主基地
-            TeamOneBuilds.Add(teamOneBuildId, GetDtoBuild(teamOneBuildId, ServerConfig.MainBaseId, 1));
-            TeamOneBuilds.Add(teamTwoBuildId, GetDtoBuild(teamTwoBuildId, ServerConfig.MainBaseId, 2));
-            --teamOneBuildId;
-            --teamTwoBuildId;
-            // 兵营
-            TeamOneBuilds.Add(teamOneBuildId, GetDtoBuild(teamOneBuildId, ServerConfig.CampId, 1));
-            TeamOneBuilds.Add(teamTwoBuildId, GetDtoBuild(teamTwoBuildId, ServerConfig.CampId, 2));
-            --teamOneBuildId;
-            --teamTwoBuildId;
-            // 防御塔
-            for (int i = 0; i < ServerConfig.TowerCount; i++)
+            if (team == 1)
             {
-                TeamOneBuilds.Add(teamOneBuildId, GetDtoBuild(teamOneBuildId, ServerConfig.TowerId, 1));
-                --teamOneBuildId;
+                TeamOneBuilds.Add(m_CurBuild1Id, GetDtoBuild(m_CurBuild1Id, type, 1));
+                --m_CurBuild1Id;
             }
-            for (int i = 0; i > ServerConfig.TowerCount; i++)
+            else if (team == 2)
             {
-                TeamOneBuilds.Add(teamTwoBuildId, GetDtoBuild(teamTwoBuildId, ServerConfig.TowerId, 2));
-                --teamTwoBuildId;
+                TeamOneBuilds.Add(m_CurBuild2Id, GetDtoBuild(m_CurBuild2Id, type, 2));
+                --m_CurBuild2Id;
             }
         }
 
@@ -184,6 +189,10 @@ namespace MOBAServer.Room
         {
             // 获取英雄模型
             HeroModel model = HeroData.GetHeroData(dto.HeroId);
+            if (model == null)
+            {
+                MobaServer.LogError(">>>>>>> hero is null id : " + dto.HeroId);
+            }
 
             DtoHero hero = new DtoHero(dto.PlayerId, dto.HeroId, team, model.Hp, model.BaseAttack,
                 model.BaseDefens, model.AttackDistance, model.Name, model.Mp, model.SkillIds);
