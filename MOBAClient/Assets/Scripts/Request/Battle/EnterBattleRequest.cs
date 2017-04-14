@@ -25,7 +25,7 @@ public class EnterBattleRequest : BaseRequest
         DtoHero[] heros = JsonMapper.ToObject<DtoHero[]>(heroJson);
         DtoBuild[] builds = JsonMapper.ToObject<DtoBuild[]>(bulidJson);
 
-        // 保存数据
+        // 初始化数据
         BattleData.Instance.InitData(heros, builds);
 
         // 初始化界面

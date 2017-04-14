@@ -104,6 +104,12 @@
   <ItemGroup>
     <Compile Include="Assets\Others\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\Scripts\Config\Paths.cs" />
+    <Compile Include="Assets\Scripts\Control\AnimeCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\BaseCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\CameraCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\Hero\WarriorCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\HpCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\KeyCtrl.cs" />
     <Compile Include="Assets\Scripts\Data\BattleData.cs" />
     <Compile Include="Assets\Scripts\Data\GameData.cs" />
     <Compile Include="Assets\Scripts\Data\SelectData.cs" />
@@ -118,6 +124,7 @@
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\EnterBattleRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\HeroMoveRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\ReadyBattleRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\BeReaySelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\DestroySelectRequest.cs" />

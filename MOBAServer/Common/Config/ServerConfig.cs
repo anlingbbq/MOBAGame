@@ -17,7 +17,7 @@ namespace Common.Config
         /// <summary>
         /// 英雄的初始id
         /// </summary>
-        public const int HeroId = 0;
+        public const int HeroTypeId = 0;
         /// <summary>
         /// 技能的初始id
         /// 英雄技能id：heroId *　skillId + num
@@ -25,7 +25,6 @@ namespace Common.Config
         public const int SkillId = 1000;
 
         #endregion
-
 
         #region 建筑
 

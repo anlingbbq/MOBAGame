@@ -108,6 +108,12 @@ namespace Common.OpCode
         /// </summary>
         BattleGetInfo,
 
+        #region 英雄
+
+        HeroMove,
+
+        #endregion
+
         #endregion
     }
 }

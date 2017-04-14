@@ -42,7 +42,7 @@ namespace MOBAServer.Room
         /// </summary>
         public bool IsAllReady
         {
-            get { return ReadyCount == EnterCount; }
+            get { return ReadyCount == Count; }
         }
 
         public SelectRoom(int id, int count) : base(id, count)

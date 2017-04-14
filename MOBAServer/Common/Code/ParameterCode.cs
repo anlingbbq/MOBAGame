@@ -85,6 +85,10 @@ namespace Common.Code
         /// 建筑数组
         /// </summary>
         BuildsArray,
+        /// <summary>
+        /// 三维坐标
+        /// </summary>
+        DtoVector3,
 
         #endregion
     }

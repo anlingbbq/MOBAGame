@@ -28,7 +28,7 @@ namespace MOBAServer.DataBase.Model
             RunCount = 0;
             WinCount = 0;
             LostCount = 0;
-            HeroIdList = HeroData.HeroId_Warrior + "," + HeroData.HeroId_Archer;
+            HeroIdList = HeroData.TypeId_Warrior + "," + HeroData.TypeId_Archer;
             FriendIdList = "";
         }
 

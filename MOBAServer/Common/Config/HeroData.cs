@@ -9,19 +9,19 @@ namespace Common.Config
     /// 英雄数据
     /// 数据感觉应该从数据库里读
     /// 但是想到还要搞缓存层。。就直接写在这里吧
-    /// 英雄id从1开始
-    /// 技能id从1001开始
+    /// 英雄typeId从1开始
+    /// 技能typeId从1001开始
     /// </summary>
     public class HeroData
     {
         /// <summary>
         /// 战士id
         /// </summary>
-        public const int HeroId_Warrior = ServerConfig.HeroId + 1;
+        public const int TypeId_Warrior = ServerConfig.HeroTypeId + 1;
         /// <summary>
         /// 弓箭手id
         /// </summary>
-        public const int HeroId_Archer = ServerConfig.HeroId + 2;
+        public const int TypeId_Archer = ServerConfig.HeroTypeId + 2;
 
         /// <summary>
         /// 根据id保存英雄数据
@@ -31,18 +31,18 @@ namespace Common.Config
         static HeroData()
         {
             // 创建临时的英雄数据
-            createHero(HeroId_Warrior, "战士", 60, 20, 300, 100, 10, 3, 50, 10, 1);
-            createHero(HeroId_Archer, "弓箭手", 50, 10, 200, 80, 15, 2, 30, 5, 5);
+            createHero(TypeId_Warrior, "战士", 60, 20, 300, 100, 10, 3, 50, 10, 1);
+            createHero(TypeId_Archer, "弓箭手", 50, 10, 200, 80, 15, 2, 30, 5, 5);
         }
 
         /// <summary>
         /// 创建英雄
         /// </summary>
-        public static void createHero(int id, string name, int baseAttack, int baseDefense, int hp,
+        public static void createHero(int typeId, string name, int baseAttack, int baseDefense, int hp,
             int mp, int growAttack, int growDefense, int growHp, int growMp,
             double attackDistance)
         {
-            HeroModel hero = new HeroModel(id, name, baseAttack, baseDefense, hp,
+            HeroModel hero = new HeroModel(typeId, name, baseAttack, baseDefense, hp,
                 mp, growAttack, growDefense, growHp, growMp,attackDistance);
 
             HeroDict.Add(hero.TypeId, hero);

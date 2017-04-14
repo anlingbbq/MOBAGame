@@ -54,6 +54,7 @@
     <Compile Include="Dto\DtoHero.cs" />
     <Compile Include="Dto\DtoMinion.cs" />
     <Compile Include="Dto\DtoSelect.cs" />
+    <Compile Include="Dto\DtoVector3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

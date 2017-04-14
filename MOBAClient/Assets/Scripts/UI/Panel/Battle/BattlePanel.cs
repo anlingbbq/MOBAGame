@@ -77,7 +77,6 @@ public class BattlePanel : UIBasePanel, IResourceListener
     {
         // 释放资源
         ResourcesManager.Instance.ReleaseAll();
-
         m_EnterRequest = GetComponent<EnterBattleRequest>();
         OnEnter();
     }

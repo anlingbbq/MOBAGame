@@ -42,9 +42,14 @@ public class BattleData : Singleton<BattleData>
     public DtoHero Hero { get; private set; }
 
     /// <summary>
+    /// 自己的英雄控制器
+    /// </summary>
+    public BaseCtrl HeroCtrl { get; private set; }
+
+    /// <summary>
     /// 保存游戏物体
     /// </summary>
-    private Dictionary<int, GameObject> GameObjectDict = new Dictionary<int, GameObject>();
+    public Dictionary<int, BaseCtrl> CtrlDict = new Dictionary<int, BaseCtrl>();
 
     /// <summary>
     /// 初始化游戏对象
@@ -56,36 +61,44 @@ public class BattleData : Singleton<BattleData>
         m_Heros = heros;
         Builds = builds;
 
+        int myTeam = GetMyTeamId(heros, GameData.player.Id);
+
         #region 英雄
 
         // 创建英雄
-        GameObject go;
+        GameObject go = null;
         foreach (DtoHero item in m_Heros)
         {
-            // 先加载预设资源
-            go = Instantiate(Resources.Load<GameObject>(Paths.RES_MODEL_HERO + item.Name));
             if (item.Team == 1)
             {
+                go = Instantiate(Resources.Load<GameObject>(Paths.RES_MODEL_HERO + item.Name),
+                    Team1HeroPoint[0].position, Quaternion.AngleAxis(90, Vector3.up));
                 go.transform.SetParent(Team1Parent);
-                go.transform.position = Team1HeroPoint[0].position;
             }
             else if (item.Team == 2)
             {
+                go = Instantiate(Resources.Load<GameObject>(Paths.RES_MODEL_HERO + item.Name),
+                    Team2HeroPoint[0].position, Quaternion.AngleAxis(-90, Vector3.up));
                 go.transform.SetParent(Team2Parent);
-                go.transform.position = Team2HeroPoint[0].position;
             }
+
+            // 初始化控制器
+            BaseCtrl ctrl = go.GetComponent<BaseCtrl>();
+            ctrl.Init(item, item.Team == myTeam);
+            CtrlDict.Add(item.Id, ctrl);
+
             // 判断这个英雄是不是自己
             if (item.Id == GameData.player.Id)
             {
                 // 保存当前英雄
-                Hero = item;   
+                Hero = item;
+                // 保存英雄的控制器
+                HeroCtrl = ctrl;
             }
-
-            GameObjectDict.Add(item.Id, go);
         }
 
         #endregion
-
+        return;
         #region 建筑
 
         // 创建建筑
@@ -96,16 +109,37 @@ public class BattleData : Singleton<BattleData>
             {
                 go = Team1Builds[build.TypeId - 1];
                 go.SetActive(true);
-                GameObjectDict.Add(build.Id, go);
             }
             else if (build.Team == 2)
             {
                 go = Team2Builds[build.TypeId - 1];
                 go.SetActive(true);
-                GameObjectDict.Add(build.Id, go);
             }
+
+            // 初始化控制器
+            BaseCtrl ctrl = go.GetComponent<BaseCtrl>();
+            ctrl.Init(build, build.Team == myTeam);
+            CtrlDict.Add(build.Id, ctrl);
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// 获取自身队伍的id
+    /// </summary>
+    /// <param name="heros"></param>
+    /// <param name="playerId"></param>
+    /// <returns></returns>
+    private int GetMyTeamId(DtoHero[] heros, int playerId)
+    {
+        foreach (DtoHero hero in heros)
+        {
+            if (hero.Id == playerId)
+            {
+                return hero.Team;
+            }
+        }
+        return -1;
     }
 }
