@@ -42,11 +42,6 @@ public class BattleData : Singleton<BattleData>
     public DtoHero Hero { get; private set; }
 
     /// <summary>
-    /// 自己的英雄控制器
-    /// </summary>
-    public BaseCtrl HeroCtrl { get; private set; }
-
-    /// <summary>
     /// 保存游戏物体
     /// </summary>
     public Dictionary<int, BaseCtrl> CtrlDict = new Dictionary<int, BaseCtrl>();
@@ -61,7 +56,7 @@ public class BattleData : Singleton<BattleData>
         m_Heros = heros;
         Builds = builds;
 
-        int myTeam = GetMyTeamId(heros, GameData.player.Id);
+        int myTeam = GetMyTeamId(heros, GameData.Player.Id);
 
         #region 英雄
 
@@ -88,12 +83,12 @@ public class BattleData : Singleton<BattleData>
             CtrlDict.Add(item.Id, ctrl);
 
             // 判断这个英雄是不是自己
-            if (item.Id == GameData.player.Id)
+            if (item.Id == GameData.Player.Id)
             {
                 // 保存当前英雄
                 Hero = item;
                 // 保存英雄的控制器
-                HeroCtrl = ctrl;
+                GameData.Hero = ctrl;
             }
         }
 

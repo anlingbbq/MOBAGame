@@ -160,6 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Others\Demigiant\DOTweenPro\Editor\DOTweenAnimationInspector.cs" />
+    <Compile Include="Assets\Others\RTS Effects\KunaiEditor\Editor\KunaiEditor.cs" />
+    <Compile Include="Assets\Scripts\Manager\Pool\Editor\PoolEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Others\Demigiant\DOTween\DOTween.XML" />
@@ -174,6 +176,7 @@
     <None Include="Assets\Others\Demigiant\DemiLib\Core\DemiLib.xml" />
     <None Include="Assets\Others\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
     <None Include="Assets\Others\Demigiant\readme_DOTweenPro.txt" />
+    <None Include="Assets\Others\RTS Effects\KunaiEditor\Editor\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

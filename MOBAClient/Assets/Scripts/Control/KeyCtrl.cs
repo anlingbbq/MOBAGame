@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class KeyCtrl : MonoBehaviour
 {
+    /// <summary>
+    /// 英雄移动的请求
+    /// </summary>
     private HeroMoveRequest m_HeroMoveRequest;
 
     void Start()
@@ -13,6 +16,8 @@ public class KeyCtrl : MonoBehaviour
 
     void Update()
     {
+        #region 鼠标右键
+
         if (Input.GetMouseButtonDown(1))
         {
             Vector2 mouse = Input.mousePosition;
@@ -29,6 +34,19 @@ public class KeyCtrl : MonoBehaviour
                 Move(hit.point);
             }
         }
+
+        #endregion
+
+
+        #region 空格
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            // 焦距到自己的英雄
+            Camera.main.GetComponent<CameraCtrl>().FocusOn();
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -37,6 +55,10 @@ public class KeyCtrl : MonoBehaviour
     /// <param name="point"></param>
     private void Move(Vector3 point)
     {
+        // 显示点击特效
+        GameObject go = PoolManager.Instance.GetObject("ClickMove");
+        go.transform.position = point + Vector3.up;
+
         // 发送移动的请求
         m_HeroMoveRequest.SendHeroMove(point);
     }

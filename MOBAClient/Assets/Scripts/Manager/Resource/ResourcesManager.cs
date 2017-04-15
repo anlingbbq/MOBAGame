@@ -145,6 +145,7 @@ public class ResourcesManager : Singleton<ResourcesManager>
     /// </summary>
     public void ReleaseAll()
     {
+        m_AssetDict.Clear();
         Resources.UnloadUnusedAssets();
         GC.Collect();
     }

@@ -52,7 +52,7 @@ public class SelectData : Singleton<SelectData>
     /// <returns></returns>
     public void GetTeamId()
     {
-        int playerId = GameData.player.Id;
+        int playerId = GameData.Player.Id;
         for (int i = 0; i < m_Team1.Length; i++)
         {
             if (playerId == m_Team1[i].PlayerId)

@@ -27,8 +27,9 @@ public class EnterBattleRequest : BaseRequest
 
         // 初始化数据
         BattleData.Instance.InitData(heros, builds);
-
         // 初始化界面
         m_BattlePanel.InitView();
+        // 焦距英雄
+        Camera.main.GetComponent<CameraCtrl>().FocusOn();
     }
 }

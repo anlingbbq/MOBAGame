@@ -24,7 +24,7 @@ public class PlayerOnlineRequest : BaseRequest
         DtoPlayer dtoPlayer = JsonMapper.ToObject<DtoPlayer>
             (response.Parameters.ExTryGet((byte)ParameterCode.DtoPlayer) as string);
 
-        GameData.player = dtoPlayer;
+        GameData.Player = dtoPlayer;
         m_MainPanel.OnOnline(dtoPlayer);
     }
 }

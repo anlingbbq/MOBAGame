@@ -103,10 +103,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Others\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
+    <Compile Include="Assets\Others\RTS Effects\KunaiEditor\KunaiRotation.cs" />
+    <Compile Include="Assets\Others\RTS Effects\Scripts\AnimatedUVs.cs" />
+    <Compile Include="Assets\Others\RTS Effects\Scripts\ClickSpawn.cs" />
     <Compile Include="Assets\Scripts\Config\Paths.cs" />
     <Compile Include="Assets\Scripts\Control\AnimeCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\BaseCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\CameraCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\Hero\NavPathGizmo.cs" />
     <Compile Include="Assets\Scripts\Control\Hero\WarriorCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\HpCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\KeyCtrl.cs" />
@@ -117,6 +121,10 @@
     <Compile Include="Assets\Scripts\Manager\GameRoot.cs" />
     <Compile Include="Assets\Scripts\Manager\Log.cs" />
     <Compile Include="Assets\Scripts\Manager\PhotonEngine.cs" />
+    <Compile Include="Assets\Scripts\Manager\Pool\ObjectPool.cs" />
+    <Compile Include="Assets\Scripts\Manager\Pool\ObjectPoolList.cs" />
+    <Compile Include="Assets\Scripts\Manager\Pool\PoolManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\Pool\ReuseableObject.cs" />
     <Compile Include="Assets\Scripts\Manager\Resource\AssetType.cs" />
     <Compile Include="Assets\Scripts\Manager\Resource\IResourceListener.cs" />
     <Compile Include="Assets\Scripts\Manager\Resource\LoadAsset.cs" />
@@ -178,6 +186,7 @@
     <None Include="Assets\Others\Demigiant\DemiLib\Core\DemiLib.xml" />
     <None Include="Assets\Others\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
     <None Include="Assets\Others\Demigiant\readme_DOTweenPro.txt" />
+    <None Include="Assets\Others\RTS Effects\KunaiEditor\Editor\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

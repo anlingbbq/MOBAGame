@@ -35,4 +35,9 @@ public class HpCtrl : MonoBehaviour
     {
         BarHp.value = value;
     }
+
+    void LateUpdate()
+    {
+        transform.forward = Camera.main.transform.forward;    
+    }
 }

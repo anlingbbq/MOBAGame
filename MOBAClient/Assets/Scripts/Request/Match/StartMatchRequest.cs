@@ -22,7 +22,7 @@ public class StartMatchRequest : BaseRequest
     public void SendStartMatchRequest()
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
-        data.Add((byte)ParameterCode.PlayerId, GameData.player.Id);
+        data.Add((byte)ParameterCode.PlayerId, GameData.Player.Id);
         SendRequest(data);
     }
 

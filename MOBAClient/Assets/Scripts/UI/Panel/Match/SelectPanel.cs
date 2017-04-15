@@ -224,7 +224,7 @@ public class SelectPanel : UIBasePanel
         SoundManager.Instance.PlayEffectMusic(Paths.UI_CLICK);
 
         m_TalkReqeust.SendTalkRequesst(SelectData.Instance.TeamId, 
-            GameData.player.Name + ":" + InputTalk.text);
+            GameData.Player.Name + ":" + InputTalk.text);
 
         InputTalk.text = "";
     }

@@ -21,7 +21,7 @@ public class FriendListPanel : UIBasePanel
 
     void Start()
     {
-        List<DtoFriend> friends = GameData.player.Friends;
+        List<DtoFriend> friends = GameData.Player.Friends;
         GameObject go = null;
         foreach (DtoFriend friend in friends)
         {

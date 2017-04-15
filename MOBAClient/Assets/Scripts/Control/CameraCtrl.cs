@@ -89,4 +89,16 @@ public class CameraCtrl : MonoBehaviour
             transform.position.y, 
             Mathf.Clamp(transform.position.z, Z_MIN, Z_MAX));
     }
+
+    /// <summary>
+    /// 焦点在英雄上
+    /// </summary>
+    public void FocusOn()
+    {
+        if (GameData.Hero == null)
+            return;
+
+        Vector3 pos = GameData.Hero.transform.position;
+        transform.position = new Vector3(pos.x, transform.position.y, pos.z - 10);
+    }
 }

@@ -14,7 +14,7 @@ public class StopMatchRequest : BaseRequest
     public void SendStopMatchRequest()
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
-        data.Add((byte)ParameterCode.PlayerId, GameData.player.Id);
+        data.Add((byte)ParameterCode.PlayerId, GameData.Player.Id);
         PhotonEngine.Peer.OpCustom((byte)this.OpCode, data, true);
     }
 
