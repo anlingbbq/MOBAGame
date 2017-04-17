@@ -118,6 +118,7 @@
     <Compile Include="Assets\Scripts\Data\GameData.cs" />
     <Compile Include="Assets\Scripts\Data\SelectData.cs" />
     <Compile Include="Assets\Scripts\Event\BaseEvent.cs" />
+    <Compile Include="Assets\Scripts\Manager\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameRoot.cs" />
     <Compile Include="Assets\Scripts\Manager\Log.cs" />
     <Compile Include="Assets\Scripts\Manager\PhotonEngine.cs" />
@@ -131,7 +132,9 @@
     <Compile Include="Assets\Scripts\Manager\Resource\ResourcesManager.cs" />
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\DamageRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\EnterBattleRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\HeroAttackRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\HeroMoveRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\ReadyBattleRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\BeReaySelectRequest.cs" />

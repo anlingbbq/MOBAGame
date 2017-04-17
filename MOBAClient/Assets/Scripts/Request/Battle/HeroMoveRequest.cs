@@ -20,6 +20,7 @@ public class HeroMoveRequest : BaseRequest
         DtoVector3 point = JsonMapper.ToObject<DtoVector3>(
             response.Parameters[(byte)ParameterCode.DtoVector3] as string);
 
+        ctrl.LostTarget();
         ctrl.Move(new Vector3((float)point.X, (float)point.Y, (float)point.Z));
     }
 

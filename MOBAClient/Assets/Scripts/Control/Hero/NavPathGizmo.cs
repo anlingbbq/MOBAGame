@@ -5,11 +5,6 @@ using UnityEngine.AI;
 
 public class NavPathGizmo : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
     void OnDrawGizmos()
     {
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
@@ -31,7 +26,9 @@ public class NavPathGizmo : MonoBehaviour
 
         for (int i = 0; i < path.corners.Length - 1; i++)
         {
-            Debug.DrawLine(path.corners[i], path.corners[i + 1], color);
+            Vector3 pos = path.corners[i] + Vector3.up * 2;
+            Debug.DrawLine(pos, path.corners[i + 1], color);
         }
+        Debug.LogError("draw");
     }
 }

@@ -89,6 +89,26 @@ namespace Common.Code
         /// 三维坐标
         /// </summary>
         DtoVector3,
+        /// <summary>
+        /// 目标id
+        /// </summary>
+        TargetId,
+        /// <summary>
+        /// 目标id数组
+        /// </summary>
+        TargetArray,
+        /// <summary>
+        /// 攻击者id
+        /// </summary>
+        AttackId,
+        /// <summary>
+        /// 技能id
+        /// </summary>
+        SkillId,
+        /// <summary>
+        /// 伤害数据
+        /// </summary>
+        DtoDamages,
 
         #endregion
     }

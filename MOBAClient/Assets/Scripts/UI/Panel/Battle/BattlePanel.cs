@@ -68,23 +68,10 @@ public class BattlePanel : UIBasePanel, IResourceListener
 
     #endregion
 
-    /// <summary>
-    /// 进入游戏的请求
-    /// </summary>
-    private EnterBattleRequest m_EnterRequest;
-
-    void Start()
-    {
-        // 释放资源
-        ResourcesManager.Instance.ReleaseAll();
-        m_EnterRequest = GetComponent<EnterBattleRequest>();
-        OnEnter();
-    }
-
     public void InitView()
     {
         // 获取数据
-        DtoHero hero = BattleData.Instance.Hero;
+        DtoHero hero = GameData.HeroData;
         // 加载头像
         ResourcesManager.Instance.Load(Paths.RES_HEAD_UI + hero.Name, typeof(Sprite), this);
         // 默认状体
@@ -101,10 +88,9 @@ public class BattlePanel : UIBasePanel, IResourceListener
         TextKDA.text = hero.Kill + "/" + hero.Death;
     }
 
-    public override void OnEnter()
+    public void UpdateView(DtoHero data)
     {
-        base.OnEnter();
-        m_EnterRequest.SendRequest();
+        
     }
 
     void IResourceListener.OnLoaded(string assetName, object asset, AssetType assetType)

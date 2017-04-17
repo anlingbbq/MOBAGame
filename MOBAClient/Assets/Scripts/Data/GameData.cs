@@ -1,13 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Common.Dto;
 using Common.DTO;
 using UnityEngine;
 
 public class GameData
 {
-    // 保存自身的玩家数据
+    /// <summary>
+    /// 保存自身的玩家数据 
+    /// </summary>
     public static DtoPlayer Player;
 
-    // 保存自身的玩家控制器
-    public static BaseCtrl Hero;
+    /// <summary>
+    /// 保存自身的玩家控制器 
+    /// </summary>
+    public static BaseCtrl HeroCtrl;
+
+    /// <summary>
+    /// 自己的英雄数据
+    /// </summary>
+    public static DtoHero HeroData;
 }

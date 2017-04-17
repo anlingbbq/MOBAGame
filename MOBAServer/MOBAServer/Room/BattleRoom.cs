@@ -182,7 +182,7 @@ namespace MOBAServer.Room
         }
 
         /// <summary>
-        /// 获取英雄数据
+        /// 根据选择数据获取英雄数据
         /// </summary>
         /// <param name="dto"></param>
         public DtoHero GetDtoHero(DtoSelect dto, int team)
@@ -190,14 +190,28 @@ namespace MOBAServer.Room
             // 获取英雄模型
             HeroModel model = HeroData.GetHeroData(dto.HeroId);
             if (model == null)
-            {
-                MobaServer.LogError(">>>>>>> hero is null id : " + dto.HeroId);
-            }
+                return null;
 
             DtoHero hero = new DtoHero(dto.PlayerId, dto.HeroId, team, model.Hp, model.BaseAttack,
                 model.BaseDefens, model.AttackDistance, model.Name, model.Mp, model.SkillIds);
 
             return hero;
+        }
+
+        /// <summary>
+        /// 根据标识id获取英雄数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DtoHero GetDtoHero(int id)
+        {
+            DtoHero hero = null;
+            if (TeamOneHeros.TryGetValue(id, out hero))
+                return hero;
+            if (TeamTwoHeros.TryGetValue(id, out hero))
+                return hero;
+
+            return null;
         }
 
         /// <summary>
@@ -244,7 +258,7 @@ namespace MOBAServer.Room
         }
 
         /// <summary>
-        /// 清楚数据
+        /// 清除数据
         /// </summary>
         public void Clear()
         {

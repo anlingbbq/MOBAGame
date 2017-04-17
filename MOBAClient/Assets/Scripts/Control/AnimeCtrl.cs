@@ -24,6 +24,7 @@ public class AnimeCtrl : MonoBehaviour
     public void Free()
     {
         animator.SetBool("walk", false);
+        animator.SetBool("attack", false);
         State = AnimeState.free;
     }
 
@@ -33,7 +34,7 @@ public class AnimeCtrl : MonoBehaviour
     public void Attack()
     {
         animator.SetBool("walk", false);
-        animator.SetTrigger("attack");
+        animator.SetBool("attack", true);
         State = AnimeState.attack;
     }
 
@@ -42,6 +43,7 @@ public class AnimeCtrl : MonoBehaviour
     /// </summary>
     public void Walk()
     {
+        animator.SetBool("attack", false);
         animator.SetBool("walk", true);
         State = AnimeState.walk;
     }

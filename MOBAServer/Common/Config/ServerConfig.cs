@@ -20,6 +20,7 @@ namespace Common.Config
         public const int HeroTypeId = 0;
         /// <summary>
         /// 技能的初始id
+        /// 普通攻击的id为1000
         /// 英雄技能id：heroId *　skillId + num
         /// </summary>
         public const int SkillId = 1000;

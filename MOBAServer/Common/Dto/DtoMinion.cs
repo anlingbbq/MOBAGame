@@ -7,6 +7,7 @@ namespace Common.Dto
 {
     /// <summary>
     /// 小兵的数据传输对象
+    /// 同时也时游戏物体的数据基类
     /// </summary>
     public class DtoMinion
     {

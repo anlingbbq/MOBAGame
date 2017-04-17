@@ -19,7 +19,7 @@ public class PoolManager
 	// 选择目标路径
     public const string PoolConfigPath = "Assets/Resources/pool.asset";
 
-    // 一个字典，key是池子名字，value是单个池子
+    // key是池子名字，value是单个池子
     private Dictionary<string, ObjectPool> m_PoolDict = new Dictionary<string, ObjectPool>();
 
     public PoolManager()
@@ -40,7 +40,7 @@ public class PoolManager
     {
         if (!m_PoolDict.ContainsKey(poolName))
         {
-            Debug.LogError("没有这个 " + poolName + " 池子！");
+            Debug.LogError("找不到对象池: " + poolName);
             return null;
         }
 
@@ -70,7 +70,7 @@ public class PoolManager
     {
         if (!m_PoolDict.ContainsKey(poolName))
         {
-            Debug.LogError("没有这个 " + poolName + " 池子！");
+            Debug.LogError("找不到对象池: " + poolName);
             return;
         }
         ObjectPool pool = m_PoolDict[poolName];
@@ -82,7 +82,7 @@ public class PoolManager
     /// </summary>
     public void InitAllPool()
     {
-        foreach (var pool in m_PoolDict.Values)
+        foreach (ObjectPool pool in m_PoolDict.Values)
         {
             pool.InitPool();
         }

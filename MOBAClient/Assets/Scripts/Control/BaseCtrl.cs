@@ -15,6 +15,19 @@ public class BaseCtrl : MonoBehaviour
     public DtoMinion Model { get; set; }
 
     /// <summary>
+    /// 目标
+    /// </summary>
+    [SerializeField]
+    protected Transform m_Target;
+    /// <summary>
+    /// 失去目标
+    /// </summary>
+    public void LostTarget()
+    {
+        m_Target = null;
+    }
+
+    /// <summary>
     /// 初始化
     /// </summary>
     /// <param name="model"></param>
@@ -26,11 +39,11 @@ public class BaseCtrl : MonoBehaviour
         // 设置血条颜色
         m_HpCtrl.SetColor(friend);
 
-        // 设置标签
+        // 设置层
         if (friend)
-            gameObject.tag = "Friend";
+            gameObject.layer = LayerMask.NameToLayer("Friend");
         else
-            gameObject.tag = "Enemy";
+            gameObject.layer = LayerMask.NameToLayer("Enemy");
     }
 
     #region 动画
@@ -102,6 +115,7 @@ public class BaseCtrl : MonoBehaviour
         // 检测寻路是否终止
         if (m_AnimeCtrl.State == AnimeState.walk && !IsMoving)
         {
+            m_Target = null;
             m_AnimeCtrl.Free();
         }
     }
@@ -111,9 +125,9 @@ public class BaseCtrl : MonoBehaviour
     #region 攻击
 
     /// <summary>
-    /// 请求攻击
+    /// 攻击
     /// </summary>
-    public virtual void RequestAttack()
+    public virtual void Attack()
     {
         
     }
@@ -121,7 +135,7 @@ public class BaseCtrl : MonoBehaviour
     /// <summary>
     /// 响应攻击
     /// </summary>
-    public virtual void AttackResponse(Transform[] target)
+    public virtual void AttackResponse(params Transform[] target)
     {
         
     }

@@ -110,7 +110,18 @@ namespace Common.OpCode
 
         #region 英雄
 
+        /// <summary>
+        /// 英雄移动
+        /// </summary>
         HeroMove,
+        /// <summary>
+        /// 英雄攻击
+        /// </summary>
+        HeroAttack,
+        /// <summary>
+        /// 计算伤害
+        /// </summary>
+        Damage,
 
         #endregion
 

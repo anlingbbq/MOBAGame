@@ -37,11 +37,6 @@ public class BattleData : Singleton<BattleData>
     public DtoBuild[] Builds { get; private set; }
 
     /// <summary>
-    /// 自己的英雄数据
-    /// </summary>
-    public DtoHero Hero { get; private set; }
-
-    /// <summary>
     /// 保存游戏物体
     /// </summary>
     public Dictionary<int, BaseCtrl> CtrlDict = new Dictionary<int, BaseCtrl>();
@@ -85,10 +80,10 @@ public class BattleData : Singleton<BattleData>
             // 判断这个英雄是不是自己
             if (item.Id == GameData.Player.Id)
             {
-                // 保存当前英雄
-                Hero = item;
-                // 保存英雄的控制器
-                GameData.Hero = ctrl;
+                // 保存自己英雄的数据
+                GameData.HeroData = item;
+                // 保存自己英雄的控制器
+                GameData.HeroCtrl = ctrl;
             }
         }
 
@@ -136,5 +131,20 @@ public class BattleData : Singleton<BattleData>
             }
         }
         return -1;
+    }
+
+    /// <summary>
+    /// 接收服务器攻击响应
+    /// </summary>
+    public void OnAttack(int fromId, int toId, int skillId)
+    {
+        BaseCtrl fromCtrl = CtrlDict.ExTryGet(fromId);
+        BaseCtrl toCtrl = CtrlDict.ExTryGet(toId);
+
+        if (fromCtrl == null || toCtrl == null)
+            return;
+
+        // 调用攻击方法
+        fromCtrl.AttackResponse(toCtrl.transform);
     }
 }

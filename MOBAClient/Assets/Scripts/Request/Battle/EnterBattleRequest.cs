@@ -9,13 +9,8 @@ using UnityEngine;
 
 public class EnterBattleRequest : BaseRequest
 {
+    [SerializeField]
     private BattlePanel m_BattlePanel;
-
-    protected override void Start()
-    {
-        base.Start();
-        m_BattlePanel = GetComponent<BattlePanel>();
-    }
 
     public override void OnOperationResponse(OperationResponse response)
     {

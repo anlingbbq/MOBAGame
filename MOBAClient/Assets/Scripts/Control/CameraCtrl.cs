@@ -95,10 +95,10 @@ public class CameraCtrl : MonoBehaviour
     /// </summary>
     public void FocusOn()
     {
-        if (GameData.Hero == null)
+        if (GameData.HeroCtrl == null)
             return;
 
-        Vector3 pos = GameData.Hero.transform.position;
+        Vector3 pos = GameData.HeroCtrl.transform.position;
         transform.position = new Vector3(pos.x, transform.position.y, pos.z - 10);
     }
 }

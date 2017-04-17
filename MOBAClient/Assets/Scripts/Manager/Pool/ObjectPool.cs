@@ -27,11 +27,11 @@ public class ObjectPool
     /// 池子内所有对象的集合 
     /// </summary>
     [System.NonSerialized]
-    private List<GameObject> PrefabList = new List<GameObject>();
+    private List<GameObject> m_PrefabList = new List<GameObject>();
 
     public bool Contains(GameObject go)
     {
-        return PrefabList.Contains(go);
+        return m_PrefabList.Contains(go);
     }
 
     /// <summary> 
@@ -40,11 +40,11 @@ public class ObjectPool
     public GameObject GetObject()
     {
         GameObject go = null;
-        for (int i = 0; i < PrefabList.Count; i++)
+        for (int i = 0; i < m_PrefabList.Count; i++)
         {
-            if (!PrefabList[i].activeSelf)
+            if (!m_PrefabList[i].activeSelf)
             {
-                go = PrefabList[i];
+                go = m_PrefabList[i];
                 go.SetActive(true);
                 break;
             }
@@ -52,13 +52,13 @@ public class ObjectPool
 
         if (go == null)
         {
-            if (PrefabList.Count >= MaxCount)
+            if (m_PrefabList.Count >= MaxCount)
             {
-                GameObject.Destroy(PrefabList[0]);
-                PrefabList.RemoveAt(0);
+                GameObject.Destroy(m_PrefabList[0]);
+                m_PrefabList.RemoveAt(0);
             }
             go = GameObject.Instantiate<GameObject>(Prefab);
-            PrefabList.Add(go);
+            m_PrefabList.Add(go);
         }
         go.SendMessage("BeforeGetObject", SendMessageOptions.DontRequireReceiver);
         return go;
@@ -69,7 +69,7 @@ public class ObjectPool
     /// </summary>
     public void HideObject(GameObject go)
     {
-        if (PrefabList.Contains(go))
+        if (m_PrefabList.Contains(go))
         {
             go.SendMessage("BeforeHideObject", SendMessageOptions.DontRequireReceiver);
             go.SetActive(false);
@@ -81,15 +81,15 @@ public class ObjectPool
     /// </summary>
     public void HideAllObject()
     {
-        for (int i = 0; i < PrefabList.Count; i++)
+        for (int i = 0; i < m_PrefabList.Count; i++)
         {
-            if (PrefabList[i].activeSelf)
-                HideObject(PrefabList[i]);
+            if (m_PrefabList[i].activeSelf)
+                HideObject(m_PrefabList[i]);
         }
     }
 
     public void InitPool()
     {
-        PrefabList = new List<GameObject>();
+        m_PrefabList = new List<GameObject>();
     }
 }
