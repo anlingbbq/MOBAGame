@@ -29,6 +29,5 @@ public class NavPathGizmo : MonoBehaviour
             Vector3 pos = path.corners[i] + Vector3.up * 2;
             Debug.DrawLine(pos, path.corners[i + 1], color);
         }
-        Debug.LogError("draw");
     }
 }

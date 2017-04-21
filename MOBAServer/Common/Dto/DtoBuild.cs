@@ -31,8 +31,8 @@ namespace Common.Dto
         }
 
         public DtoBuild(int id, int typeId, int team, int maxHp, int attack, int defense,
-           double attackDistance, string name, bool aggressire, bool rebirth, int rebirthTime)
-            :base(id, typeId, team, maxHp, attack, defense, attackDistance, name)
+           double attackDistance, double attackInterval, string name, bool aggressire, bool rebirth, int rebirthTime)
+            :base(id, typeId, team, maxHp, attack, defense, attackDistance, attackInterval, name)
         {
             Aggressire = aggressire;
             Rebirth = rebirth;

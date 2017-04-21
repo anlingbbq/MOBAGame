@@ -18,7 +18,7 @@ public class BaseCtrl : MonoBehaviour
     /// 目标
     /// </summary>
     [SerializeField]
-    protected Transform m_Target;
+    protected BaseCtrl m_Target;
     /// <summary>
     /// 失去目标
     /// </summary>
@@ -53,6 +53,14 @@ public class BaseCtrl : MonoBehaviour
     /// </summary>
     [SerializeField]
     protected AnimeCtrl m_AnimeCtrl;
+
+    /// <summary>
+    /// 动画状态
+    /// </summary>
+    public AnimeState State
+    {
+        get { return m_AnimeCtrl.State; }
+    }
 
     #endregion
 
@@ -125,28 +133,74 @@ public class BaseCtrl : MonoBehaviour
     #region 攻击
 
     /// <summary>
-    /// 攻击
+    /// 攻击 计算伤害
     /// </summary>
     public virtual void Attack()
     {
-        
+        // 播放音效
+        PlayAudio("attack");
     }
 
     /// <summary>
-    /// 响应攻击
+    /// 攻击响应
+    /// 同步攻击动画 不计算伤害
     /// </summary>
     public virtual void AttackResponse(params Transform[] target)
     {
-        
+
+    }
+
+    /// <summary>
+    /// 停止攻击
+    /// </summary>
+    public virtual void StopAttack()
+    {
+        m_AnimeCtrl.Free();
+        m_Target = null;
+    }
+
+    #endregion
+
+    #region 音效
+
+    [SerializeField]
+    protected AudioSource m_AudioSource;
+
+    protected virtual void Start()
+    {
+        m_AudioSource.playOnAwake = false;
+        m_AudioSource.loop = false;
+    }
+
+    /// <summary>
+    /// 保存音效文件
+    /// </summary>
+    protected Dictionary<string, AudioClip> m_ClipDict = new Dictionary<string, AudioClip>();
+
+    /// <summary>
+    /// 播放音效
+    /// </summary>
+    protected void PlayAudio(string name)
+    {
+        if (m_AudioSource == null)
+            return;
+
+        AudioClip clip = m_ClipDict.ExTryGet(name);
+        if (clip == null)
+            return;
+
+        m_AudioSource.clip = clip;
+        m_AudioSource.Play();
     }
 
     #endregion
 
     /// <summary>
-    /// 死亡
+    /// 死亡响应
     /// </summary>
     public virtual void DeathResponse()
     {
-        
+        // 隐藏血条
+        m_HpCtrl.SetBarActive(false);
     }
 }

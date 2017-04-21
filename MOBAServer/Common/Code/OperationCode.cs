@@ -107,23 +107,18 @@ namespace Common.OpCode
         /// 获取战斗数据
         /// </summary>
         BattleGetInfo,
-
-        #region 英雄
-
         /// <summary>
         /// 英雄移动
         /// </summary>
         HeroMove,
         /// <summary>
-        /// 英雄攻击
+        /// 攻击
         /// </summary>
-        HeroAttack,
+        Attack,
         /// <summary>
         /// 计算伤害
         /// </summary>
         Damage,
-
-        #endregion
 
         #endregion
     }

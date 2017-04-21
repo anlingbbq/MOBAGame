@@ -193,7 +193,7 @@ namespace MOBAServer.Room
                 return null;
 
             DtoHero hero = new DtoHero(dto.PlayerId, dto.HeroId, team, model.Hp, model.BaseAttack,
-                model.BaseDefens, model.AttackDistance, model.Name, model.Mp, model.SkillIds);
+                model.BaseDefens, model.AttackDistance, model.AttackInterval, model.Name, model.Mp, model.SkillIds);
 
             return hero;
         }
@@ -226,9 +226,25 @@ namespace MOBAServer.Room
             // 获取建筑模型
             BuildModel model = BuildData.GetBuildData(typeId);
             DtoBuild build = new DtoBuild(id, typeId, team, model.Hp, model.Attack, model.Defense,
-                model.AttackDistance, model.Name, model.Agressire, model.Rebirth, model.RebirthTime);
+                model.AttackDistance, model.AttackInterval, model.Name, model.Agressire, model.Rebirth, model.RebirthTime);
 
             return build;
+        }
+
+        /// <summary>
+        /// 根据标识id获取建筑
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DtoBuild GetDtoBuild(int id)
+        {
+            DtoBuild build = null;
+            if (TeamOneBuilds.TryGetValue(id, out build))
+                return build;
+            if (TeamTwoBuilds.TryGetValue(id, out build))
+                return build;
+
+            return null;
         }
 
         /// <summary>

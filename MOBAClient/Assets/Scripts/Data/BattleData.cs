@@ -25,19 +25,14 @@ public class BattleData : Singleton<BattleData>
     /// <summary>
     /// 英雄数据
     /// </summary>
-    private DtoHero[] m_Heros;
-
-    public DtoHero[] Heros
-    {
-        get { return m_Heros; }
-    }
+    public DtoHero[] Heros { get; set; }
     /// <summary>
     /// 建筑数据
     /// </summary>
     public DtoBuild[] Builds { get; private set; }
 
     /// <summary>
-    /// 保存游戏物体
+    /// 保存游戏控制器
     /// </summary>
     public Dictionary<int, BaseCtrl> CtrlDict = new Dictionary<int, BaseCtrl>();
 
@@ -48,7 +43,7 @@ public class BattleData : Singleton<BattleData>
     /// <param name="builds"></param>
     public void InitData(DtoHero[] heros, DtoBuild[] builds)
     {
-        m_Heros = heros;
+        Heros = heros;
         Builds = builds;
 
         int myTeam = GetMyTeamId(heros, GameData.Player.Id);
@@ -57,7 +52,7 @@ public class BattleData : Singleton<BattleData>
 
         // 创建英雄
         GameObject go = null;
-        foreach (DtoHero item in m_Heros)
+        foreach (DtoHero item in Heros)
         {
             if (item.Team == 1)
             {
@@ -141,7 +136,7 @@ public class BattleData : Singleton<BattleData>
         BaseCtrl fromCtrl = CtrlDict.ExTryGet(fromId);
         BaseCtrl toCtrl = CtrlDict.ExTryGet(toId);
 
-        if (fromCtrl == null || toCtrl == null)
+        if (!fromCtrl || !toCtrl)
             return;
 
         // 调用攻击方法

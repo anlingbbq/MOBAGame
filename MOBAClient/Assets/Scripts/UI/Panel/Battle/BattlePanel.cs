@@ -13,6 +13,7 @@ public class BattlePanel : UIBasePanel, IResourceListener
     /// <summary>
     /// 头像图片
     /// </summary>
+    [Header("UI控件")]
     [SerializeField]
     private Image ImgHead;
     /// <summary>
@@ -68,13 +69,26 @@ public class BattlePanel : UIBasePanel, IResourceListener
 
     #endregion
 
+    #region 文字浮动效果
+
+    [Header("浮动文字")]
+    [SerializeField]
+    private bl_HUDText m_HUDText;
+
+    public void FloatDamage(int damage, Transform trans)
+    {
+        m_HUDText.NewText("- " + damage, trans, Color.red, 28, 20f, -1f, 2.2f, bl_Guidance.Up);
+    }
+
+    #endregion
+
     public void InitView()
     {
         // 获取数据
         DtoHero hero = GameData.HeroData;
         // 加载头像
         ResourcesManager.Instance.Load(Paths.RES_HEAD_UI + hero.Name, typeof(Sprite), this);
-        // 默认状体
+        // 默认状态
         BarExp.value = 0;
         BarHp.value = 1;
         BarMp.value = 1;
@@ -88,9 +102,26 @@ public class BattlePanel : UIBasePanel, IResourceListener
         TextKDA.text = hero.Kill + "/" + hero.Death;
     }
 
-    public void UpdateView(DtoHero data)
+    /// <summary>
+    /// 刷新界面
+    /// </summary>
+    /// <param name="hero"></param>
+    public void UpdateView(DtoHero hero)
     {
-        
+
+        // 更新状态条
+        BarExp.value = (float) hero.Exp / (hero.Level * 100);
+        BarHp.value = (float) hero.CurHp / hero.MaxHp;
+        BarMp.value = (float) hero.CurMp / hero.MaxMp;
+
+        // 更新文本
+        TextAttack.text = hero.Attack.ToString();
+        TextDefense.text = hero.Defense.ToString();
+        TextLevel.text = "Lv." + hero.Level;
+        TextHp.text = hero.CurHp + "/" + hero.MaxHp;
+        TextMp.text = hero.CurMp + "/" + hero.MaxMp;
+        TextCoins.text = hero.Money.ToString();
+        TextKDA.text = hero.Kill + "/" + hero.Death;
     }
 
     void IResourceListener.OnLoaded(string assetName, object asset, AssetType assetType)

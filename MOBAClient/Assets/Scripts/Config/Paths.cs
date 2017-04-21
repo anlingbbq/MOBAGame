@@ -19,6 +19,9 @@ public class Paths
     // 选择英雄的音效路径
     public const string RES_SOUND_SELECT = "Sound/Select/";
 
+    // 战斗音效路径
+    public const string RES_SOUND_BATTLE = "Sound/Battle/";
+
     #endregion
 
     // 头像路径

@@ -31,19 +31,18 @@ namespace Common.Config
         static HeroData()
         {
             // 创建临时的英雄数据
-            createHero(TypeId_Warrior, "战士", 60, 20, 300, 100, 10, 3, 50, 10, 5);
-            createHero(TypeId_Archer, "弓箭手", 50, 10, 200, 80, 15, 2, 30, 5, 12);
+            createHero(TypeId_Warrior, "战士", 60, 20, 300, 100, 10, 3, 50, 10, 5, 1.2);
+            createHero(TypeId_Archer, "弓箭手", 50, 10, 200, 80, 15, 2, 30, 5, 12, 1.2);
         }
 
         /// <summary>
         /// 创建英雄
         /// </summary>
         public static void createHero(int typeId, string name, int baseAttack, int baseDefense, int hp,
-            int mp, int growAttack, int growDefense, int growHp, int growMp,
-            double attackDistance)
+            int mp, int growAttack, int growDefense, int growHp, int growMp, double attackDistance, double attackInterval)
         {
             HeroModel hero = new HeroModel(typeId, name, baseAttack, baseDefense, hp,
-                mp, growAttack, growDefense, growHp, growMp,attackDistance);
+                mp, growAttack, growDefense, growHp, growMp, attackDistance, attackInterval);
 
             HeroDict.Add(hero.TypeId, hero);
         }
@@ -122,6 +121,11 @@ namespace Common.Config
         public double AttackDistance;
 
         /// <summary>
+        /// 攻击间隔
+        /// </summary>
+        public double AttackInterval;
+
+        /// <summary>
         /// 技能id
         /// </summary>
         public int[] SkillIds;
@@ -132,8 +136,7 @@ namespace Common.Config
         }
 
         public HeroModel(int typeId, string name, int baseAttack, int baseDefense, int hp,
-            int mp, int growAttack, int growDefense, int growHp, int growMp, 
-            double attackDistance)
+            int mp, int growAttack, int growDefense, int growHp, int growMp, double attackDistance, double attackInterval)
         {
             TypeId = typeId;
             Name = name;
@@ -146,6 +149,7 @@ namespace Common.Config
             GrowHp = growHp;
             GrowMp = growMp;
             AttackDistance = attackDistance;
+            AttackInterval = attackInterval;
 
             SkillIds = new []
             {

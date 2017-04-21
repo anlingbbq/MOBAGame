@@ -53,7 +53,7 @@ public class AnimeCtrl : MonoBehaviour
     /// </summary>
     public void Death()
     {
-        animator.SetBool("Death", true);
+        animator.SetTrigger("death");
         State = AnimeState.death;
     }
 }

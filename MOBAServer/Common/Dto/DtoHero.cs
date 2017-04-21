@@ -66,8 +66,8 @@ namespace Common.Dto
         }
 
         public DtoHero(int id, int typeId, int team, int maxHp, int attack, int defense,
-            double attackDistance, string name, int maxMp, int[] skills)
-            :base(id, typeId, team, maxHp, attack, defense, attackDistance, name)
+            double attackDistance, double attackInterval, string name, int maxMp, int[] skills)
+            :base(id, typeId, team, maxHp, attack, defense, attackDistance, attackInterval, name)
         {
             CurMp = MaxMp = maxMp;
             Level = 1;

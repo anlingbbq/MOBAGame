@@ -52,6 +52,11 @@ namespace Common.Dto
         public double AttackDistance { get; set; }
 
         /// <summary>
+        /// 攻击间隔
+        /// </summary>
+        public double AttackInterval { get; set; }
+
+        /// <summary>
         /// 名字
         /// </summary>
         public string Name { get; set; }
@@ -62,7 +67,7 @@ namespace Common.Dto
         }
 
         public DtoMinion(int id, int typeId, int team, int maxHp, int attack, int defense, 
-            double attackDistance, string name)
+            double attackDistance, double attackInterval, string name)
         {
             Id = id;
             TypeId = typeId;
@@ -71,6 +76,7 @@ namespace Common.Dto
             Attack = attack;
             Defense = defense;
             AttackDistance = attackDistance;
+            AttackInterval = attackInterval;
             Name = name;
         }
     }

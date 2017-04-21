@@ -14,14 +14,16 @@ namespace Common.Config
 
         static BuildData()
         {
-            createBuild(ServerConfig.MainBaseId, 5000, -1, 100, -1, "主基地", false, false, -1);
-            createBuild(ServerConfig.CampId, 3000, -1, 100, -1, "兵营", false, true, 300);
-            createBuild(ServerConfig.TowerId, 5000, 200, 20, 15, "炮塔", true, false, -1);
+            CreateBuild(ServerConfig.MainBaseId, 5000, -1, 100, -1, -1, "主基地", false, false, -1);
+            CreateBuild(ServerConfig.CampId, 3000, -1, 100, -1, -1, "兵营", false, true, 300);
+            CreateBuild(ServerConfig.TowerId, 5000, 200, 20, 15, 2, "炮塔", true, false, -1);
         }
 
-        private static void createBuild(int typeId, int hp, int attack, int defense, double attackDistance, string name, bool agressire, bool rebirth, int rebirthTime)
+        private static void CreateBuild(int typeId, int hp, int attack, int defense, double attackDistance, 
+            double attackInterval, string name, bool agressire, bool rebirth, int rebirthTime)
         {
-            BuildModel model = new BuildModel(typeId, hp, attack, defense, attackDistance, name, agressire, rebirth, rebirthTime);
+            BuildModel model = new BuildModel(typeId, hp, attack, defense, attackDistance, 
+                attackInterval, name, agressire, rebirth, rebirthTime);
 
             BuildDict.Add(model.TypeId, model);
         }
@@ -67,6 +69,11 @@ namespace Common.Config
         public double AttackDistance { get; set; }
 
         /// <summary>
+        /// 攻击间隔
+        /// </summary>
+        public double AttackInterval { get; set; }
+
+        /// <summary>
         /// 名称
         /// </summary>
         public string Name { get; set; }
@@ -86,7 +93,8 @@ namespace Common.Config
         /// </summary>
         public int RebirthTime { get; set; }
 
-        public BuildModel(int typeId, int hp, int attack, int defense, double attackDistance, string name, bool agressire, bool rebirth, int rebirthTime)
+        public BuildModel(int typeId, int hp, int attack, int defense, double attackDistance, 
+            double attakInterval, string name, bool agressire, bool rebirth, int rebirthTime)
         {
             this.TypeId = typeId;
             this.Hp = hp;
@@ -97,6 +105,7 @@ namespace Common.Config
             this.Agressire = agressire;
             this.Rebirth = rebirth;
             this.RebirthTime = rebirthTime;
+            this.AttackInterval = attakInterval;
         }
     }
 }

@@ -13,12 +13,12 @@ public class KeyCtrl : MonoBehaviour
     /// <summary>
     /// 英雄攻击的请求
     /// </summary>
-    private HeroAttackRequest m_HeroAttackRequest;
+    private AttackRequest m_AttackRequest;
 
     void Start()
     {
         m_HeroMoveRequest = GetComponent<HeroMoveRequest>();
-        m_HeroAttackRequest = GetComponent<HeroAttackRequest>();
+        m_AttackRequest = GetComponent<AttackRequest>();
     }
 
     void Update()
@@ -27,6 +27,10 @@ public class KeyCtrl : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
+            // 判断自身死亡状态
+            if (GameData.HeroCtrl.State == AnimeState.death)
+                return;
+
             Vector2 mouse = Input.mousePosition;
             // 屏幕坐标转换为射线
             Ray ray = Camera.main.ScreenPointToRay(mouse);
@@ -39,17 +43,18 @@ public class KeyCtrl : MonoBehaviour
             for (int i = hits.Length - 1; i >= 0; i--)
             {
                 RaycastHit hit = hits[i];
-
+                
+                // 投射到敌人则攻击
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
+                    int targetId = hit.collider.gameObject.GetComponent<BaseCtrl>().Model.Id;
+                    RequestAttack(targetId);
+                    break;
+                }
                 // 投射到地面则移动
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+                else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Terrain"))
                 {
                     RequestMove(hit.point);
-                }
-                // 投射到敌人则攻击
-                else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-                {
-                    RequestAttack(hit.collider.gameObject);
-                    break;
                 }
             }
         }
@@ -85,13 +90,14 @@ public class KeyCtrl : MonoBehaviour
     /// <summary>
     /// 请求攻击
     /// </summary>
-    /// <param name="target"></param>
-    private void RequestAttack(GameObject target)
+    /// <param name="targetId"></param>
+    private void RequestAttack(int targetId)
     {
-        // 请求攻击 发送参数 1.技能id, 2.目标id
+        // 请求攻击 发送参数 1.技能id, 2.攻击者的id, 3.目标id
         Dictionary<byte, object> data = new Dictionary<byte, object>();
         data.Add((byte)ParameterCode.SkillId, ServerConfig.SkillId);
-        data.Add((byte)ParameterCode.TargetId, target.GetComponent<BaseCtrl>().Model.Id);
-        m_HeroAttackRequest.SendRequest(data);
+        data.Add((byte)ParameterCode.AttackId, GameData.Player.Id);
+        data.Add((byte)ParameterCode.TargetId, targetId);
+        m_AttackRequest.SendRequest(data);
     }
 }

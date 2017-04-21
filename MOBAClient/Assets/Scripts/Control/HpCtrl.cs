@@ -14,10 +14,18 @@ public class HpCtrl : MonoBehaviour
     [SerializeField]
     private Slider BarHp;
     /// <summary>
-    /// 控制颜色
+    /// 填充图片
     /// </summary>
     [SerializeField]
     private Image ImgFill;
+
+    /// <summary>
+    /// 设置血条状态
+    /// </summary>
+    public void SetBarActive(bool isActive)
+    {
+        BarHp.gameObject.SetActive(isActive);
+    }
 
     /// <summary>
     /// 设置颜色
@@ -38,6 +46,7 @@ public class HpCtrl : MonoBehaviour
 
     void LateUpdate()
     {
+        // 始终朝向摄像机
         transform.forward = Camera.main.transform.forward;    
     }
 }

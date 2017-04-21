@@ -30,8 +30,8 @@ public class ResourcesManager : Singleton<ResourcesManager>
                     {
                         asset.ListenerList[j].OnLoaded(asset.AssetName, asset.GetAsset, asset.AssetType);
                     }
-                    m_AssetDict.Add(asset.AssetName, asset.GetAsset);
                     m_LoadingList.RemoveAt(i);
+                    m_AssetDict.Add(asset.AssetName, asset.GetAsset);
                 }
             }
         }
@@ -59,7 +59,6 @@ public class ResourcesManager : Singleton<ResourcesManager>
         {
             if (listener != null)
                 listener.OnLoaded(assetName, m_AssetDict[assetName], assetType);
-            return;
         }
         // 进行异步加载
         else
@@ -77,32 +76,25 @@ public class ResourcesManager : Singleton<ResourcesManager>
     /// <param name="assetType">自定义的资源类型</param>
     private void LoadAsync(string assetName, Type type, IResourceListener listener, AssetType assetType)
     {
-        // 如果需要回调
-        if (listener != null)
+        // 如果正在加载中 添加回掉
+        foreach (LoadAsset item in m_LoadingList)
         {
-            // 如果正在加载中 添加回掉
-            for (int i = 0; i < m_LoadingList.Count; i++)
+            if (item.AssetName == assetName)
             {
-                LoadAsset item = m_LoadingList[i];
-                if (item.AssetName == assetName)
-                {
-                    item.AddListener(listener);
-                    return;
-                }
-            }
-
-            // 如果在等待的队列中 添加回掉
-            for (int i = 0; i < m_WaitingQueue.Count; i++)
-            {
-                LoadAsset item = m_WaitingQueue.Peek();
-                if (item.AssetName == assetName)
-                {
-                    item.AddListener(listener);
-                    return;
-                }
+                item.AddListener(listener);
+                return;
             }
         }
-    
+
+        // 如果在等待的队列中 添加回掉
+        foreach (LoadAsset item in m_WaitingQueue)
+        {
+            if (item.AssetName == assetName)
+            {
+                item.AddListener(listener);
+                return;
+            }
+        }
 
         // 都没有 则创建资源
         LoadAsset asset = new LoadAsset();

@@ -151,6 +151,9 @@
     <Reference Include="Photon3Unity3D">
       <HintPath>Assets\Plugins\Photon3Unity3D.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-UnityScript">
+      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="MOBAClient.csproj">
@@ -161,6 +164,7 @@
   <ItemGroup>
     <Compile Include="Assets\Others\Demigiant\DOTweenPro\Editor\DOTweenAnimationInspector.cs" />
     <Compile Include="Assets\Others\RTS Effects\KunaiEditor\Editor\KunaiEditor.cs" />
+    <Compile Include="Assets\Others\UHUDText\Content\Script\Editor\bl_HUDTextEditor.cs" />
     <Compile Include="Assets\Scripts\Manager\Pool\Editor\PoolEditor.cs" />
   </ItemGroup>
   <ItemGroup>
