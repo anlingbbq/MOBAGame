@@ -135,9 +135,6 @@ public class SelectPanel : UIBasePanel
     /// <summary>
     /// 更新视图
     /// </summary>
-    /// <param name="TeamId">自身的队伍</param>
-    /// <param name="team1"></param>
-    /// <param name="team2"></param>
     public void UpdateView()
     {
         // 已经选择的英雄
@@ -182,7 +179,7 @@ public class SelectPanel : UIBasePanel
         foreach (ItemHero hero in ItemHeroDict.Values)
         {
             // 如果玩家已经准备了
-            if (BtnReady.interactable == false)
+            if (BtnReady.interactable == false && hasSelected)
             {
                 hero.Interactable = false;
                 continue;
@@ -197,11 +194,18 @@ public class SelectPanel : UIBasePanel
     }
 
     /// <summary>
+    /// 是否有选择
+    /// </summary>
+    private bool hasSelected = false;
+
+    /// <summary>
     /// 点击英雄头像的回调
     /// </summary>
     /// <param name="heroId"></param>
     public void OnSelectHeroClick(int heroId)
     {
+        hasSelected = true;
+        BtnReady.interactable = true;
         m_SelectedRequest.SendSelectedRequest(heroId);
     }
 
@@ -244,9 +248,10 @@ public class SelectPanel : UIBasePanel
     {
         base.OnEnter();
 
+        // 禁用准备按钮
+        BtnReady.interactable = false;
         // 清空聊天框
         TextContent.text = "";
-
         // 发送进入选人房间的消息
         m_EnterRequest.SendRequest();
     }

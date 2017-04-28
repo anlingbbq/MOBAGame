@@ -82,6 +82,7 @@
     <Compile Include="Extension\DictEx.cs" />
     <Compile Include="Handler\BaseHandler.cs" />
     <Compile Include="Handler\Battle\BattleGetInfoHandler.cs" />
+    <Compile Include="Handler\Battle\BuyItemHandler.cs" />
     <Compile Include="Handler\Battle\DamageHandler.cs" />
     <Compile Include="Handler\Battle\EnterBattleHandler.cs" />
     <Compile Include="Handler\Battle\AttackHandler.cs" />

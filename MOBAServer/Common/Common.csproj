@@ -46,6 +46,7 @@
     <Compile Include="Code\ParameterCode.cs" />
     <Compile Include="Code\ReturnCode.cs" />
     <Compile Include="Config\BuildData.cs" />
+    <Compile Include="Config\ItemData.cs" />
     <Compile Include="Config\Skill\DamageData.cs" />
     <Compile Include="Dto\DtoDamage.cs" />
     <Compile Include="Config\HeroData.cs" />

@@ -17,11 +17,11 @@ public class TowerCheck : MonoBehaviour
     /// <summary>
     /// 检测到的敌人列表
     /// </summary>
-    public List<BaseCtrl> EnemyList = new List<BaseCtrl>();
+    public List<AIBaseCtrl> EnemyList = new List<AIBaseCtrl>();
 
     private void OnTriggerEnter(Collider other)
     {
-        BaseCtrl ctrl = other.GetComponent<BaseCtrl>();
+        AIBaseCtrl ctrl = other.GetComponent<AIBaseCtrl>();
         if (ctrl == null || ctrl.Model.Team == m_Team)
             return;
 
@@ -30,7 +30,7 @@ public class TowerCheck : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        BaseCtrl ctrl = other.GetComponent<BaseCtrl>();
+        AIBaseCtrl ctrl = other.GetComponent<AIBaseCtrl>();
         if (EnemyList.Contains(ctrl))
             EnemyList.Remove(ctrl);
     }

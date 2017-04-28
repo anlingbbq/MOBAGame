@@ -15,14 +15,14 @@ namespace Common.Config
         static BuildData()
         {
             CreateBuild(ServerConfig.MainBaseId, 5000, -1, 100, -1, -1, "主基地", false, false, -1);
-            CreateBuild(ServerConfig.CampId, 3000, -1, 100, -1, -1, "兵营", false, true, 300);
-            CreateBuild(ServerConfig.TowerId, 5000, 200, 20, 15, 2, "炮塔", true, false, -1);
+            CreateBuild(ServerConfig.CampId, 2500, -1, 100, -1, -1, "兵营", false, true, 300);
+            CreateBuild(ServerConfig.TowerId, 2000, 0, 20, 15, 2, "炮塔", true, false, -1);
         }
 
         private static void CreateBuild(int typeId, int hp, int attack, int defense, double attackDistance, 
             double attackInterval, string name, bool agressire, bool rebirth, int rebirthTime)
         {
-            BuildModel model = new BuildModel(typeId, hp, attack, defense, attackDistance, 
+            BuildModel model = new BuildModel(typeId, hp, attack, defense, attackDistance,
                 attackInterval, name, agressire, rebirth, rebirthTime);
 
             BuildDict.Add(model.TypeId, model);

@@ -72,9 +72,8 @@ public class TargetSkill : MonoBehaviour
         {
             // 防止重复发送
             m_Send = false;
-
             // 发送伤害请求
-            m_DamageRequest.SendDamage(m_AttackId, m_SkillId, m_TargetId);
+            MOBAClient.BattleManager.Instance.RequestDamage(m_AttackId, m_SkillId, m_TargetId);
         }
         // 销毁物体
         PoolManager.Instance.HideObjet(gameObject);

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Common.Code;
-using Common.Config;
+﻿using Common.Config;
 using UnityEngine;
 
 public class KeyCtrl : MonoBehaviour
@@ -23,14 +20,27 @@ public class KeyCtrl : MonoBehaviour
 
     void Update()
     {
+        if (!GameData.HeroCtrl)
+            return;
+
+        #region 空格
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            // 焦距到自己的英雄
+            Camera.main.GetComponent<CameraCtrl>().FocusOn();
+        }
+
+        #endregion
+
         #region 鼠标右键
+
+        // 判断自身死亡状态
+        if (GameData.HeroCtrl.State.Type == AIStateEnum.DEAD)
+            return;
 
         if (Input.GetMouseButtonDown(1))
         {
-            // 判断自身死亡状态
-            if (GameData.HeroCtrl.State == AnimeState.death)
-                return;
-
             Vector2 mouse = Input.mousePosition;
             // 屏幕坐标转换为射线
             Ray ray = Camera.main.ScreenPointToRay(mouse);
@@ -39,35 +49,42 @@ public class KeyCtrl : MonoBehaviour
             // RaycastHit hit;
             // Physics.Raycast(ray, out hit))
 
+            
+            HitState state = HitState.INVALID;
+            RaycastHit hit = new RaycastHit();
             RaycastHit[] hits = Physics.RaycastAll(ray);
             for (int i = hits.Length - 1; i >= 0; i--)
             {
-                RaycastHit hit = hits[i];
-                
                 // 投射到敌人则攻击
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                if (hits[i].collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    int targetId = hit.collider.gameObject.GetComponent<BaseCtrl>().Model.Id;
-                    RequestAttack(targetId);
+                    hit = hits[i];
+                    state = HitState.ATTACK;
                     break;
                 }
                 // 投射到地面则移动
-                else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+                if (hits[i].collider.gameObject.layer == LayerMask.NameToLayer("Terrain"))
                 {
-                    RequestMove(hit.point);
+                    hit = hits[i];
+                    state = HitState.MOVE;
                 }
             }
-        }
 
-        #endregion
-
-
-        #region 空格
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            // 焦距到自己的英雄
-            Camera.main.GetComponent<CameraCtrl>().FocusOn();
+            /*
+             * 这里这样处理是为了
+             * 在先投射到移动层再投射到攻击层的时候
+             * 不处理移动，只处理攻击
+             */
+            if (state == HitState.MOVE)
+            {
+                RequestMove(hit.point);
+            }
+            else if (state == HitState.ATTACK)
+            {
+                int targetId = hit.collider.gameObject.GetComponent<AIBaseCtrl>().Model.Id;
+                // 发送攻击请求
+                m_AttackRequest.SendAttack(ServerConfig.SkillId, GameData.Player.Id, targetId);
+            }
         }
 
         #endregion
@@ -84,20 +101,16 @@ public class KeyCtrl : MonoBehaviour
         go.transform.position = point + Vector3.up * 2;
 
         // 发送移动的请求
-        m_HeroMoveRequest.SendHeroMove(point);
+        m_HeroMoveRequest.SendMove(point);
     }
 
     /// <summary>
-    /// 请求攻击
+    /// 射线状态
     /// </summary>
-    /// <param name="targetId"></param>
-    private void RequestAttack(int targetId)
+    enum HitState
     {
-        // 请求攻击 发送参数 1.技能id, 2.攻击者的id, 3.目标id
-        Dictionary<byte, object> data = new Dictionary<byte, object>();
-        data.Add((byte)ParameterCode.SkillId, ServerConfig.SkillId);
-        data.Add((byte)ParameterCode.AttackId, GameData.Player.Id);
-        data.Add((byte)ParameterCode.TargetId, targetId);
-        m_AttackRequest.SendRequest(data);
+        INVALID,
+        ATTACK,
+        MOVE,
     }
 }

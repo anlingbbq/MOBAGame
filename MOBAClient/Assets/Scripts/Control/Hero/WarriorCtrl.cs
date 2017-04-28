@@ -1,29 +1,39 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Common.Config;
 using UnityEngine;
 
-public class WarriorCtrl : BaseCtrl, IResourceListener
+public class WarriorCtrl : AIBaseCtrl, IResourceListener
 {
+    void Awake()
+    {
+        // 初始化状态
+        AddState(new HeroIdel());
+        AddState(new HeroMove());
+        AddState(new HeroAttack());
+        AddState(new HeroDead());
+        ChangeState(AIStateEnum.IDLE);
+    }
+
     protected override void Start()
     {
         base.Start();
+
+        // 加载音效
         ResourcesManager.Instance.Load(Paths.RES_SOUND_BATTLE + "WarriorAttack", typeof(AudioClip), this);
         ResourcesManager.Instance.Load(Paths.RES_SOUND_BATTLE + "WarriorDeath", typeof(AudioClip), this);
     }
 
-    public override void Attack()
+    public override void AttackRequest()
     {
-        base.Attack();
+        PlayAudio("attack");
 
         // 只发送自己的攻击
-        if (m_Target == null || this != GameData.HeroCtrl)
+        if (Target == null || this != GameData.HeroCtrl)
             return;
 
         // 获取目标id
-        int targetId = m_Target.GetComponent<BaseCtrl>().Model.Id;
-        // 请求计算伤害
-        BattleRoot.Instance.RequestDamage(targetId);
+        int targetId = Target.GetComponent<AIBaseCtrl>().Model.Id;
+        // 请求计算伤害 普通攻击
+        MOBAClient.BattleManager.Instance.RequestDamage(GameData.Player.Id, ServerConfig.SkillId, targetId);
     }
 
     /// <summary>
@@ -32,7 +42,9 @@ public class WarriorCtrl : BaseCtrl, IResourceListener
     /// <param name="target"></param>
     public override void AttackResponse(params Transform[] target)
     {
-        m_Target = target[0].GetComponent<BaseCtrl>();
+        Target = target[0].GetComponent<AIBaseCtrl>();
+        // 攻击状态
+        ChangeState(AIStateEnum.ATTACK);
     }
 
     public override void DeathResponse()
@@ -41,41 +53,8 @@ public class WarriorCtrl : BaseCtrl, IResourceListener
 
         // 停止寻路
         m_Agent.Stop();
-        // 播放死亡动画
-        m_AnimeCtrl.Death();
-        // 播放音效
-        PlayAudio("death");
-
-        // 添加到死亡层
-        gameObject.layer = LayerMask.NameToLayer("Death");
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
-        if (m_Target != null)
-        {
-            // 获取与目标的距离
-            float distance = Vector2.Distance(transform.position, m_Target.transform.position);
-
-            // 超过攻击距离
-            if (distance > Model.AttackDistance)
-            {
-                // 移动至目标位置
-                Move(m_Target.transform.position);
-            }
-            // 直接攻击
-            else
-            {
-                // 停止寻路
-                m_Agent.Stop();
-                // 面向目标
-                transform.LookAt(m_Target.transform);
-                // 播放动画
-                m_AnimeCtrl.Attack();
-            }
-        }
+        // 死亡状态
+        ChangeState(AIStateEnum.DEAD);
     }
 
     public void OnLoaded(string assetName, object asset, AssetType assetType)

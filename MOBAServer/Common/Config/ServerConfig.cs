@@ -63,5 +63,18 @@ namespace Common.Config
 
         #endregion
 
+        #region 道具
+
+        /// <summary>
+        /// 道具类型初始id
+        /// </summary>
+        public const int ItemTypeId = 1;
+
+        /// <summary>
+        /// 道具栏的最大数量
+        /// </summary>
+        public const int ItemMaxCount = 6;
+
+        #endregion
     }
 }

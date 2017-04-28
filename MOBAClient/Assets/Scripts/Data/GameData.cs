@@ -14,7 +14,7 @@ public class GameData
     /// <summary>
     /// 保存自身的玩家控制器 
     /// </summary>
-    public static BaseCtrl HeroCtrl;
+    public static AIBaseCtrl HeroCtrl;
 
     /// <summary>
     /// 自己的英雄数据

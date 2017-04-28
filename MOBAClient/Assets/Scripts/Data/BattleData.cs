@@ -34,7 +34,7 @@ public class BattleData : Singleton<BattleData>
     /// <summary>
     /// 保存游戏控制器
     /// </summary>
-    public Dictionary<int, BaseCtrl> CtrlDict = new Dictionary<int, BaseCtrl>();
+    public Dictionary<int, AIBaseCtrl> CtrlDict = new Dictionary<int, AIBaseCtrl>();
 
     /// <summary>
     /// 初始化游戏对象
@@ -68,7 +68,7 @@ public class BattleData : Singleton<BattleData>
             }
 
             // 初始化控制器
-            BaseCtrl ctrl = go.GetComponent<BaseCtrl>();
+            AIBaseCtrl ctrl = go.GetComponent<AIBaseCtrl>();
             ctrl.Init(item, item.Team == myTeam);
             CtrlDict.Add(item.Id, ctrl);
 
@@ -83,7 +83,7 @@ public class BattleData : Singleton<BattleData>
         }
 
         #endregion
-        return;
+
         #region 建筑
 
         // 创建建筑
@@ -102,7 +102,7 @@ public class BattleData : Singleton<BattleData>
             }
 
             // 初始化控制器
-            BaseCtrl ctrl = go.GetComponent<BaseCtrl>();
+            AIBaseCtrl ctrl = go.GetComponent<AIBaseCtrl>();
             ctrl.Init(build, build.Team == myTeam);
             CtrlDict.Add(build.Id, ctrl);
         }
@@ -133,8 +133,8 @@ public class BattleData : Singleton<BattleData>
     /// </summary>
     public void OnAttack(int fromId, int toId, int skillId)
     {
-        BaseCtrl fromCtrl = CtrlDict.ExTryGet(fromId);
-        BaseCtrl toCtrl = CtrlDict.ExTryGet(toId);
+        AIBaseCtrl fromCtrl = CtrlDict.ExTryGet(fromId);
+        AIBaseCtrl toCtrl = CtrlDict.ExTryGet(toId);
 
         if (!fromCtrl || !toCtrl)
             return;

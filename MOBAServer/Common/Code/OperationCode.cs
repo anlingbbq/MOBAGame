@@ -119,6 +119,10 @@ namespace Common.OpCode
         /// 计算伤害
         /// </summary>
         Damage,
+        /// <summary>
+        /// 购买装备
+        /// </summary>
+        BuyItem,
 
         #endregion
     }

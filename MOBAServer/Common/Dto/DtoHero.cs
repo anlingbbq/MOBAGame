@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Common.Config;
 
 namespace Common.Dto
 {
@@ -73,11 +74,32 @@ namespace Common.Dto
             Level = 1;
             Exp = 0;
             Money = 500;
-            Equipments = new int[6];
             Skills = skills;
             SP = 1;
             Kill = 0;
             Death = 0;
+
+            // 初始化装备为-1
+            Equipments = new int[ServerConfig.ItemMaxCount];
+            for (int i = 0; i < Equipments.Length; i++)
+                Equipments[i] = -1;
+        }
+
+        // 添加装备
+        public void AddItem(ItemModel item)
+        {
+            for (int i = 0; i < Equipments.Length; i++)
+            {
+                if (Equipments[i] == -1)
+                {
+                    // 添加装备属性
+                    Equipments[i] = item.Id;
+                    Attack += item.Attack;
+                    Defense += item.Defense;
+                    MaxHp += item.Hp;
+                    break;
+                }
+            }
         }
     }
 }

@@ -6,10 +6,9 @@ using UnityEngine;
 
 /// <summary>
 /// 防御塔控制
-/// 为防止重复发送请求
-/// 只有己方防御塔执行逻辑
+/// TODO 为防止重复发送请求，只有己方防御塔执行逻辑（这个处理问题很大，先不管）防御塔控制应该由服务器来做？
 /// </summary>
-public class TowerCtrl : BaseCtrl
+public class TowerCtrl : AIBaseCtrl
 {
     /// <summary>
     /// 检测攻击范围内的敌人
@@ -21,12 +20,12 @@ public class TowerCtrl : BaseCtrl
     /// 攻击点
     /// </summary>
     [SerializeField]
-    private Transform m_AttackPos;
+    public Transform m_AttackPos;
 
     /// <summary>
     /// 是否是己方队伍
     /// </summary>
-    private bool m_IsFriend;
+    public bool m_IsFriend;
 
     /// <summary>
     /// 攻击间隔计时
@@ -42,6 +41,8 @@ public class TowerCtrl : BaseCtrl
     {
         base.Start();
 
+        m_AttackRequest = GetComponent<AttackRequest>();
+
         // 赋值队伍信息
         m_Check.SetTeam(Model.Team);
         m_IsFriend = GameData.HeroCtrl.Model.Team == Model.Team;
@@ -50,9 +51,17 @@ public class TowerCtrl : BaseCtrl
     public override void AttackResponse(params Transform[] target)
     {
         // 生成一个攻击特效
-        GameObject go = PoolManager.Instance.GetObject("BulletTower");
+        GameObject go = null;
+        if (Model.Team == 1)
+            go = PoolManager.Instance.GetObject("BulletOne");
+        else 
+            go = PoolManager.Instance.GetObject("BulletTwo");
+
         go.transform.position = m_AttackPos.position;
-        int targetId = target[0].GetComponent<BaseCtrl>().Model.Id;
+        // 防止重置位置时产生的粒子
+        go.GetComponent<EllipsoidParticleEmitter>().emit = true;
+        // 初始化
+        int targetId = target[0].GetComponent<AIBaseCtrl>().Model.Id;
         go.GetComponent<TargetSkill>().Init(target[0], ServerConfig.SkillId, Model.Id, targetId, m_IsFriend);
     }
 
@@ -63,33 +72,32 @@ public class TowerCtrl : BaseCtrl
         this.gameObject.SetActive(false);
     }
 
-    protected override void Update()
+    void Update()
     {
         if (!m_IsFriend)
             return;
 
-        // 检测目标
-        if (m_Target == null)
+        // 获取目标
+        if (Target == null)
         {
             m_Timer = 0;
             if (m_Check.EnemyList.Count == 0)
                 return;
 
-            m_Target = m_Check.EnemyList[0];
+            Target = m_Check.EnemyList[0];
         }
         // 检测死亡
-        if (m_Target.Model.CurHp <= 0)
+        if (Target.Model.CurHp <= 0)
         {
-            m_Check.EnemyList.Remove(m_Target);
-            m_Target = null;
+            m_Check.EnemyList.Remove(Target);
+            Target = null;
             return;
         }
         // 检测攻击距离
-        float distance = Vector3.Distance(transform.position, m_Target.transform.position);
+        float distance = Vector3.Distance(transform.position, Target.transform.position);
         if (distance > Model.AttackDistance)
         {
-            m_Check.EnemyList.Remove(m_Target);
-            m_Target = null;
+            Target = null;
             return;
         }
         // 开始攻击
@@ -98,11 +106,7 @@ public class TowerCtrl : BaseCtrl
         {
             m_Timer = 0;
             // 向服务器发起攻击的请求
-            Dictionary<byte, object> data = new Dictionary<byte, object>();
-            data.Add((byte)ParameterCode.AttackId, Model.Id);
-            data.Add((byte)ParameterCode.SkillId, ServerConfig.SkillId);
-            data.Add((byte)ParameterCode.TargetId, m_Target.Model.Id);
-            m_AttackRequest.SendRequest(data);
+            m_AttackRequest.SendAttack(ServerConfig.SkillId, Model.Id, Target.Model.Id);
         }
     }
 }

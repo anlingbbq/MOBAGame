@@ -40,9 +40,9 @@ public class DamageRequest : BaseRequest
             item = damages[i];
             int toId = item.ToId;
             // 获取目标控制器
-            BaseCtrl toCtrl = BattleData.Instance.CtrlDict.ExTryGet(toId);
-            if (toCtrl == null)
-                return;
+            AIBaseCtrl toCtrl = BattleData.Instance.CtrlDict.ExTryGet(toId);
+            if (!toCtrl) return;
+
             toCtrl.Model.CurHp -= item.Damage;
             toCtrl.OnHpChange();
 
@@ -66,17 +66,6 @@ public class DamageRequest : BaseRequest
                 if (item.IsDead)
                 {
                     toCtrl.DeathResponse();
-
-                    // 如果攻击的首要目标死亡
-                    if (i == 0)
-                    {
-                        // 获取攻击者的控制器
-                        BaseCtrl ctrl = BattleData.Instance.CtrlDict.ExTryGet(item.FromId);
-                        if (ctrl == null)
-                            return;
-                        // 停止攻击
-                        ctrl.StopAttack();
-                    }
                 }
             }
         }

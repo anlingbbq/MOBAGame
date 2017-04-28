@@ -43,7 +43,7 @@ namespace MOBAServer.Handler
 
             }
             // 建筑id范围
-            else if (fromId >= ServerConfig.TeamTwoBuildId && fromId <= ServerConfig.TeamOneBuildId)
+            else if (fromId >= ServerConfig.TeamTwoBuildId - 100 && fromId <= ServerConfig.TeamOneBuildId)
             {
                 fromDto = room.GetDtoBuild(fromId);
             }
@@ -67,7 +67,7 @@ namespace MOBAServer.Handler
 
                 }
                 // 建筑id范围
-                else if (toIds[i] >= ServerConfig.TeamTwoBuildId && toIds[i] <= ServerConfig.TeamOneBuildId)
+                else if (toIds[i] >= ServerConfig.TeamTwoBuildId - 100 && toIds[i] <= ServerConfig.TeamOneBuildId)
                 {
                     toDtos[i] = room.GetDtoBuild(toIds[i]);
                 }
