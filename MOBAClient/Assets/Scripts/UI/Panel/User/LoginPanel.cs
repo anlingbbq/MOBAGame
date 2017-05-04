@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Common.Code;
-using Common.DTO;
-using Common.OpCode;
+﻿using Common.Code;
 using DG.Tweening;
 using ExitGames.Client.Photon;
 using LitJson;
@@ -43,7 +38,7 @@ public class LoginPanel : UIBasePanel, IResourceListener
         ResourcesManager.Instance.Load(Paths.UI_ENTERGAME, typeof(AudioClip));
         ResourcesManager.Instance.Load(Paths.UI_CLICK, typeof(AudioClip));
         ResourcesManager.Instance.Load(Paths.UI_READY, typeof(AudioClip));
-        ResourcesManager.Instance.Load(Paths.UI_LOGIN_BG, typeof(AudioClip), this, AssetType.SoundBGM);
+        ResourcesManager.Instance.Load(Paths.UI_LOGIN_BG, typeof(AudioClip), this);
     }
 
     /// <summary>
@@ -56,6 +51,13 @@ public class LoginPanel : UIBasePanel, IResourceListener
         if (!string.IsNullOrEmpty(InputUsername.text)
             && !string.IsNullOrEmpty(InputPassword.text))
         {
+            if (!PhotonEngine.Instance.IsConnect)
+            {
+                TipPanel.SetContent("服务器连接失败。。");
+                UIManager.Instance.PushPanel(UIPanelType.Tip);
+                return;
+            }
+
             m_LoginRequest.SendLoginRequest(InputUsername.text, InputPassword.text);
 
             ResetPanel();
@@ -121,10 +123,10 @@ public class LoginPanel : UIBasePanel, IResourceListener
         LoginLayer.DOLocalMoveY(0, 1.5f).SetEase(Ease.OutBack);
     }
 
-    public void OnLoaded(string assetName, object asset, AssetType assetType)
+    public void OnLoaded(string assetName, object asset)
     {
         // 播放背景音乐
-        if (assetType == AssetType.SoundBGM)
+        if (assetName == Paths.UI_LOGIN_BG)
         {
             SoundManager.Instance.PlayBgMusic(asset as AudioClip);
         }

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using Common.Code;
 using Common.Config;
-using Common.Config.Skill;
 using Common.Dto;
 using Common.OpCode;
 using LitJson;
 using MOBAServer.Cache;
 using MOBAServer.DataBase.Manager;
 using MOBAServer.Room;
+using MOBAServer.Skill;
 using Photon.SocketServer;
 
 namespace MOBAServer.Handler
@@ -80,32 +80,36 @@ namespace MOBAServer.Handler
            
             #endregion
 
-            ISkill skill = null;
-            List<DtoDamage> damages = null;
-            // 区别普通攻击和技能
-            if (skillId == ServerConfig.SkillId)
-            {
-                // 普通攻击
-                skill = DamageData.GetSkill(skillId);
-                damages = skill.Damge(0, fromDto, toDtos);
+            // 使用技能 获取伤害数据
+            DtoDamage[] damages = null;
+            damages = SkillManager.Instance.RunSkill(skillId, 0, fromDto, toDtos);
+            if (damages == null)
+                return;
 
-                // 死亡检测
-                foreach (DtoDamage item in damages)
-                {
-                    if (item.IsDead)
-                    {
+            //// 区别普通攻击和技能
+            //if (skillId == ServerConfig.SkillId)
+            //{
+            //    // 普通攻击
+            //    skill = DamageData.GetSkill(skillId);
+            //    damages = skill.Damge(0, fromDto, toDtos);
+
+            //    // 死亡检测
+            //    foreach (DtoDamage item in damages)
+            //    {
+            //        if (item.IsDead)
+            //        {
                         
-                    }
-                }
-            }
-            else
-            {
-                // 技能
-            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    // 技能
+            //}
 
             // 广播伤害数据传输对象
             Dictionary<byte, object> data = new Dictionary<byte, object>();
-            data.Add((byte)ParameterCode.DtoDamages, JsonMapper.ToJson(damages.ToArray()));
+            data.Add((byte)ParameterCode.DtoDamages, JsonMapper.ToJson(damages));
             room.Brocast(OperationCode.Damage, data);
         }
     }

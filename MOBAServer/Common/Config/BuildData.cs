@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Common.Config
 {
@@ -14,9 +11,9 @@ namespace Common.Config
 
         static BuildData()
         {
-            CreateBuild(ServerConfig.MainBaseId, 5000, -1, 100, -1, -1, "主基地", false, false, -1);
-            CreateBuild(ServerConfig.CampId, 2500, -1, 100, -1, -1, "兵营", false, true, 300);
-            CreateBuild(ServerConfig.TowerId, 2000, 0, 20, 15, 2, "炮塔", true, false, -1);
+            CreateBuild(ServerConfig.MainBaseId, 2000, -1, 100, -1, -1, "主基地", false, false, -1);
+            CreateBuild(ServerConfig.CampId, 1000, -1, 100, -1, -1, "兵营", false, true, 300);
+            CreateBuild(ServerConfig.TowerId, 1200, 20, 20, 15, 2, "炮塔", true, false, -1);
         }
 
         private static void CreateBuild(int typeId, int hp, int attack, int defense, double attackDistance, 

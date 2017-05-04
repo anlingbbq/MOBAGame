@@ -26,6 +26,11 @@ public class AIBaseCtrl : MonoBehaviour
     public AIBaseCtrl Target;
 
     /// <summary>
+    /// 小地图头像
+    /// </summary>
+    public SpriteRenderer MiniMapHead;
+
+    /// <summary>
     /// 初始化
     /// </summary>
     /// <param name="model"></param>
@@ -173,14 +178,16 @@ public class AIBaseCtrl : MonoBehaviour
     }
 
     /// <summary>
-    /// 切换移动状态
+    /// 设置移动速度
     /// </summary>
-    /// <param name="point"></param>
-    public void Move(Vector3 point)
+    public float Speed
     {
-        MoveTo(point);
-        // 移动状态
-        ChangeState(AIStateEnum.MOVE);
+        get { return (float)Model.Speed; }
+        set
+        {
+            Model.Speed = value;
+            m_Agent.speed = value;
+        }
     }
 
     /// <summary>
@@ -195,6 +202,17 @@ public class AIBaseCtrl : MonoBehaviour
         m_Agent.SetDestination(point);
         // 动画
         AnimeCtrl.Move();
+    }
+
+    /// <summary>
+    /// 切换移动状态
+    /// </summary>
+    /// <param name="point"></param>
+    public void Move(Vector3 point)
+    {
+        MoveTo(point);
+        // 移动状态
+        ChangeState(AIStateEnum.MOVE);
     }
 
     /// <summary>

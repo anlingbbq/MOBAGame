@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Common.Config
 {
     public class ItemData
     {
-        static Dictionary<int, ItemModel> ItemDict = new Dictionary<int, ItemModel>();
+        public static Dictionary<int, ItemModel> ItemDict = new Dictionary<int, ItemModel>();
 
         static ItemData()
         {
@@ -16,16 +14,41 @@ namespace Common.Config
             CreateItem(ServerConfig.ItemTypeId + 2, "弯弓", 20, 0, 40, 450);
         }
 
+        /// <summary>
+        /// 创建物品
+        /// </summary>
+        /// <param name="typeId"></param>
+        /// <param name="name"></param>
+        /// <param name="attack"></param>
+        /// <param name="defense"></param>
+        /// <param name="hp"></param>
+        /// <param name="price"></param>
         public static void CreateItem(int typeId, string name, int attack, int defense, int hp, int price)
         {
             ItemDict.Add(typeId, new ItemModel(name, typeId, attack, defense, hp, price));
         }
 
+        /// <summary>
+        /// 根据id获取物品
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static ItemModel GetItem(int id)
         {
             ItemModel model;
             ItemDict.TryGetValue(id, out model);
             return model;
+        }
+
+        public static ItemModel[] GetArray()
+        {
+            int i = 0;
+            ItemModel[] array = new ItemModel[ItemDict.Count];
+            foreach (ItemModel item in ItemDict.Values)
+            {
+                array[i++] = item;
+            }
+            return array;
         }
     }
 

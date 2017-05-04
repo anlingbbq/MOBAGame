@@ -12,7 +12,7 @@ public class UIBasePanel : MonoBehaviour
         m_CanvasGroup = GetComponent<CanvasGroup>();
         if (m_CanvasGroup == null)
         {
-            Log.Error("UIPanel 没有挂载CanvasGroup组件");
+            Debug.LogError("UIPanel 没有挂载CanvasGroup组件");
             m_CanvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
     }
@@ -24,6 +24,8 @@ public class UIBasePanel : MonoBehaviour
         m_CanvasGroup.alpha = 1;
         m_CanvasGroup.blocksRaycasts = true;
         m_CanvasGroup.interactable = true;
+
+        transform.SetAsLastSibling();
     }
 
     public virtual void OnPause()
@@ -53,7 +55,6 @@ public class UIBasePanel : MonoBehaviour
     /// </summary>
     public virtual void ShowPanel()
     {
-        this.transform.SetAsLastSibling();
         this.OnEnter();
     }
 

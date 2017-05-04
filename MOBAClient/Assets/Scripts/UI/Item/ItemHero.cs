@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Common.Config;
+﻿using Common.Config;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +12,11 @@ public class ItemHero : MonoBehaviour, IResourceListener
     
     private AudioClip m_HeroSound;
 
+    /// <summary>
+    /// 英雄名称
+    /// </summary>
+    private string HeroName;
+
     void Start()
     {
         BtnHead.onClick.AddListener(OnClick);
@@ -22,16 +24,15 @@ public class ItemHero : MonoBehaviour, IResourceListener
 
     public void InitView(HeroModel hero)
     {
-        // 保存英雄id
+        // 保存英雄数据
         HeroId = hero.TypeId;
+        HeroName = hero.Name;
 
         // 加载选择的音效资源
-        ResourcesManager.Instance.Load(Paths.RES_SOUND_SELECT + hero.Name,
-            typeof(AudioClip), this, AssetType.SoundEffect);
+        ResourcesManager.Instance.Load(Paths.RES_SOUND_SELECT + HeroName, typeof(AudioClip));
 
         // 获取头像资源
-        string headPath = Paths.RES_HEAD_UI + hero.Name;
-        ResourcesManager.Instance.Load(headPath, typeof(Sprite), this, AssetType.Sprite);
+        ResourcesManager.Instance.Load(Paths.RES_HEAD_UI + HeroName, typeof(Sprite), this);
     }
 
     /// <summary>
@@ -56,13 +57,13 @@ public class ItemHero : MonoBehaviour, IResourceListener
         panel.OnSelectHeroClick(HeroId);
     }
 
-    public void OnLoaded(string assetName, object asset, AssetType assetType)
+    public void OnLoaded(string assetName, object asset)
     {
-        if (assetType == AssetType.SoundEffect)
+        if (assetName == Paths.RES_SOUND_SELECT + HeroName)
         {
             m_HeroSound = asset as AudioClip;
         }
-        else if (assetType == AssetType.Sprite)
+        else if (assetName == Paths.RES_HEAD_UI + HeroName)
         {
             ImageHead.sprite = asset as Sprite;
         }

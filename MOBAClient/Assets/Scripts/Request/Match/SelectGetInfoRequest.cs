@@ -38,6 +38,6 @@ public class SelectGetInfoRequest : BaseRequest
         // 更新界面
         m_SelectPanel.UpdateView();
         // 初始化选人层
-        m_SelectPanel.InitSelectHeroLayer(GameData.Player.HeroIds);
+        m_SelectPanel.InitSelectHeros(GameData.Player.HeroIds);
     }
 }

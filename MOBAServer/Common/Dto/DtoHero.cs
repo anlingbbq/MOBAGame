@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Common.Config;
+﻿using Common.Config;
 
 namespace Common.Dto
 {
@@ -42,14 +38,19 @@ namespace Common.Dto
         public int[] Equipments { get; set; }
 
         /// <summary>
-        /// 技能列表
+        /// 技能id
         /// </summary>
-        public int[] Skills { get; set; }
+        public int[] SkillIds { get; set; }
 
         /// <summary>
         /// 技能点数
         /// </summary>
         public int SP { get; set; }
+
+        /// <summary>
+        /// 技能数据
+        /// </summary>
+        public DtoSkill[] Skills { get; set; }
 
         /// <summary>
         /// 击杀
@@ -67,39 +68,94 @@ namespace Common.Dto
         }
 
         public DtoHero(int id, int typeId, int team, int maxHp, int attack, int defense,
-            double attackDistance, double attackInterval, string name, int maxMp, int[] skills)
-            :base(id, typeId, team, maxHp, attack, defense, attackDistance, attackInterval, name)
+            double attackDistance, double attackInterval, string name, int maxMp, double speed, int[] skillIds)
+            :base(id, typeId, team, maxHp, attack, defense, attackDistance, attackInterval, speed, name)
         {
             CurMp = MaxMp = maxMp;
             Level = 1;
             Exp = 0;
             Money = 500;
-            Skills = skills;
+            SkillIds = skillIds;
             SP = 1;
             Kill = 0;
             Death = 0;
 
-            // 初始化装备为-1
+            // 初始化装备id为-1
             Equipments = new int[ServerConfig.ItemMaxCount];
             for (int i = 0; i < Equipments.Length; i++)
                 Equipments[i] = -1;
+
+            // 初始化技能
+            Skills = new DtoSkill[SkillIds.Length];
+            for (int i = 0; i < SkillIds.Length; i++)
+            {
+                SkillModel model = SkillData.GetSkill(SkillIds[i]);
+                if (model != null)
+                {
+                    Skills[i] = new DtoSkill(model, -1);
+                }
+            }
         }
 
-        // 添加装备
-        public void AddItem(ItemModel item)
+        /// <summary>
+        /// 添加装备 
+        /// </summary>
+        /// <param name="item">装备</param>
+        /// <returns>是否成功</returns>
+        public bool BuyItem(ItemModel item)
         {
             for (int i = 0; i < Equipments.Length; i++)
             {
                 if (Equipments[i] == -1)
                 {
+                    // 扣钱
+                    Money -= item.Price;
                     // 添加装备属性
                     Equipments[i] = item.Id;
                     Attack += item.Attack;
                     Defense += item.Defense;
                     MaxHp += item.Hp;
+                    CurHp += item.Hp;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 升级技能
+        /// </summary>
+        /// <param name="skillId"></param>
+        /// <returns></returns>
+        public DtoSkill UpgradeSkill(int skillId)
+        {
+            DtoSkill skill = null;
+            foreach (DtoSkill item in Skills)
+            {
+                if (item.Id == skillId)
+                {
+                    skill = item;
                     break;
                 }
             }
+            if (skill == null)
+                return null;
+
+            SP -= 1;
+            // 升级技能
+            skill.Upgrade();
+            return skill;
+        }
+
+        /// <summary>
+        /// 更新数据
+        /// </summary>
+        /// <param name=""></param>
+        public void Update(DtoHero data)
+        {
+            Attack = data.Attack;
+            Defense = data.Defense;
+
         }
     }
 }

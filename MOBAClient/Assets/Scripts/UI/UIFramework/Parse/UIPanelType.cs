@@ -14,4 +14,6 @@ public enum UIPanelType {
     FriendList,
     Match,
     Select,
+    Battle,
+    Shop,
 }

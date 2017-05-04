@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Common.Config;
 using Common.Dto;
 
@@ -193,7 +192,7 @@ namespace MOBAServer.Room
                 return null;
 
             DtoHero hero = new DtoHero(dto.PlayerId, dto.HeroId, team, model.Hp, model.BaseAttack,
-                model.BaseDefens, model.AttackDistance, model.AttackInterval, model.Name, model.Mp, model.SkillIds);
+                model.BaseDefens, model.AttackDistance, model.AttackInterval, model.Name, model.Mp, model.Speed, model.SkillIds);
 
             return hero;
         }

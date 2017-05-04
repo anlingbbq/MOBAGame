@@ -44,5 +44,10 @@ namespace Common.Dto
             Damage = damage;
             IsDead = isDead;
         }
+
+        public override string ToString()
+        {
+            return "fromId: " + FromId + ", toId : " + ToId + ", Damage : " + Damage;
+        }
     }
 }

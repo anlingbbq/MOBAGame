@@ -104,10 +104,6 @@ namespace Common.OpCode
         /// </summary>
         EnterBattle,
         /// <summary>
-        /// 获取战斗数据
-        /// </summary>
-        BattleGetInfo,
-        /// <summary>
         /// 英雄移动
         /// </summary>
         HeroMove,
@@ -123,6 +119,10 @@ namespace Common.OpCode
         /// 购买装备
         /// </summary>
         BuyItem,
+        /// <summary>
+        /// 升级技能
+        /// </summary>
+        UpgradeSkill,
 
         #endregion
     }

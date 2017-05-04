@@ -28,7 +28,7 @@ public class ResourcesManager : Singleton<ResourcesManager>
                     LoadAsset asset = m_LoadingList[i];
                     for (int j = 0; j < asset.ListenerList.Count; j++)
                     {
-                        asset.ListenerList[j].OnLoaded(asset.AssetName, asset.GetAsset, asset.AssetType);
+                        asset.ListenerList[j].OnLoaded(asset.AssetName, asset.GetAsset);
                     }
                     m_LoadingList.RemoveAt(i);
                     m_AssetDict.Add(asset.AssetName, asset.GetAsset);
@@ -51,19 +51,20 @@ public class ResourcesManager : Singleton<ResourcesManager>
     /// <param name="type">资源类型</param>
     /// <param name="listener">回掉</param>
     /// <param name="assetType">自定义的资源类型</param>
-    public void Load(string assetName, Type type, IResourceListener listener = null, 
-        AssetType assetType = AssetType.Default)
+    public void Load(string assetName, Type type, IResourceListener listener = null)
     {
         // 资源已存在 直接完成回掉
         if (m_AssetDict.ContainsKey(assetName))
         {
             if (listener != null)
-                listener.OnLoaded(assetName, m_AssetDict[assetName], assetType);
+            {
+                listener.OnLoaded(assetName, m_AssetDict[assetName]);
+            }
         }
         // 进行异步加载
         else
         {
-            LoadAsync(assetName, type, listener, assetType);
+            LoadAsync(assetName, type, listener);
         }
     }
 
@@ -73,8 +74,7 @@ public class ResourcesManager : Singleton<ResourcesManager>
     /// <param name="assetName">资源名</param>
     /// <param name="type">资源类型</param>
     /// <param name="listener">回掉</param>
-    /// <param name="assetType">自定义的资源类型</param>
-    private void LoadAsync(string assetName, Type type, IResourceListener listener, AssetType assetType)
+    private void LoadAsync(string assetName, Type type, IResourceListener listener)
     {
         // 如果正在加载中 添加回掉
         foreach (LoadAsset item in m_LoadingList)
@@ -100,7 +100,6 @@ public class ResourcesManager : Singleton<ResourcesManager>
         LoadAsset asset = new LoadAsset();
         asset.AssetName = assetName;
         asset.Type = type;
-        asset.AssetType = assetType;
         asset.AddListener(listener);
 
         // 添加到等待队列

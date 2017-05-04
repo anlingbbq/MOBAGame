@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Common.Config;
 using Common.Dto;
+using MOBAClient;
 using UnityEngine;
 
 public class BattleData : Singleton<BattleData>
@@ -48,6 +48,9 @@ public class BattleData : Singleton<BattleData>
 
         int myTeam = GetMyTeamId(heros, GameData.Player.Id);
 
+        // 初始化技能数据
+        SkillData.Instance.Init(heros);
+
         #region 英雄
 
         // 创建英雄
@@ -57,13 +60,13 @@ public class BattleData : Singleton<BattleData>
             if (item.Team == 1)
             {
                 go = Instantiate(Resources.Load<GameObject>(Paths.RES_MODEL_HERO + item.Name),
-                    Team1HeroPoint[0].position, Quaternion.AngleAxis(90, Vector3.up));
+                    Team1HeroPoint[0].position, Quaternion.AngleAxis(180, Vector3.up));
                 go.transform.SetParent(Team1Parent);
             }
             else if (item.Team == 2)
             {
                 go = Instantiate(Resources.Load<GameObject>(Paths.RES_MODEL_HERO + item.Name),
-                    Team2HeroPoint[0].position, Quaternion.AngleAxis(-90, Vector3.up));
+                    Team2HeroPoint[0].position, Quaternion.AngleAxis(180, Vector3.up));
                 go.transform.SetParent(Team2Parent);
             }
 
@@ -103,7 +106,17 @@ public class BattleData : Singleton<BattleData>
 
             // 初始化控制器
             AIBaseCtrl ctrl = go.GetComponent<AIBaseCtrl>();
-            ctrl.Init(build, build.Team == myTeam);
+            if (build.Team == myTeam)
+            {
+                ctrl.Init(build, true);
+                ctrl.MiniMapHead.color = Color.blue;
+            }
+            else
+            {
+                ctrl.Init(build, false);
+                ctrl.MiniMapHead.color = Color.red;
+            }
+ 
             CtrlDict.Add(build.Id, ctrl);
         }
 
@@ -126,20 +139,5 @@ public class BattleData : Singleton<BattleData>
             }
         }
         return -1;
-    }
-
-    /// <summary>
-    /// 接收服务器攻击响应
-    /// </summary>
-    public void OnAttack(int fromId, int toId, int skillId)
-    {
-        AIBaseCtrl fromCtrl = CtrlDict.ExTryGet(fromId);
-        AIBaseCtrl toCtrl = CtrlDict.ExTryGet(toId);
-
-        if (!fromCtrl || !toCtrl)
-            return;
-
-        // 调用攻击方法
-        fromCtrl.AttackResponse(toCtrl.transform);
     }
 }

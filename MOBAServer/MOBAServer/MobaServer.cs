@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Common.Config;
 using Common.OpCode;
 using ExitGames.Logging;
 using ExitGames.Logging.Log4Net;
@@ -10,6 +11,7 @@ using Photon.SocketServer;
 using LogManager = ExitGames.Logging.LogManager;
 using log4net.Config;
 using MOBAServer.Handler;
+using MOBAServer.Skill;
 
 namespace MOBAServer
 {
@@ -42,6 +44,7 @@ namespace MOBAServer
             LogInfo("服务器开启");
 
             InitHandler();
+            InitSkill();
             LogInfo("初始化完成");
         }
 
@@ -66,6 +69,14 @@ namespace MOBAServer
         }
 
         /// <summary>
+        /// 初始化技能
+        /// </summary>
+        private void InitSkill()
+        {
+            SkillManager.Instance.Init(SkillData.SkillDict);
+        }
+
+        /// <summary>
         /// 根据操作码动态创建Hanlder类
         /// </summary>
         /// <param name="opCode"></param>
@@ -77,7 +88,7 @@ namespace MOBAServer
 
             if (handler == null)
             {
-                LogWarn("init handler not found : " + handerName);
+                LogWarn(">>>> init handler not found : " + handerName);
                 return;
             }
             handler.OpCode = opCode;

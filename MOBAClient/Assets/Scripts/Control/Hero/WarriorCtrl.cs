@@ -17,6 +17,13 @@ public class WarriorCtrl : AIBaseCtrl, IResourceListener
     {
         base.Start();
 
+        // 设置移动速度
+        Speed = (float)Model.Speed;
+
+        // 调整角度
+        MiniMapHead.transform.rotation = Quaternion.Euler(90, 0, 0);
+        transform.rotation = Model.Team == 1 ? Quaternion.Euler(0, 90, 0) : Quaternion.Euler(0, -90, 1);
+
         // 加载音效
         ResourcesManager.Instance.Load(Paths.RES_SOUND_BATTLE + "WarriorAttack", typeof(AudioClip), this);
         ResourcesManager.Instance.Load(Paths.RES_SOUND_BATTLE + "WarriorDeath", typeof(AudioClip), this);
@@ -47,6 +54,9 @@ public class WarriorCtrl : AIBaseCtrl, IResourceListener
         ChangeState(AIStateEnum.ATTACK);
     }
 
+    /// <summary>
+    /// 死亡响应
+    /// </summary>
     public override void DeathResponse()
     {
         base.DeathResponse();
@@ -57,7 +67,16 @@ public class WarriorCtrl : AIBaseCtrl, IResourceListener
         ChangeState(AIStateEnum.DEAD);
     }
 
-    public void OnLoaded(string assetName, object asset, AssetType assetType)
+    void Update()
+    {
+        if (MiniMapHead.gameObject.activeSelf)
+        {
+            // 固定小地图头像角度
+            MiniMapHead.transform.rotation = Quaternion.Euler(90, 180, 0);
+        }
+    }
+
+    public void OnLoaded(string assetName, object asset)
     {
         switch (assetName)
         {

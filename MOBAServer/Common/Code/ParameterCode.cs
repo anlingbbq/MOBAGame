@@ -86,6 +86,10 @@ namespace Common.Code
         /// </summary>
         BuildsArray,
         /// <summary>
+        /// 物品数组
+        /// </summary>
+        ItemArray,
+        /// <summary>
         /// 英雄传输对象
         /// </summary>
         DtoHero,
@@ -117,6 +121,10 @@ namespace Common.Code
         /// 装备Id
         /// </summary>
         ItemId,
+        /// <summary>
+        /// 技能对象
+        /// </summary>
+        DtoSkill,
 
         #endregion
     }

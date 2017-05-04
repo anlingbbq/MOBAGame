@@ -33,8 +33,8 @@ public class TipPanel : UIBasePanel
     /// <summary>
     /// 打开界面之前需要先设置内容
     /// </summary>
-    /// <param name="text"></param>
-    /// <param name="action"></param>
+    /// <param name="text">内容</param>
+    /// <param name="action">回掉函数</param>
     public static void SetContent(string text, Action action = null, int timeOff = -1)
     {
         Content = text;

@@ -42,6 +42,13 @@
 	{
 		"Name" : "Select",
 		"Path" : "UI/Panel/SelectPanel"
+	},
+	{
+		"Name" : "Battle",
+		"Path" : "UI/Panel/BattlePanel"
+	},
+	{
+		"Name" : "Shop",
+		"Path" : "UI/Panel/ShopPanel"
 	}
-
 ]

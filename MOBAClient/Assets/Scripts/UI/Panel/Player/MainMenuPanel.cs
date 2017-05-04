@@ -242,7 +242,7 @@ public class MainMenuPanel : UIBasePanel
         TipPanel.SetContent("点击进入选人界面\n" + ServerConfig.SelectRoomTimeOff + "秒后自动取消", () =>
         {
             // 清除界面
-            UIManager.Instance.ClearPanel();
+            UIManager.Instance.ClearStack();
             // 打开选择界面
             UIManager.Instance.PushPanel(UIPanelType.Select);
         }, ServerConfig.SelectRoomTimeOff);
@@ -258,7 +258,7 @@ public class MainMenuPanel : UIBasePanel
     {
         // 选人房间销毁时 可能处于选人界面也可能处于提示界面
         // 直接清空栈 打开主界面
-        UIManager.Instance.ClearPanel();
+        UIManager.Instance.ClearStack();
         UIManager.Instance.PushPanel(UIPanelType.MainMenu);
     }
 

@@ -1,23 +1,9 @@
 ﻿using Common.Config;
+using Common.Dto;
 using UnityEngine;
 
 public class KeyCtrl : MonoBehaviour
 {
-    /// <summary>
-    /// 英雄移动的请求
-    /// </summary>
-    private HeroMoveRequest m_HeroMoveRequest;
-    /// <summary>
-    /// 英雄攻击的请求
-    /// </summary>
-    private AttackRequest m_AttackRequest;
-
-    void Start()
-    {
-        m_HeroMoveRequest = GetComponent<HeroMoveRequest>();
-        m_AttackRequest = GetComponent<AttackRequest>();
-    }
-
     void Update()
     {
         if (!GameData.HeroCtrl)
@@ -33,6 +19,26 @@ public class KeyCtrl : MonoBehaviour
 
         #endregion
 
+        #region 鼠标左键
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mouse = Input.mousePosition;
+            // 屏幕坐标转换为射线
+            Ray ray = Camera.main.ScreenPointToRay(mouse);
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            for (int i = hits.Length - 1; i >= 0; i--)
+            {
+                if (hits[i].collider.gameObject.tag == "Shop")
+                {
+                    UIManager.Instance.ShopPanel(UIPanelType.Shop);
+                    break;
+                }
+            }
+        }
+
+        #endregion
+
         #region 鼠标右键
 
         // 判断自身死亡状态
@@ -44,11 +50,6 @@ public class KeyCtrl : MonoBehaviour
             Vector2 mouse = Input.mousePosition;
             // 屏幕坐标转换为射线
             Ray ray = Camera.main.ScreenPointToRay(mouse);
-
-            // 单体的射线检测 当中途有遮挡物时会无法去到后面的点击物体
-            // RaycastHit hit;
-            // Physics.Raycast(ray, out hit))
-
             
             HitState state = HitState.INVALID;
             RaycastHit hit = new RaycastHit();
@@ -77,13 +78,16 @@ public class KeyCtrl : MonoBehaviour
              */
             if (state == HitState.MOVE)
             {
-                RequestMove(hit.point);
+                // 显示点击特效
+                GameObject go = PoolManager.Instance.GetObject("ClickMove");
+                go.transform.position = hit.point + Vector3.up * 2;
+
+                MOBAClient.BattleManager.Instance.RequestMove(hit.point);
             }
             else if (state == HitState.ATTACK)
             {
                 int targetId = hit.collider.gameObject.GetComponent<AIBaseCtrl>().Model.Id;
-                // 发送攻击请求
-                m_AttackRequest.SendAttack(ServerConfig.SkillId, GameData.Player.Id, targetId);
+                MOBAClient.BattleManager.Instance.RequestAttack(ServerConfig.SkillId, GameData.HeroData.Id, targetId);
             }
         }
 
@@ -91,21 +95,7 @@ public class KeyCtrl : MonoBehaviour
     }
 
     /// <summary>
-    /// 请求移动
-    /// </summary>
-    /// <param name="point"></param>
-    private void RequestMove(Vector3 point)
-    {
-        // 显示点击特效
-        GameObject go = PoolManager.Instance.GetObject("ClickMove");
-        go.transform.position = point + Vector3.up * 2;
-
-        // 发送移动的请求
-        m_HeroMoveRequest.SendMove(point);
-    }
-
-    /// <summary>
-    /// 射线状态
+    /// 点击状态
     /// </summary>
     enum HitState
     {

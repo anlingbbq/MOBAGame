@@ -42,7 +42,7 @@ public class ItemSelectPlayer : MonoBehaviour, IResourceListener
             // 显示头像
             ImageHead.color = Color.white;
             string headPath = Paths.RES_HEAD_UI + HeroData.GetHeroData(model.HeroId).Name;
-            ResourcesManager.Instance.Load(headPath, typeof(Sprite), this, AssetType.Sprite);
+            ResourcesManager.Instance.Load(headPath, typeof(Sprite), this);
         }
         // 是否准备
         if (model.IsReady)
@@ -57,7 +57,7 @@ public class ItemSelectPlayer : MonoBehaviour, IResourceListener
         }
     }
 
-    public void OnLoaded(string assetName, object asset, AssetType assetType)
+    public void OnLoaded(string assetName, object asset)
     {
         ImageHead.sprite = asset as Sprite;
     }

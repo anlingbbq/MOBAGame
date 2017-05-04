@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Common.Code;
+using Common.Config;
 using Common.OpCode;
 using LitJson;
 using MOBAServer.Cache;
 using MOBAServer.DataBase.Manager;
 using MOBAServer.Room;
-using NHibernate.Criterion;
 using Photon.SocketServer;
 
 namespace MOBAServer.Handler
@@ -27,10 +23,11 @@ namespace MOBAServer.Handler
             if (!room.IsAllEnter)
                 return;
 
-            // 发送给所有客户端 英雄和建筑的数据
+            // 发送给所有客户端 英雄,建筑,装备的数据
             Dictionary<byte, object> data = new Dictionary<byte, object>();
             data.Add((byte)ParameterCode.HerosArray, JsonMapper.ToJson(room.HerosArray));
             data.Add((byte)ParameterCode.BuildsArray, JsonMapper.ToJson(room.BuildsArray));
+            data.Add((byte)ParameterCode.ItemArray, JsonMapper.ToJson(ItemData.GetArray()));
             room.Brocast(OperationCode.EnterBattle, data);
         }
     }

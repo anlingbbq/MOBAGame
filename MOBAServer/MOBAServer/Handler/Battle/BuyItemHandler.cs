@@ -15,6 +15,8 @@ namespace MOBAServer.Handler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
+            MobaServer.LogInfo("处理购买道具的请求");
+
             // 获取道具
             int itemId = (int) request[(byte)ParameterCode.ItemId];
             ItemModel item = ItemData.GetItem(itemId);
@@ -36,20 +38,19 @@ namespace MOBAServer.Handler
                 SendResponse(peer, request.OperationCode, null, ReturnCode.Falied, "金币不足");
                 return;
             }
-            // 格子不够
-            if (hero.Equipments.Length == ServerConfig.ItemMaxCount)
+           
+            // 开始购买
+            if (hero.BuyItem(item))
+            {
+                // 给所有客户端发送消息 谁买了什么装备
+                Dictionary<byte, object> data = new Dictionary<byte, object>();
+                data.Add((byte) ParameterCode.DtoHero, JsonMapper.ToJson(hero));
+                room.Brocast(OpCode, data);
+            }
+            else
             {
                 SendResponse(peer, request.OperationCode, null, ReturnCode.Falied, "装备已满");
-                return;
             }
-
-            // 开始购买
-            hero.Money -= item.Price;
-            hero.AddItem(item);
-            // 给所有客户端发送消息 谁买了什么装备
-            Dictionary<byte, object> data = new Dictionary<byte, object>();
-            data.Add((byte)ParameterCode.DtoHero, JsonMapper.ToJson(hero));
-            room.Brocast(OpCode, data);
         }
     }
 }

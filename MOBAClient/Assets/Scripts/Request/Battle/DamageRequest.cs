@@ -8,9 +8,6 @@ using UnityEngine;
 
 public class DamageRequest : BaseRequest
 {
-    [SerializeField]
-    private BattlePanel m_BattlePanel;
-
     /// <summary>
     /// 发送计算伤害的请求
     /// </summary>
@@ -41,22 +38,23 @@ public class DamageRequest : BaseRequest
             int toId = item.ToId;
             // 获取目标控制器
             AIBaseCtrl toCtrl = BattleData.Instance.CtrlDict.ExTryGet(toId);
-            if (!toCtrl) return;
+            if (toCtrl == null) return;
 
             toCtrl.Model.CurHp -= item.Damage;
             toCtrl.OnHpChange();
 
             // 显示伤害数值
-            m_BattlePanel.FloatDamage(item.Damage, toCtrl.transform);
+            BattlePanel panel = UIManager.Instance.GetPanel(UIPanelType.Battle) as BattlePanel;
+            panel.FloatDamage(item.Damage, toCtrl.transform);
 
             // 如果被攻击的是自己
             if (toId == GameData.Player.Id)
             {
                 // 更新ui界面
-                m_BattlePanel.UpdateView((DtoHero) toCtrl.Model);
-                // TODO 如果死亡了 屏幕灰白
+                panel.UpdateView((DtoHero) toCtrl.Model);
                 if (item.IsDead)
                 {
+                    UIManager.Instance.ShopPanel(UIPanelType.Mask);
                     toCtrl.DeathResponse();
                 }
             }

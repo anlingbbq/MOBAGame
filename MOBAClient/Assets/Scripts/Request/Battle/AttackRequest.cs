@@ -33,6 +33,13 @@ public class AttackRequest : BaseRequest
         int toId = (int)response[(byte)ParameterCode.TargetId];
         int skillId = (int)response[(byte)ParameterCode.SkillId];
 
-        BattleData.Instance.OnAttack(fromId, toId, skillId);
+        AIBaseCtrl fromCtrl = BattleData.Instance.CtrlDict.ExTryGet(fromId);
+        AIBaseCtrl toCtrl = BattleData.Instance.CtrlDict.ExTryGet(toId);
+
+        if (!fromCtrl || !toCtrl)
+            return;
+
+        // 调用攻击方法
+        fromCtrl.AttackResponse(toCtrl.transform);
     }
 }

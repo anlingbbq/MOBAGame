@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Common.Code;
+using Common.Config;
 using Common.Dto;
 using ExitGames.Client.Photon;
 using LitJson;
@@ -9,21 +10,22 @@ using UnityEngine;
 
 public class EnterBattleRequest : BaseRequest
 {
-    [SerializeField]
-    private BattlePanel m_BattlePanel;
-
     public override void OnOperationResponse(OperationResponse response)
     {
-        // 保存英雄和建筑的数据
+        // 获取英雄和建筑的数据
         string heroJson = response.Parameters[(byte)ParameterCode.HerosArray] as string;
         string bulidJson = response.Parameters[(byte)ParameterCode.BuildsArray] as string;
         DtoHero[] heros = JsonMapper.ToObject<DtoHero[]>(heroJson);
         DtoBuild[] builds = JsonMapper.ToObject<DtoBuild[]>(bulidJson);
-
-        // 初始化数据
+        // 初始化战斗数据
         BattleData.Instance.InitData(heros, builds);
-        // 初始化界面
-        m_BattlePanel.InitView();
+
+        // 保存物品数据
+        string itemJson = response[(byte)ParameterCode.ItemArray] as string;
+        GameData.Items = JsonMapper.ToObject<ItemModel[]>(itemJson);
+
+        // 初始化战斗界面
+        UIManager.Instance.PushPanel(UIPanelType.Battle);
         // 焦距英雄
         Camera.main.GetComponent<CameraCtrl>().FocusOn();
     }

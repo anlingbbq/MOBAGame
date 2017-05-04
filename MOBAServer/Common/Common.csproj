@@ -46,10 +46,10 @@
     <Compile Include="Code\ParameterCode.cs" />
     <Compile Include="Code\ReturnCode.cs" />
     <Compile Include="Config\BuildData.cs" />
-    <Compile Include="Config\ItemData.cs" />
-    <Compile Include="Config\Skill\DamageData.cs" />
-    <Compile Include="Dto\DtoDamage.cs" />
     <Compile Include="Config\HeroData.cs" />
+    <Compile Include="Config\ItemData.cs" />
+    <Compile Include="Config\SkillData.cs" />
+    <Compile Include="Dto\DtoDamage.cs" />
     <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="Dto\DtoBuild.cs" />
     <Compile Include="Dto\DtoFriend.cs" />
@@ -57,9 +57,8 @@
     <Compile Include="Dto\DtoHero.cs" />
     <Compile Include="Dto\DtoMinion.cs" />
     <Compile Include="Dto\DtoSelect.cs" />
+    <Compile Include="Dto\DtoSkill.cs" />
     <Compile Include="Dto\DtoVector3.cs" />
-    <Compile Include="Config\Skill\NormalAttack.cs" />
-    <Compile Include="Config\Skill\ISkill.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

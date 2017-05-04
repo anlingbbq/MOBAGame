@@ -17,9 +17,6 @@ public class LoadAsset
     // 资源类型 用于加载资源
     public Type Type;
 
-    // 自定义的资源类型 用于识别
-    public AssetType AssetType;
-
     // 是否加载完成
     public bool IsDone
     {

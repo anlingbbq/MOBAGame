@@ -8,21 +8,32 @@ using UnityEngine;
 
 public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 {
-    // 代表客户端
+    /// <summary>
+    /// 客户端连接
+    /// </summary>
     private static PhotonPeer m_Peer;
 
     public static PhotonPeer Peer
     {
         get { return m_Peer; }
     }
-    // IP地址
+    /// <summary>
+    /// IP地址 
+    /// </summary>
     private string m_ServerAddress = "127.0.0.1:5055";
-    // 服务器端应用名称
+    /// <summary>
+    /// 服务器端应用名称 
+    /// </summary>
     private string m_ApplicationName = "MOBA";
-    // 使用协议
+    /// <summary>
+    /// 使用协议 
+    /// </summary>
     private ConnectionProtocol m_Protocol = ConnectionProtocol.Udp;
 
-    private bool IsConnect = false;
+    /// <summary>
+    /// 是否连接
+    /// </summary>
+    public bool IsConnect = false;
 
     public static PhotonEngine Instance;
 
@@ -63,7 +74,6 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener
 
     public void DebugReturn(DebugLevel level, string message)
     {
-        // TODO 加一个服务器没有开启的反馈
         if (level == DebugLevel.ERROR)
         {
             Log.Error(message);

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Common.Config;
 using Common.Dto;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -67,6 +64,18 @@ public class BattlePanel : UIBasePanel, IResourceListener
     [SerializeField]
     private Text TextCoins;
 
+    /// <summary>
+    /// 装备栏
+    /// </summary>
+    [SerializeField]
+    private Image[] Equipments;
+
+    /// <summary>
+    /// 技能栏
+    /// </summary>
+    [SerializeField]
+    private Button[] Skills;
+
     #endregion
 
     #region 文字浮动效果
@@ -100,6 +109,21 @@ public class BattlePanel : UIBasePanel, IResourceListener
         TextMp.text = hero.CurMp + "/" + hero.MaxMp;
         TextCoins.text = hero.Money.ToString();
         TextKDA.text = hero.Kill + "/" + hero.Death;
+
+        // 飘字设置
+        m_HUDText.CanvasParent = GameObject.Find("Canvas").transform;
+
+        // 技能设置
+        int index = 0;
+        foreach (DtoSkill skill in hero.Skills)
+        {
+            if (skill != null)
+            {
+                Skills[index].gameObject.SetActive(true);
+                Skills[index].GetComponent<ItemSkill>().Init(skill);
+            }
+            ++index;
+        }
     }
 
     /// <summary>
@@ -122,10 +146,27 @@ public class BattlePanel : UIBasePanel, IResourceListener
         TextMp.text = hero.CurMp + "/" + hero.MaxMp;
         TextCoins.text = hero.Money.ToString();
         TextKDA.text = hero.Kill + "/" + hero.Death;
+
+        // 更新装备栏
+        for (int i = 0; i < hero.Equipments.Length; i++)
+        {
+            if (hero.Equipments[i] != -1)
+            {
+                Equipments[i].sprite = ResourcesManager.Instance.GetAsset(Paths.RES_EQUIPMENT_UI + hero.Equipments[i]) as Sprite;
+                Equipments[i].color = Color.white;
+            }
+        }
     }
 
-    void IResourceListener.OnLoaded(string assetName, object asset, AssetType assetType)
+    void IResourceListener.OnLoaded(string assetName, object asset)
     {
         ImgHead.sprite = asset as Sprite;
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+
+        InitView();
     }
 }

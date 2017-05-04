@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Common.Config
 {
@@ -31,18 +29,18 @@ namespace Common.Config
         static HeroData()
         {
             // 创建临时的英雄数据
-            createHero(TypeId_Warrior, "战士", 60, 20, 300, 100, 10, 3, 50, 10, 5, 1.2);
-            createHero(TypeId_Archer, "弓箭手", 50, 10, 200, 80, 15, 2, 30, 5, 12, 1.2);
+            createHero(TypeId_Warrior, "战士", 60, 20, 300, 100, 6, 10, 3, 50, 10, 5, 1.2);
+            createHero(TypeId_Archer, "弓箭手", 50, 10, 200, 80, 6, 15, 2, 30, 5, 12, 1.2);
         }
 
         /// <summary>
         /// 创建英雄
         /// </summary>
-        public static void createHero(int typeId, string name, int baseAttack, int baseDefense, int hp,
-            int mp, int growAttack, int growDefense, int growHp, int growMp, double attackDistance, double attackInterval)
+        public static void createHero(int typeId, string name, int baseAttack, int baseDefense, int hp, int mp, double speed,
+            int growAttack, int growDefense, int growHp, int growMp, double attackDistance, double attackInterval)
         {
             HeroModel hero = new HeroModel(typeId, name, baseAttack, baseDefense, hp,
-                mp, growAttack, growDefense, growHp, growMp, attackDistance, attackInterval);
+                mp, speed, growAttack, growDefense, growHp, growMp, attackDistance, attackInterval);
 
             HeroDict.Add(hero.TypeId, hero);
         }
@@ -126,6 +124,11 @@ namespace Common.Config
         public double AttackInterval;
 
         /// <summary>
+        /// 移动速度
+        /// </summary>
+        public double Speed;
+
+        /// <summary>
         /// 技能id
         /// </summary>
         public int[] SkillIds;
@@ -135,8 +138,8 @@ namespace Common.Config
             
         }
 
-        public HeroModel(int typeId, string name, int baseAttack, int baseDefense, int hp,
-            int mp, int growAttack, int growDefense, int growHp, int growMp, double attackDistance, double attackInterval)
+        public HeroModel(int typeId, string name, int baseAttack, int baseDefense, int hp, int mp, double speed,
+            int growAttack, int growDefense, int growHp, int growMp, double attackDistance, double attackInterval)
         {
             TypeId = typeId;
             Name = name;
@@ -144,6 +147,7 @@ namespace Common.Config
             BaseDefens = baseDefense;
             Hp = hp;
             Mp = mp;
+            Speed = speed;
             GrowAttack = growAttack;
             GrowDefense = growDefense;
             GrowHp = growHp;

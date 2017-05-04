@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Common.Config
+﻿namespace Common.Config
 {
     public class ServerConfig
     {
@@ -68,7 +63,7 @@ namespace Common.Config
         /// <summary>
         /// 道具类型初始id
         /// </summary>
-        public const int ItemTypeId = 1;
+        public const int ItemTypeId = 0;
 
         /// <summary>
         /// 道具栏的最大数量

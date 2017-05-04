@@ -81,13 +81,13 @@
     <Compile Include="DataBase\NhibernateHelper.cs" />
     <Compile Include="Extension\DictEx.cs" />
     <Compile Include="Handler\BaseHandler.cs" />
-    <Compile Include="Handler\Battle\BattleGetInfoHandler.cs" />
     <Compile Include="Handler\Battle\BuyItemHandler.cs" />
     <Compile Include="Handler\Battle\DamageHandler.cs" />
     <Compile Include="Handler\Battle\EnterBattleHandler.cs" />
     <Compile Include="Handler\Battle\AttackHandler.cs" />
     <Compile Include="Handler\Battle\HeroMoveHandler.cs" />
-    <Compile Include="Handler\Battle\StartBattleHandler.cs" />
+    <Compile Include="Handler\Battle\UseSkillHandler.cs" />
+    <Compile Include="Handler\Battle\UpgradeSkillHandler.cs" />
     <Compile Include="Handler\Match\BeReadySelectHandler.cs" />
     <Compile Include="Handler\Match\SelectedHandler.cs" />
     <Compile Include="Handler\Match\EnterSelectHandler.cs" />
@@ -109,6 +109,8 @@
     <Compile Include="Room\MatchRoom.cs" />
     <Compile Include="Room\RoomBase.cs" />
     <Compile Include="Room\SelectRoom.cs" />
+    <Compile Include="Skill\SkillHandlerData.cs" />
+    <Compile Include="Skill\SkillManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="log4net.config">
@@ -130,6 +132,7 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

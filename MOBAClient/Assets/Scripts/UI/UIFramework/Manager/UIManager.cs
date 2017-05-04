@@ -88,7 +88,7 @@ public class UIManager
     /// <summary>
     /// 清除所有栈中的界面
     /// </summary>
-    public void ClearPanel()
+    public void ClearStack()
     {
         while (m_PanelStack.Count > 0)
         {
@@ -98,14 +98,32 @@ public class UIManager
 
     /// <summary>
     /// 加载面板 用于不适合放在栈内的面板
-    /// 和UIBasePanel的ShowPanel和HidePanel一起使用
+    /// 和ShowPanel，HidePanel一起使用
     /// </summary>
     public UIBasePanel LoadPanel(UIPanelType panelType)
     {
         UIBasePanel panel = GetPanel(panelType);
-        panel.OnExit();
+        panel.HidePanel();
 
         return panel;
+    }
+
+    /// <summary>
+    /// 显示面板
+    /// </summary>
+    /// <param name="panelType"></param>
+    public void ShopPanel(UIPanelType panelType)
+    {
+        GetPanel(panelType).ShowPanel();
+    }
+
+    /// <summary>
+    /// 隐藏面板
+    /// </summary>
+    /// <param name="panelType"></param>
+    public void HidePanel(UIPanelType panelType)
+    {
+        GetPanel(panelType).HidePanel();
     }
 
     /// <summary>
@@ -143,5 +161,15 @@ public class UIManager
         {
             return panel;
         }
+    }
+
+    /// <summary>
+    /// 清除所有面板
+    /// </summary>
+    public void ClearAll()
+    {
+        m_CanvasTransform = null;
+        m_PanelStack.Clear();
+        m_PanelDict.Clear();
     }
 }

@@ -10,5 +10,5 @@ public interface IResourceListener
     /// <param name="assetName"></param>
     /// <param name="asset"></param>
     /// <param name="assetType"></param>
-    void OnLoaded(string assetName, object asset, AssetType assetType);
+    void OnLoaded(string assetName, object asset);
 }

@@ -93,9 +93,9 @@ public class SelectPanel : UIBasePanel
     private Dictionary<int, ItemHero> ItemHeroDict = new Dictionary<int, ItemHero>();
 
     /// <summary>
-    /// 初始化选择英雄的层
+    /// 初始化选择英雄
     /// </summary>
-    public void InitSelectHeroLayer(List<int> heroIds)
+    public void InitSelectHeros(List<int> heroIds)
     {
         GameObject go;
         foreach (int id in heroIds)

@@ -17,6 +17,8 @@ namespace MOBAServer.Handler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
+            MobaServer.LogInfo("处理移动的请求");
+
             // 获取玩家id
             int playerId = UserManager.GetPlayer(peer.Username).Identification;
 

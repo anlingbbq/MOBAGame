@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Common.Config;
 using Common.Dto;
 using Common.DTO;
-using UnityEngine;
 
 public class GameData
 {
@@ -17,7 +15,12 @@ public class GameData
     public static AIBaseCtrl HeroCtrl;
 
     /// <summary>
-    /// 自己的英雄数据
+    /// 保存自身的英雄数据
     /// </summary>
     public static DtoHero HeroData;
+
+    /// <summary>
+    /// 保存道具数据
+    /// </summary>
+    public static ItemModel[] Items;
 }
