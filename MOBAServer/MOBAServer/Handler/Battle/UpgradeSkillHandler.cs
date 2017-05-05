@@ -36,9 +36,9 @@ namespace MOBAServer.Handler
             if (skill == null)
                 return;
 
-            // 发送升级后的技能和英雄id
+            // 发送升级的技能id和英雄id
             Dictionary<byte, object> data = new Dictionary<byte, object>();
-            data.Add((byte)ParameterCode.DtoSkill, JsonMapper.ToJson(skill));
+            data.Add((byte)ParameterCode.SkillId, skill.Id);
             data.Add((byte)ParameterCode.PlayerId, playerId);
             SendResponse(peer, request.OperationCode, data);
         }

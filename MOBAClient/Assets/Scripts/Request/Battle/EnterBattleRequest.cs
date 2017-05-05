@@ -12,13 +12,12 @@ public class EnterBattleRequest : BaseRequest
 {
     public override void OnOperationResponse(OperationResponse response)
     {
-        // 获取英雄和建筑的数据
-        string heroJson = response.Parameters[(byte)ParameterCode.HerosArray] as string;
-        string bulidJson = response.Parameters[(byte)ParameterCode.BuildsArray] as string;
-        DtoHero[] heros = JsonMapper.ToObject<DtoHero[]>(heroJson);
-        DtoBuild[] builds = JsonMapper.ToObject<DtoBuild[]>(bulidJson);
+        // 获取英雄,建筑,技能的数据
+        DtoHero[] heros = JsonMapper.ToObject<DtoHero[]>(response[(byte)ParameterCode.HerosArray] as string);
+        DtoBuild[] builds = JsonMapper.ToObject<DtoBuild[]>(response[(byte)ParameterCode.BuildsArray] as string);
+        SkillModel[] skills = JsonMapper.ToObject<SkillModel[]>(response[(byte)ParameterCode.SkillArray] as string);
         // 初始化战斗数据
-        BattleData.Instance.InitData(heros, builds);
+        BattleData.Instance.InitData(heros, builds, skills);
 
         // 保存物品数据
         string itemJson = response[(byte)ParameterCode.ItemArray] as string;

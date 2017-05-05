@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Common.Config;
 using Common.Dto;
 using MOBAClient;
 using UnityEngine;
@@ -41,7 +42,7 @@ public class BattleData : Singleton<BattleData>
     /// </summary>
     /// <param name="heros"></param>
     /// <param name="builds"></param>
-    public void InitData(DtoHero[] heros, DtoBuild[] builds)
+    public void InitData(DtoHero[] heros, DtoBuild[] builds, SkillModel[] skills)
     {
         Heros = heros;
         Builds = builds;
@@ -49,7 +50,7 @@ public class BattleData : Singleton<BattleData>
         int myTeam = GetMyTeamId(heros, GameData.Player.Id);
 
         // 初始化技能数据
-        SkillData.Instance.Init(heros);
+        SkillManager.Instance.Init(heros, skills);
 
         #region 英雄
 

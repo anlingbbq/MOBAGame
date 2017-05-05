@@ -87,7 +87,7 @@ namespace MOBAServer.Skill
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns>返回伤害数据，要求造成伤害的效果在最后,且只有一个</returns>
-        public DtoDamage[] RunSkill(int skillId, int level, DtoMinion from, DtoMinion[] to = null, RoomBase<MobaPeer> room = null)
+        public DtoDamage[] UseSkill(int skillId, int level, DtoMinion from, DtoMinion[] to = null, RoomBase<MobaPeer> room = null)
         {
             DtoDamage[] damages = null;
             SkillHandler skillHandler = HandlerDict.ExTryGet(skillId)[level];

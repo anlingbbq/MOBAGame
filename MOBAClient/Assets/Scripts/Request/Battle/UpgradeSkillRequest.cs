@@ -28,9 +28,10 @@ public class UpgradeSkillRequest : BaseRequest
 
     public override void OnOperationResponse(OperationResponse response)
     {
-        DtoSkill skill = JsonMapper.ToObject<DtoSkill>(response[(byte)ParameterCode.DtoSkill] as string);
+        int skillId = (int) response[(byte)ParameterCode.SkillId];
         int heroId = (int) response[(byte) ParameterCode.PlayerId];
-        SkillData.Instance.UpgradeSkill("" + heroId + skill.Id, skill);
+        DtoHero hero = BattleData.Instance.CtrlDict.ExTryGet(heroId).Model as DtoHero;
+        DtoSkill skill = hero.UpgradeSkill(skillId);
 
         // 更新ui
         m_ItemSkill.UpdateView(skill);

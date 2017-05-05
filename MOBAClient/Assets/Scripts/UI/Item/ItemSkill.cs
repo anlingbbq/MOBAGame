@@ -3,6 +3,7 @@ using Common.Dto;
 using MOBAClient;
 using UnityEngine;
 using UnityEngine.UI;
+using BattleManager = MOBAClient.BattleManager;
 
 public class ItemSkill : MonoBehaviour, IResourceListener
 {
@@ -43,44 +44,39 @@ public class ItemSkill : MonoBehaviour, IResourceListener
     /// <summary>
     /// 描述内容
     /// </summary>
-    private string Desc;
+    private string m_Desc;
 
     /// <summary>
     /// 技能id
     /// </summary>
-    private int SkillId;
-
-    /// <summary>
-    /// SkillData中的键
-    /// </summary>
-    private string SkillKey;
+    private int m_SkillId;
 
     /// <summary>
     /// 冷却时间
     /// </summary>
-    private float CoolDown;
+    private float m_CoolDown;
+
+    /// <summary>
+    /// 当前等级
+    /// </summary>
+    private int m_Level = -1;
 
     /// <summary>
     /// 计时
     /// </summary>
-    private float Timer;
-
-    /// <summary>
-    /// 是否学习
-    /// </summary>
-    private bool IsLearn;
+    private float m_Timer;
 
     /// <summary>
     /// 是否准备好了
     /// </summary>
-    private bool IsReady;
+    private bool m_IsReady;
 
     public void Init(DtoSkill data)
     {
-        SkillId = data.Id;
-        SkillKey = "" + GameData.HeroData.Id + data.Id;
-        CoolDown = (float)data.CoolDown;
-        Desc = data.Name + "\n" + data.Description;
+        m_SkillId = data.Id;
+        m_Level = data.Level;
+        m_CoolDown = (float)data.CoolDown;
+        m_Desc = data.Name + "\n" + data.Description;
         // 加载图片
         ResourcesManager.Instance.Load(Paths.RES_SKILL_UI + data.Id, typeof(Sprite), this);
     }
@@ -94,7 +90,7 @@ public class ItemSkill : MonoBehaviour, IResourceListener
             return;
 
         // 发送升级技能的消息
-        MOBAClient.BattleManager.Instance.RequestUpgradeSkill(SkillId, this);
+        MOBAClient.BattleManager.Instance.RequestUpgradeSkill(m_SkillId, this);
     }
 
     /// <summary>
@@ -102,10 +98,10 @@ public class ItemSkill : MonoBehaviour, IResourceListener
     /// </summary>
     public void OnSkillClick()
     {
-        if (!IsLearn)
+        if (m_Level < 0)
         {
             // 显示描述
-            TextDesc.text = Desc;
+            TextDesc.text = m_Desc;
             ImgDesc.gameObject.SetActive(true);
             TimerManager.Instance.AddTimer("ShowSkillDesc", 5, () =>
             {
@@ -115,25 +111,25 @@ public class ItemSkill : MonoBehaviour, IResourceListener
         else
         {
             // 使用技能
-            if (IsReady)
+            if (m_IsReady)
             {
-                IsReady = false;
-                SkillData.Instance.RunSkill(SkillKey, GameData.HeroCtrl);
+                m_IsReady = false;
+                MOBAClient.BattleManager.Instance.RequestUseSkill(m_SkillId, m_Level, GameData.HeroData.Id, null);
             }
         }
     }
 
     void Update()
     {
-        if (IsLearn && !IsReady)
+        if (m_Level >= 0 && !m_IsReady)
         {
             // 计算冷却时间
-            Timer += Time.deltaTime;
-            ImgMask.fillAmount = 1 - Timer / CoolDown;
-            if (Timer >= CoolDown)
+            m_Timer += Time.deltaTime;
+            ImgMask.fillAmount = 1 - m_Timer / m_CoolDown;
+            if (m_Timer >= m_CoolDown)
             {
-                Timer = 0;
-                IsReady = true;
+                m_Timer = 0;
+                m_IsReady = true;
                 ImgMask.fillAmount = 0;
             }
         }
@@ -141,15 +137,14 @@ public class ItemSkill : MonoBehaviour, IResourceListener
 
     public void UpdateView(DtoSkill skill)
     {
-        if (!IsLearn)
+        if (m_Level < 0)
         {
-            IsLearn = true;
-            IsReady = true;
+            m_IsReady = true;
             ImgMask.fillAmount = 0;
         }
-
+        m_Level = skill.Level;
         BtnUp.gameObject.SetActive(false);
-        CoolDown = (float)skill.CoolDown;
+        m_CoolDown = (float)skill.CoolDown;
     }
 
     public void OnLoaded(string assetName, object asset)

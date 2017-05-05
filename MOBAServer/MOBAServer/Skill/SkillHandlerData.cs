@@ -26,15 +26,18 @@ namespace MOBAServer.Skill
         /// </summary>
         public static Dictionary<EffectType, EffectHandler> HandlerDict;
 
+        /// <summary>
+        /// 根据效果枚举 创建所有效果委托
+        /// </summary>
         public static void Init()
         {
             HandlerDict = new Dictionary<EffectType, EffectHandler>();
             Type dataType = typeof(SkillHandlerData);
-
+            MethodInfo info = null;
             // 遍历技能枚举 寻找对应的函数
             foreach (string name in Enum.GetNames(typeof(EffectType)))
             {
-                MethodInfo info = dataType.GetMethod(name);
+                info = dataType.GetMethod(name);
                 if (info == null)
                 {
                     MobaServer.LogWarn(">>>> init skill not found : " + name);
@@ -57,7 +60,6 @@ namespace MOBAServer.Skill
         /// <returns></returns>
         public static DtoDamage[] NormalAttack(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to, EffectModel effect)
         {
-            MobaServer.LogInfo(">>>>>>>>> start attack");
             DtoDamage[] damages = new DtoDamage[to.Length];
             int attack = from.Attack;
             // 遍历被攻击者

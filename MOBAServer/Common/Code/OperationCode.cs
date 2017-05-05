@@ -123,6 +123,10 @@ namespace Common.OpCode
         /// 升级技能
         /// </summary>
         UpgradeSkill,
+        /// <summary>
+        /// 使用技能
+        /// </summary>
+        UseSkill,
 
         #endregion
     }

@@ -75,8 +75,11 @@ namespace Common.Dto
         /// </summary>
         public void Upgrade()
         {
-            Level += 1;
             SkillModel model = SkillData.GetSkill(Id);
+            if (Level >= model.LvData.Length - 1)
+                return;
+
+            Level += 1;
             CostValue = model.LvData[Level].CostValue;
             Distance = model.LvData[Level].Distance;
             CoolDown = model.LvData[Level].CoolDown;

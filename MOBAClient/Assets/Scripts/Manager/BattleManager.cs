@@ -79,6 +79,18 @@ namespace MOBAClient
             m_UpgradeSkillRequest.SendUpgradeSkill(skillId, item);
         }
 
+        /// <summary>
+        /// 使用技能的请求
+        /// </summary>
+        private UseSkillRequest m_UseSkillRequest;
+        /// <summary>
+        /// 请求使用技能
+        /// </summary>
+        public void RequestUseSkill(int skillId, int level, int from, params int[] target)
+        {
+            m_UseSkillRequest.SendUseSkill(skillId, level, from, target);            
+        }
+
         #endregion
 
         void Start()
@@ -93,6 +105,7 @@ namespace MOBAClient
             m_AttackRequest = GetComponent<AttackRequest>();
             m_BuyRequest = GetComponent<BuyItemRequest>();
             m_UpgradeSkillRequest = GetComponent<UpgradeSkillRequest>();
+            m_UseSkillRequest = GetComponent<UseSkillRequest>();
 
             // 加载资源
             ResourcesManager.Instance.Load(Paths.UI_BUY, typeof(AudioClip));

@@ -146,16 +146,5 @@ namespace Common.Dto
             skill.Upgrade();
             return skill;
         }
-
-        /// <summary>
-        /// 更新数据
-        /// </summary>
-        /// <param name=""></param>
-        public void Update(DtoHero data)
-        {
-            Attack = data.Attack;
-            Defense = data.Defense;
-
-        }
     }
 }

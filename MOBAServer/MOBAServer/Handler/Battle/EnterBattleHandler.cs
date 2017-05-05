@@ -6,6 +6,7 @@ using LitJson;
 using MOBAServer.Cache;
 using MOBAServer.DataBase.Manager;
 using MOBAServer.Room;
+using MOBAServer.Skill;
 using Photon.SocketServer;
 
 namespace MOBAServer.Handler
@@ -28,6 +29,10 @@ namespace MOBAServer.Handler
             data.Add((byte)ParameterCode.HerosArray, JsonMapper.ToJson(room.HerosArray));
             data.Add((byte)ParameterCode.BuildsArray, JsonMapper.ToJson(room.BuildsArray));
             data.Add((byte)ParameterCode.ItemArray, JsonMapper.ToJson(ItemData.GetArray()));
+
+            // 发送当前游戏内用到的技能数据
+            data.Add((byte)ParameterCode.SkillArray, JsonMapper.ToJson(SkillData.GetSkillByHeros(room.HerosArray)));
+
             room.Brocast(OperationCode.EnterBattle, data);
         }
     }

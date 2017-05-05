@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Common.Dto;
 
 namespace Common.Config
 {
@@ -35,20 +36,20 @@ namespace Common.Config
                     new EffectModel(EffectType.SpeedDouble, 2, 2),
                     new EffectModel(EffectType.AttackDouble, 2, 4),
                 }),
-                new SkillLevelModel(3, 5, 0, 0, new EffectModel[]
+                new SkillLevelModel(3, 6, 0, 0, new EffectModel[]
                 {
                     new EffectModel(EffectType.SpeedDouble, 2.2, 2.5),
                     new EffectModel(EffectType.AttackDouble, 2, 4),
                 }),
-                new SkillLevelModel(5, 5, 0, 0, new EffectModel[]
+                new SkillLevelModel(5, 6, 0, 0, new EffectModel[]
                 {
                     new EffectModel(EffectType.SpeedDouble, 3, 2.5),
                     new EffectModel(EffectType.AttackDouble, 2.5, 4),
                 }),
-                new SkillLevelModel(7, 5, 0, 0, new EffectModel[]
+                new SkillLevelModel(7, 6, 0, 0, new EffectModel[]
                 {
                     new EffectModel(EffectType.SpeedDouble, 3, 2.5),
-                    new EffectModel(EffectType.AttackDouble, 5, 4),
+                    new EffectModel(EffectType.AttackDouble, 4, 4),
                 }),
             });
             #endregion
@@ -72,6 +73,38 @@ namespace Common.Config
             SkillDict.TryGetValue(id, out skill);
 
             return skill;
+        }
+
+        /// <summary>
+        /// 从英雄数组中获取所有技能模型
+        /// </summary>
+        /// <returns></returns>
+        public static SkillModel[] GetSkillByHeros(DtoHero[] heros)
+        {
+            Dictionary<int, SkillModel> dict = new Dictionary<int, SkillModel>();
+            foreach (DtoHero hero in heros)
+            {
+                foreach (DtoSkill skill in hero.Skills)
+                {
+                    if (skill == null)
+                        continue;
+
+                    SkillModel model;
+                    SkillDict.TryGetValue(skill.Id, out model);
+                    if (model == null || dict.ContainsKey(skill.Id))
+                        continue;
+
+                    dict.Add(skill.Id, model);
+                }
+            }
+
+            SkillModel[] array = new SkillModel[dict.Count];
+            int i = 0;
+            foreach (SkillModel model in dict.Values)
+            {
+                array[i++] = model;
+            }
+            return array;
         }
     }
 

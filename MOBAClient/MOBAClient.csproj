@@ -52,9 +52,6 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -69,9 +66,6 @@
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
@@ -156,7 +150,6 @@
     <Compile Include="Assets\Scripts\Data\BattleData.cs" />
     <Compile Include="Assets\Scripts\Data\GameData.cs" />
     <Compile Include="Assets\Scripts\Data\SelectData.cs" />
-    <Compile Include="Assets\Scripts\Data\SkillData.cs" />
     <Compile Include="Assets\Scripts\Event\BaseEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameRoot.cs" />
@@ -170,6 +163,9 @@
     <Compile Include="Assets\Scripts\Manager\Resource\IResourceListener.cs" />
     <Compile Include="Assets\Scripts\Manager\Resource\LoadAsset.cs" />
     <Compile Include="Assets\Scripts\Manager\Resource\ResourcesManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\Skill\SkillHandlerData.cs" />
+    <Compile Include="Assets\Scripts\Manager\Skill\SkillManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\Skill\TargetSkill.cs" />
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Manager\TimerManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
@@ -180,6 +176,7 @@
     <Compile Include="Assets\Scripts\Request\Battle\HeroMoveRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\ReadyBattleRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\UpgradeSkillRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\UseSkillRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\BeReaySelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\DestroySelectRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\EnterSelectRequest.cs" />
@@ -197,7 +194,6 @@
     <Compile Include="Assets\Scripts\Request\Player\PlayerOnlineRequest.cs" />
     <Compile Include="Assets\Scripts\Request\User\UserLoginRequest.cs" />
     <Compile Include="Assets\Scripts\Request\User\UserRegisterRequest.cs" />
-    <Compile Include="Assets\Scripts\Skill\TargetSkill.cs" />
     <Compile Include="Assets\Scripts\UI\Item\ItemEquipment.cs" />
     <Compile Include="Assets\Scripts\UI\Item\ItemFriend.cs" />
     <Compile Include="Assets\Scripts\UI\Item\ItemHero.cs" />

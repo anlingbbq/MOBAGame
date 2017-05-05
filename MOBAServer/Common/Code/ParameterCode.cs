@@ -106,9 +106,9 @@ namespace Common.Code
         /// </summary>
         TargetArray,
         /// <summary>
-        /// 攻击者id
+        /// 发起者id
         /// </summary>
-        AttackId,
+        FromId,
         /// <summary>
         /// 技能id
         /// </summary>
@@ -122,9 +122,13 @@ namespace Common.Code
         /// </summary>
         ItemId,
         /// <summary>
-        /// 技能对象
+        /// 技能等级
         /// </summary>
-        DtoSkill,
+        SkillLevel,
+        /// <summary>
+        /// 技能模型数组
+        /// </summary>
+        SkillArray,
 
         #endregion
     }

@@ -4,7 +4,6 @@ using Common.Code;
 using Common.Dto;
 using ExitGames.Client.Photon;
 using LitJson;
-using UnityEngine;
 
 public class DamageRequest : BaseRequest
 {
@@ -15,9 +14,9 @@ public class DamageRequest : BaseRequest
     /// <param name="skillId">技能id</param>
     /// <param name="targetArray">目标id数组</param>
     public void SendDamage(int attackId, int skillId, params int[] targetArray)
-    {
+    { 
         Dictionary<byte, object> data = new Dictionary<byte, object>();
-        data.Add((byte)ParameterCode.AttackId, attackId);
+        data.Add((byte)ParameterCode.FromId, attackId);
         data.Add((byte)ParameterCode.SkillId, skillId);
         data.Add((byte)ParameterCode.TargetArray, JsonMapper.ToJson(targetArray));
 
