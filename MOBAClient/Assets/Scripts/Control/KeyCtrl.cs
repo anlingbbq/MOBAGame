@@ -87,7 +87,8 @@ public class KeyCtrl : MonoBehaviour
             else if (state == HitState.ATTACK)
             {
                 int targetId = hit.collider.gameObject.GetComponent<AIBaseCtrl>().Model.Id;
-                MOBAClient.BattleManager.Instance.RequestAttack(ServerConfig.SkillId, GameData.HeroData.Id, targetId);
+                // SkillId为普攻 技能id 为hero.typeId * skillid + n;
+                MOBAClient.BattleManager.Instance.RequestUseSkill(ServerConfig.SkillId, GameData.HeroData.Id, targetId);
             }
         }
 

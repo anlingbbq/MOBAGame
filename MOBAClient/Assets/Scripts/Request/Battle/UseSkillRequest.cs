@@ -6,7 +6,7 @@ using MOBAClient;
 
 public class UseSkillRequest : BaseRequest
 {
-    public void SendUseSkill(int skillId, int level, int from, params int[] target)
+    public void SendUseSkill(int skillId, int level, int from, int[] target)
     {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
         data.Add((byte)ParameterCode.SkillId, skillId);
@@ -14,8 +14,9 @@ public class UseSkillRequest : BaseRequest
         data.Add((byte)ParameterCode.FromId, from);
         if (target != null)
         {
-            data.Add((byte)ParameterCode.TargetArray, target);
+            data.Add((byte)ParameterCode.TargetArray, JsonMapper.ToJson(target));
         }
+            
 
         SendRequest(data);
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Schema;
 using Common.Code;
 using Common.Config;
 using Common.Dto;
@@ -15,7 +16,7 @@ namespace MOBAServer.Handler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
-            MobaServer.LogInfo(">>>> 处理使用技能的请求");
+            MobaServer.LogInfo("处理使用技能的请求");
 
             // 获取房间
             int playerId = UserManager.GetPlayer(peer.Username).Identification;
@@ -47,7 +48,8 @@ namespace MOBAServer.Handler
             #region 获取目标数据
 
             DtoMinion[] to = null;
-            if (request.Parameters.ContainsKey((byte) ParameterCode.TargetArray))
+            
+            if (request.Parameters.ContainsKey((byte)ParameterCode.TargetArray))
             {
                 int[] toIds = JsonMapper.ToObject<int[]>(request[(byte)ParameterCode.TargetArray] as string);
                 to = new DtoMinion[toIds.Length];
@@ -72,23 +74,15 @@ namespace MOBAServer.Handler
                 }
             }
           
-
             #endregion
 
             // 获取技能id和等级
             int skillId = (int)request[(byte)ParameterCode.SkillId];
             int level = (int)request[(byte)ParameterCode.SkillLevel];
             // 使用技能
-            DtoDamage[] damages = SkillManager.Instance.UseSkill(skillId, level, from, to, room);
-
-            Dictionary<byte, object> data = request.Parameters;
-            if (damages != null)
-            {
-                // 添加伤害数据
-                data.Add((byte)ParameterCode.DtoDamages, JsonMapper.ToJson(damages));
-            }
-            // 广播使用技能的数据
-            room.Brocast(this.OpCode, data);
+            SkillManager.Instance.UseSkill(skillId, level, from, to, room);
+            // 广播谁使用了技能
+            room.Brocast(this.OpCode, request.Parameters);
         }
     }
 }

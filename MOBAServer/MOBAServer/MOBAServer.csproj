@@ -84,7 +84,6 @@
     <Compile Include="Handler\Battle\BuyItemHandler.cs" />
     <Compile Include="Handler\Battle\DamageHandler.cs" />
     <Compile Include="Handler\Battle\EnterBattleHandler.cs" />
-    <Compile Include="Handler\Battle\AttackHandler.cs" />
     <Compile Include="Handler\Battle\HeroMoveHandler.cs" />
     <Compile Include="Handler\Battle\UseSkillHandler.cs" />
     <Compile Include="Handler\Battle\UpgradeSkillHandler.cs" />

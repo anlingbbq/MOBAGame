@@ -47,9 +47,9 @@ public class WarriorCtrl : AIBaseCtrl, IResourceListener
     /// 接收攻击响应 保存攻击目标
     /// </summary>
     /// <param name="target"></param>
-    public override void AttackResponse(params Transform[] target)
+    public override void AttackResponse(params AIBaseCtrl[] target)
     {
-        Target = target[0].GetComponent<AIBaseCtrl>();
+        Target = target[0];
         // 攻击状态
         ChangeState(AIStateEnum.ATTACK);
     }

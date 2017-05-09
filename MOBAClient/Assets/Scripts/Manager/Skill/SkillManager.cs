@@ -25,14 +25,19 @@ namespace MOBAClient
         public void Init(DtoHero[] heros, SkillModel[] skills)
         {
             // 创建技能模型字典
-            foreach (SkillModel model in skills)
+            foreach (SkillModel item in skills)
             {
-                SkillDict.Add(model.Id, model); 
+                SkillDict.Add(item.Id, item);
             }
 
             // 创建所有用到的效果委托
             SkillHandlerData.Init(heros);
 
+            // 普通攻击
+            SkillModel model = SkillDict.ExTryGet(ServerConfig.SkillId);
+            HandlerDict.Add(ServerConfig.SkillId, ParseSkill(model));
+
+            // 根据英雄技能创建对应的技能处理对象
             foreach (DtoHero hero in heros)
             {
                 foreach (DtoSkill dto in hero.Skills)
@@ -44,7 +49,7 @@ namespace MOBAClient
                         continue;
 
                     // 寻找对应的技能模型
-                    SkillModel model = SkillDict.ExTryGet(dto.Id);
+                    model = SkillDict.ExTryGet(dto.Id);
                     if (model == null)
                         continue;
 
@@ -93,6 +98,11 @@ namespace MOBAClient
         /// <param name="to"></param>
         public void UseSkill(int skillId, int level, AIBaseCtrl from, AIBaseCtrl[] to = null)
         {
+            if (!HandlerDict.ContainsKey(skillId))
+            {
+                Log.Error("没有找到技能 : " + skillId);
+                return;
+            }
             SkillHandler handler = HandlerDict.ExTryGet(skillId)[level];
             if (handler != null)
             {

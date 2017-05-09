@@ -25,21 +25,6 @@ namespace MOBAClient
         }
 
         /// <summary>
-        /// 攻击的请求
-        /// </summary>
-        private AttackRequest m_AttackRequest;
-        /// <summary>
-        /// 请求攻击
-        /// </summary>
-        /// <param name="skillId"></param>
-        /// <param name="attackId"></param>
-        /// <param name="targetId"></param>
-        public void RequestAttack(int skillId, int attackId, int targetId)
-        {
-            m_AttackRequest.SendAttack(skillId, attackId, targetId);
-        }
-
-        /// <summary>
         /// 计算伤害的请求
         /// </summary>
         private DamageRequest m_DamageRequest;
@@ -86,7 +71,11 @@ namespace MOBAClient
         /// <summary>
         /// 请求使用技能
         /// </summary>
-        public void RequestUseSkill(int skillId, int level, int from, params int[] target)
+        public void RequestUseSkill(int skillId, int from, int target, int level = 0)
+        {
+            RequestUseSkill(skillId, from, new int[] { target }, level);
+        }
+        public void RequestUseSkill(int skillId, int from, int[] target, int level)
         {
             m_UseSkillRequest.SendUseSkill(skillId, level, from, target);            
         }
@@ -102,7 +91,6 @@ namespace MOBAClient
             // 获取请求
             m_DamageRequest = GetComponent<DamageRequest>();
             m_HeroMoveRequest = GetComponent<HeroMoveRequest>();
-            m_AttackRequest = GetComponent<AttackRequest>();
             m_BuyRequest = GetComponent<BuyItemRequest>();
             m_UpgradeSkillRequest = GetComponent<UpgradeSkillRequest>();
             m_UseSkillRequest = GetComponent<UseSkillRequest>();

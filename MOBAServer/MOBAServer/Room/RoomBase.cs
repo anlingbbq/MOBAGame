@@ -119,5 +119,26 @@ namespace MOBAServer.Room
                 peer.SendOperationResponse(response, new SendParameters());
             }
         }
+
+        /// <summary>
+        /// 广播事件
+        /// </summary>
+        /// <param name="opCode"></param>
+        /// <param name="data"></param>
+        /// <param name="self"></param>
+        public void BrocastEvent(OperationCode opCode, Dictionary<byte, object> data, TPeer self = null)
+        {
+            EventData eventData = new EventData((byte)opCode);
+            eventData.Parameters = data;
+
+            foreach (TPeer peer in PeerList)
+            {
+                // 不给自身发送消息
+                if (self == peer)
+                    continue;
+
+                peer.SendEvent(eventData, new SendParameters());
+            }
+        }
     }
 }

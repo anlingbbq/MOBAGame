@@ -5,7 +5,7 @@ namespace Common.Config
 {
     /// ------------------------------------------------------------------------------------------------------------------
     /// <summary>
-    /// 在一个技能里，能造成伤害的效果只能有一个，并且要放到最后
+    /// 在一个技能里，相同等级的伤害效果只能有一个，并且要放到最后
     /// </summary>
     /// ------------------------------------------------------------------------------------------------------------------
     public static class SkillData
@@ -23,7 +23,7 @@ namespace Common.Config
             {
                 new SkillLevelModel(0, 0, 0, 0, new EffectModel[]
                 {
-                    new EffectModel(EffectType.NormalAttack, 0, 0)
+                    new EffectModel(NormalAttack, 0, 0)
                 })
             });
             #endregion
@@ -33,23 +33,23 @@ namespace Common.Config
             {
                 new SkillLevelModel(1, 6, 0, 0, new EffectModel[]
                 {
-                    new EffectModel(EffectType.SpeedDouble, 2, 2),
-                    new EffectModel(EffectType.AttackDouble, 2, 4),
+                    new EffectModel(SpeedDouble, 2, 2),
+                    new EffectModel(AttackDouble, 2, 4),
                 }),
                 new SkillLevelModel(3, 6, 0, 0, new EffectModel[]
                 {
-                    new EffectModel(EffectType.SpeedDouble, 2.2, 2.5),
-                    new EffectModel(EffectType.AttackDouble, 2, 4),
+                    new EffectModel(SpeedDouble, 2.2, 2.5),
+                    new EffectModel(AttackDouble, 2, 4),
                 }),
                 new SkillLevelModel(5, 6, 0, 0, new EffectModel[]
                 {
-                    new EffectModel(EffectType.SpeedDouble, 3, 2.5),
-                    new EffectModel(EffectType.AttackDouble, 2.5, 4),
+                    new EffectModel(SpeedDouble, 3, 2.5),
+                    new EffectModel(AttackDouble, 2.5, 4),
                 }),
                 new SkillLevelModel(7, 6, 0, 0, new EffectModel[]
                 {
-                    new EffectModel(EffectType.SpeedDouble, 3, 2.5),
-                    new EffectModel(EffectType.AttackDouble, 4, 4),
+                    new EffectModel(SpeedDouble, 3, 2.5),
+                    new EffectModel(AttackDouble, 4, 4),
                 }),
             });
             #endregion
@@ -81,7 +81,13 @@ namespace Common.Config
         /// <returns></returns>
         public static SkillModel[] GetSkillByHeros(DtoHero[] heros)
         {
+            // 创建技能模型的字典
             Dictionary<int, SkillModel> dict = new Dictionary<int, SkillModel>();
+            // 普通攻击
+            SkillModel model;
+            SkillDict.TryGetValue(ServerConfig.SkillId, out model);
+            dict.Add(ServerConfig.SkillId, model);
+            // 遍历英雄技能
             foreach (DtoHero hero in heros)
             {
                 foreach (DtoSkill skill in hero.Skills)
@@ -89,7 +95,6 @@ namespace Common.Config
                     if (skill == null)
                         continue;
 
-                    SkillModel model;
                     SkillDict.TryGetValue(skill.Id, out model);
                     if (model == null || dict.ContainsKey(skill.Id))
                         continue;
@@ -97,15 +102,45 @@ namespace Common.Config
                     dict.Add(skill.Id, model);
                 }
             }
-
+            // 将字典转为数组
             SkillModel[] array = new SkillModel[dict.Count];
             int i = 0;
-            foreach (SkillModel model in dict.Values)
+            foreach (SkillModel item in dict.Values)
             {
-                array[i++] = model;
+                array[i++] = item;
             }
             return array;
         }
+
+        #region 伤害类型
+
+        /// <summary>
+        /// 伤害类型前缀
+        /// </summary>
+        public const string DamageType = "Damage";
+        /// <summary>
+        /// 普通攻击
+        /// </summary>
+        public const string NormalAttack = DamageType + "NormalAttack";
+
+        #endregion
+
+        #region 效果类型
+
+        /// <summary>
+        /// 效果类型前缀
+        /// </summary>
+        public const string EffectType = "Effect";
+        /// <summary>
+        /// 速度加倍
+        /// </summary>
+        public const string SpeedDouble = EffectType + "SpeedDouble";
+        /// <summary>
+        /// 攻击加倍
+        /// </summary>
+        public const string AttackDouble = EffectType + "AttackDouble";
+
+        #endregion
     }
 
     public class SkillModel
@@ -191,7 +226,7 @@ namespace Common.Config
         /// <summary>
         /// 效果类型
         /// </summary>
-        public EffectType Type;
+        public string Type;
 
         /// <summary>
         /// 效果值
@@ -208,27 +243,11 @@ namespace Common.Config
             
         }
 
-        public EffectModel(EffectType type, double value, double duration)
+        public EffectModel(string type, double value, double duration)
         {
             Type = type;
             EffectValue = value;
             Duration = duration;
         }
-    }
-
-    public enum EffectType
-    {
-        /// <summary>
-        /// 普通攻击
-        /// </summary>
-        NormalAttack,
-        /// <summary>
-        /// 速度加倍
-        /// </summary>
-        SpeedDouble,
-        /// <summary>
-        /// 攻击加倍
-        /// </summary>
-        AttackDouble,
     }
 }

@@ -169,7 +169,6 @@
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Manager\TimerManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
-    <Compile Include="Assets\Scripts\Request\Battle\AttackRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\BuyItemRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\DamageRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\EnterBattleRequest.cs" />

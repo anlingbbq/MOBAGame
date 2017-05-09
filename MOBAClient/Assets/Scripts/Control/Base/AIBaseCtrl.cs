@@ -82,7 +82,7 @@ public class AIBaseCtrl : MonoBehaviour
     /// 接收服务器攻击响应
     /// 同步攻击动画 不计算伤害
     /// </summary>
-    public virtual void AttackResponse(params Transform[] target)
+    public virtual void AttackResponse(params AIBaseCtrl[] target)
     {
     }
 

@@ -14,37 +14,77 @@ namespace MOBAServer.Skill
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="effect"></param>
-    public delegate DtoDamage[] EffectHandler(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to, EffectModel effect);
+    public delegate void EffectHandler(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to, EffectModel effect);
 
     /// <summary>
-    /// 保存所有的技能处理函数
+    /// 伤害的处理委托
     /// </summary>
+    /// <param name="room"></param>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <param name="effect"></param>
+    /// <returns></returns>
+    public delegate DtoDamage[] DamageHandler(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to, EffectModel effect);
+
+    /// -----------------------------------------------------------------------------------
+    /// <summary>
+    /// 保存所有的技能处理函数
+    /// 所有新的处理函数添加在这里
+    /// 与SkillData中的常量名保持对应
+    /// </summary>
+    /// -----------------------------------------------------------------------------------
     public class SkillHandlerData
     {
         /// <summary>
-        /// 保存所有的委托
+        /// 保存效果的委托
         /// </summary>
-        public static Dictionary<EffectType, EffectHandler> HandlerDict;
+        public static Dictionary<string, EffectHandler> EffectDict;
 
         /// <summary>
-        /// 根据效果枚举 创建所有效果委托
+        /// 保存伤害的委托
+        /// </summary>
+        public static Dictionary<string, DamageHandler> DamageDict;
+
+        /// <summary>
+        /// 根据SkillData中的静态常量 创建对应委托
         /// </summary>
         public static void Init()
         {
-            HandlerDict = new Dictionary<EffectType, EffectHandler>();
-            Type dataType = typeof(SkillHandlerData);
-            MethodInfo info = null;
-            // 遍历技能枚举 寻找对应的函数
-            foreach (string name in Enum.GetNames(typeof(EffectType)))
+            EffectDict = new Dictionary<string, EffectHandler>();
+            DamageDict = new Dictionary<string, DamageHandler>();
+
+            Type typeHandler = typeof(SkillHandlerData);
+            Type typeData = typeof(SkillData);
+            MethodInfo method = null;
+            // 获取SkillData中的所有静态常量
+            foreach (FieldInfo filed in typeData.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
-                info = dataType.GetMethod(name);
-                if (info == null)
-                {
-                    MobaServer.LogWarn(">>>> init skill not found : " + name);
+                string value = filed.GetValue(null) as string;
+                if (value == null)
                     continue;
+
+                // 保存效果类委托
+                if (value.StartsWith(SkillData.EffectType))
+                {
+                    method = typeHandler.GetMethod(filed.Name);
+                    if (method == null)
+                    {
+                        MobaServer.LogWarn(">>>> effect method is not found : " + filed.Name);
+                        continue;
+                    }
+                    EffectDict.Add(value, (EffectHandler)Delegate.CreateDelegate(typeof(EffectHandler), method));
                 }
-                // 保存技能委托
-                HandlerDict.Add((EffectType)Enum.Parse(typeof(EffectType), name), (EffectHandler)Delegate.CreateDelegate(typeof(EffectHandler), info));
+                // 保存伤害类委托
+                else if (value.StartsWith(SkillData.DamageType))
+                {
+                    method = typeHandler.GetMethod(filed.Name);
+                    if (method == null)
+                    {
+                        MobaServer.LogWarn(">>>> damage method is not found : " + filed.Name);
+                        continue;
+                    }
+                    DamageDict.Add(value, (DamageHandler)Delegate.CreateDelegate(typeof(DamageHandler), method));
+                }
             }
         }
 
@@ -91,7 +131,7 @@ namespace MOBAServer.Skill
         /// <param name="to"></param>
         /// <param name="effect"></param>
         /// <returns></returns>
-        public static DtoDamage[] AttackDouble(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to, EffectModel effect)
+        public static void AttackDouble(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to, EffectModel effect)
         {
             // 增加攻击
             int value = from.Attack * ((int)effect.EffectValue - 1);
@@ -101,7 +141,6 @@ namespace MOBAServer.Skill
             {
                 from.Attack -= value;
             });
-            return null;
         }
 
         /// <summary>
@@ -112,7 +151,7 @@ namespace MOBAServer.Skill
         /// <param name="to"></param>
         /// <param name="effect"></param>
         /// <returns></returns>
-        public static DtoDamage[] SpeedDouble(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to, EffectModel effect)
+        public static void SpeedDouble(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to, EffectModel effect)
         {
             // 增加移速
             double value = from.Speed * (effect.EffectValue - 1);
@@ -122,7 +161,6 @@ namespace MOBAServer.Skill
             {
                 from.Speed -= value;
             });
-            return null;
         }
 
         #endregion

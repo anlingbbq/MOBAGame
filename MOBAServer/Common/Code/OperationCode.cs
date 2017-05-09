@@ -108,25 +108,21 @@ namespace Common.OpCode
         /// </summary>
         HeroMove,
         /// <summary>
-        /// 攻击
+        /// 使用技能
         /// </summary>
-        Attack,
+        UseSkill,
         /// <summary>
         /// 计算伤害
         /// </summary>
         Damage,
         /// <summary>
-        /// 购买装备
-        /// </summary>
-        BuyItem,
-        /// <summary>
         /// 升级技能
         /// </summary>
         UpgradeSkill,
         /// <summary>
-        /// 使用技能
+        /// 购买装备
         /// </summary>
-        UseSkill,
+        BuyItem,
 
         #endregion
     }

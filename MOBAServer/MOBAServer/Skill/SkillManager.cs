@@ -60,17 +60,28 @@ namespace MOBAServer.Skill
                 // 创建每一级的处理对象
                 SkillHandler skillHandler = new SkillHandler();
                 EffectModel[] effects = skill.LvData[i].EffectData;
-                skillHandler.Effects = new EffectModel[effects.Length];
+                skillHandler.Data = new EffectModel[effects.Length];
                 // 遍历技能效果
                 for (int j = 0; j < effects.Length; j++)
                 {
                     EffectModel effect = effects[j];
-                    skillHandler.Effects[j] = effect;
+                    skillHandler.Data[j] = effect;
                     // 判断效果类型 将相应的处理添加到委托里
-                    EffectHandler handler = SkillHandlerData.HandlerDict.ExTryGet(effect.Type);
-                    if (handler != null)
+                    if (effect.Type.StartsWith(SkillData.DamageType))
                     {
-                        skillHandler.Handler += handler;
+                        DamageHandler handler = SkillHandlerData.DamageDict.ExTryGet(effect.Type);
+                        if (handler != null)
+                        {
+                            skillHandler.Damage += handler;
+                        }
+                    }
+                    else if (effect.Type.StartsWith(SkillData.EffectType))
+                    {
+                        EffectHandler handler = SkillHandlerData.EffectDict.ExTryGet(effect.Type);
+                        if (handler != null)
+                        {
+                            skillHandler.Effect += handler;
+                        }
                     }
                 }
                 skillHandlers[i] = skillHandler;
@@ -86,16 +97,26 @@ namespace MOBAServer.Skill
         /// <param name="room"></param>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        /// <returns>返回伤害数据，要求造成伤害的效果在最后,且只有一个</returns>
-        public DtoDamage[] UseSkill(int skillId, int level, DtoMinion from, DtoMinion[] to = null, RoomBase<MobaPeer> room = null)
+        /// <returns></returns>
+        public void UseSkill(int skillId, int level, DtoMinion from, DtoMinion[] to = null, RoomBase<MobaPeer> room = null)
         {
-            DtoDamage[] damages = null;
             SkillHandler skillHandler = HandlerDict.ExTryGet(skillId)[level];
-            if (skillHandler != null)
-            {
-                damages = skillHandler.RunSkill(room, from, to);
-            }
-            return damages;
+            skillHandler.RunSkill(room, from, to);
+        }
+
+        /// <summary>
+        /// 计算伤害
+        /// </summary>
+        /// <param name="skillId"></param>
+        /// <param name="level"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="room"></param>
+        /// <returns></returns>
+        public DtoDamage[] Damage(int skillId, int level, DtoMinion from, DtoMinion[] to = null, RoomBase<MobaPeer> room = null)
+        {
+            SkillHandler skillHandler = HandlerDict.ExTryGet(skillId)[level];
+            return skillHandler.RunDamage(room, from, to);
         }
     }
 
@@ -107,29 +128,45 @@ namespace MOBAServer.Skill
         /// <summary>
         /// 效果数据
         /// </summary>
-        public EffectModel[] Effects;
+        public EffectModel[] Data;
         /// <summary>
-        /// 技能的实际调用方法
-        /// 使用委托保存所有的效果处理方式
+        /// 效果类处理
         /// </summary>
-        public EffectHandler Handler;
+        public EffectHandler Effect;
+        /// <summary>
+        /// 伤害类处理
+        /// </summary>
+        public DamageHandler Damage;
 
         /// <summary>
-        /// 使用技能
+        /// 使用技能 执行技能效果 不处理伤害
         /// </summary>
         /// <param name="room">使用房间</param>
         /// <param name="from">使用者</param>
         /// <param name="to">目标</param>
-        /// <returns>返回伤害数据，要求造成伤害的效果在最后,且只有一个</returns>
-        public DtoDamage[] RunSkill(RoomBase<MobaPeer>room, DtoMinion from, DtoMinion[] to)
+        /// <returns></returns>
+        public void RunSkill(RoomBase<MobaPeer>room, DtoMinion from, DtoMinion[] to)
         {
-            DtoDamage[] damages = null;
-            for (int i = 0; i < Handler.GetInvocationList().Length; i++)
+            if (Effect == null)
+                return;
+
+            for (int i = 0; i < Effect.GetInvocationList().Length; i++)
             {
-                var action = (EffectHandler)Handler.GetInvocationList()[i];
-                damages = action(room, from, to, Effects[i]);
+                var action = (EffectHandler)Effect.GetInvocationList()[i];
+                action(room, from, to, Data[i]);
             }
-            return damages;
+        }
+
+        /// <summary>
+        /// 计算伤害
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public DtoDamage[] RunDamage(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to)
+        {
+            return Damage == null ? null : Damage(room, from, to, Data[Data.Length - 1]);
         }
     }
 }

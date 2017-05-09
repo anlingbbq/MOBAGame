@@ -32,23 +32,16 @@ public class TowerCtrl : AIBaseCtrl
     /// </summary>
     private float m_Timer = 0;
 
-    /// <summary>
-    /// 攻击的请求
-    /// </summary>
-    private AttackRequest m_AttackRequest;
-
     protected override void Start()
     {
         base.Start();
-
-        m_AttackRequest = GetComponent<AttackRequest>();
 
         // 赋值队伍信息
         m_Check.SetTeam(Model.Team);
         m_IsFriend = GameData.HeroCtrl.Model.Team == Model.Team;
     }
 
-    public override void AttackResponse(params Transform[] target)
+    public override void AttackResponse(params AIBaseCtrl[] target)
     {
         // 生成一个攻击特效
         GameObject go = null;
@@ -61,8 +54,8 @@ public class TowerCtrl : AIBaseCtrl
         // 防止重置位置时产生的粒子
         go.GetComponent<EllipsoidParticleEmitter>().emit = true;
         // 初始化
-        int targetId = target[0].GetComponent<AIBaseCtrl>().Model.Id;
-        go.GetComponent<TargetSkill>().Init(target[0], ServerConfig.SkillId, Model.Id, targetId, m_IsFriend);
+        int targetId = target[0].Model.Id;
+        go.GetComponent<TargetSkill>().Init(target[0].transform, ServerConfig.SkillId, Model.Id, targetId, m_IsFriend);
     }
 
     public override void DeathResponse()
@@ -106,7 +99,7 @@ public class TowerCtrl : AIBaseCtrl
         {
             m_Timer = 0;
             // 向服务器发起攻击的请求
-            m_AttackRequest.SendAttack(ServerConfig.SkillId, Model.Id, Target.Model.Id);
+            MOBAClient.BattleManager.Instance.RequestUseSkill(ServerConfig.SkillId, Model.Id, Target.Model.Id);
         }
     }
 }

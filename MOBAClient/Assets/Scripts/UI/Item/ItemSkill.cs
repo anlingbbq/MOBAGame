@@ -114,7 +114,7 @@ public class ItemSkill : MonoBehaviour, IResourceListener
             if (m_IsReady)
             {
                 m_IsReady = false;
-                MOBAClient.BattleManager.Instance.RequestUseSkill(m_SkillId, m_Level, GameData.HeroData.Id, null);
+                MOBAClient.BattleManager.Instance.RequestUseSkill(m_SkillId, GameData.HeroData.Id, null, m_Level);
             }
         }
     }

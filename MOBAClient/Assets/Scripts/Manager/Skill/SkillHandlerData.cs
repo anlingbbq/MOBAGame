@@ -24,16 +24,21 @@ public class SkillHandlerData
     /// <summary>
     /// 保存所有的委托
     /// </summary>
-    public static Dictionary<EffectType, EffectHandler> HandlerDict;
+    public static Dictionary<string, EffectHandler> HandlerDict;
 
     /// <summary>
     /// 创建当前游戏中需要的效果委托
     /// </summary>
     public static void Init(DtoHero[] heros)
     {
-        HandlerDict = new Dictionary<EffectType, EffectHandler>();
-        Type dataType = typeof(SkillHandlerData);
-        MethodInfo info = null;
+        HandlerDict = new Dictionary<string, EffectHandler>();
+        Type typeData = typeof(SkillHandlerData);
+        MethodInfo method = typeData.GetMethod("NormalAttack");
+        // 普通攻击
+        HandlerDict.Add(SkillData.NormalAttack, 
+            (EffectHandler)Delegate.CreateDelegate(typeof(EffectHandler), method));
+
+        #region 根据英雄技能创建效果委托
         foreach (DtoHero hero in heros)
         {
             foreach (DtoSkill skill in hero.Skills)
@@ -50,15 +55,29 @@ public class SkillHandlerData
                 {
                     foreach (EffectModel effectModel in levelModel.EffectData)
                     {
-                        info = dataType.GetMethod(Enum.GetName(typeof(EffectType), effectModel.Type));
+                        // 寻找对应函数
+                        string name = null;
+                        if (effectModel.Type.StartsWith(SkillData.EffectType))
+                            name = effectModel.Type.Substring(SkillData.EffectType.Length);
+                        else if (effectModel.Type.StartsWith(SkillData.DamageType))
+                            name = effectModel.Type.Substring(SkillData.DamageType.Length);
+                        method = typeData.GetMethod(name);
+
+                        // 创建委托
+                        if (method == null)
+                        {
+                            Log.Error("没有对应的效果处理函数 ：" + effectModel.Type);
+                            continue;
+                        }
                         if (!HandlerDict.ContainsKey(effectModel.Type))
                         {
-                            HandlerDict.Add(effectModel.Type, (EffectHandler)Delegate.CreateDelegate(typeof(EffectHandler), info));
+                            HandlerDict.Add(effectModel.Type, (EffectHandler)Delegate.CreateDelegate(typeof(EffectHandler), method));
                         }
                     }
                 }
             }
         }
+        #endregion
     }
 
     #region 伤害类
@@ -71,9 +90,13 @@ public class SkillHandlerData
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="effect"></param>
-    public static void NormalAttack(int skillId, int level, DtoMinion from, DtoMinion[] to, EffectModel effect)
+    public static void NormalAttack(int skillId, int level, AIBaseCtrl from, AIBaseCtrl[] to, EffectModel effect)
     {
-        
+        if (from == null || to == null)
+            return;
+
+        // 调用攻击方法
+        from.AttackResponse(to);
     }
 
     #endregion
