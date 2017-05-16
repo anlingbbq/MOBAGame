@@ -105,6 +105,10 @@ namespace MOBAServer.Room
             TeamOneIdList.Clear();
             TeamTwoIdList.Clear();
             PeerList.Clear();
+
+            // 移除定时任务
+            if (!Guid.Equals(new Guid()))
+                Timer.RemoveAction(Guid);
         }
     }
 }

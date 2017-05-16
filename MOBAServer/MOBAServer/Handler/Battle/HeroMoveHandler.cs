@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Code;
-using Common.Dto;
-using LitJson;
+﻿using Common.Code;
 using MOBAServer.Cache;
 using MOBAServer.DataBase.Manager;
 using MOBAServer.Room;
@@ -17,7 +10,7 @@ namespace MOBAServer.Handler
     {
         public override void OnOperationRequest(OperationRequest request, SendParameters sendParameters, MobaPeer peer)
         {
-            MobaServer.LogInfo("处理移动的请求");
+            //MobaServer.LogInfo("处理移动的请求");
 
             // 获取玩家id
             int playerId = UserManager.GetPlayer(peer.Username).Identification;

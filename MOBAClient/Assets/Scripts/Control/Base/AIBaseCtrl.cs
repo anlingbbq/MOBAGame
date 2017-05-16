@@ -7,8 +7,7 @@ using UnityEngine.AI;
 
 /// <summary>
 /// AI控制器的基类
-/// 包括数据、攻击、血条、动画、移动，模块
-/// 需要重写攻击，攻击、死亡、复活响应
+/// 包括数据、攻击、血条、动画、移动等
 /// 
 /// 状态机功能
 /// 状态添加和切换
@@ -35,18 +34,23 @@ public class AIBaseCtrl : MonoBehaviour
     /// </summary>
     /// <param name="model"></param>
     /// <param name="friend"></param>
-    public void Init(DtoMinion model, bool friend)
+    public virtual void Init(DtoMinion model, bool friend)
     {
         Model = model;
-
+        
         // 设置血条颜色
         m_HpCtrl.SetColor(friend);
+        OnHpChange();
 
         // 设置层
         if (friend)
             gameObject.layer = LayerMask.NameToLayer("Friend");
         else
             gameObject.layer = LayerMask.NameToLayer("Enemy");
+
+        // 设置攻击速度
+        if (AnimeCtrl != null)
+            AnimeCtrl.SetAttackSpeed((float)model.AttackInterval);
     }
 
     #region 动画
@@ -72,6 +76,14 @@ public class AIBaseCtrl : MonoBehaviour
     public void OnHpChange()
     {
         m_HpCtrl.SetHp((float)Model.CurHp / Model.MaxHp);
+    }
+
+    /// <summary>
+    /// 设置血条显示
+    /// </summary>
+    public void SetHpBar(bool active)
+    {
+        m_HpCtrl.SetBarActive(active);
     }
 
     #endregion
@@ -142,7 +154,11 @@ public class AIBaseCtrl : MonoBehaviour
         // 失去目标
         Target = null;
         // 隐藏血条
-        m_HpCtrl.SetBarActive(false);
+        SetHpBar(false);
+        // 隐藏小地图头像
+        MiniMapHead.gameObject.SetActive(false);
+        // 设置到死亡层
+        gameObject.layer = LayerMask.NameToLayer("Death");
     }
 
     /// <summary>
@@ -196,6 +212,9 @@ public class AIBaseCtrl : MonoBehaviour
     /// <param name="point"></param>
     public void MoveTo(Vector3 point)
     {
+        if (!m_Agent.enabled)
+            return;
+
         point.y = transform.position.y;
         // 寻路
         m_Agent.ResetPath();
@@ -223,6 +242,16 @@ public class AIBaseCtrl : MonoBehaviour
         m_Agent.Stop();
     }
 
+    /// <summary>
+    /// 是否使用寻路组件
+    /// </summary>
+    public void SetAgent(bool enable)
+    {
+        if (enable == false)
+            m_Agent.Stop();
+        m_Agent.enabled = enable;
+    }
+
     #endregion
 
     #region 状态机
@@ -233,7 +262,7 @@ public class AIBaseCtrl : MonoBehaviour
     protected Dictionary<AIStateEnum, AIState> StateDict = new Dictionary<AIStateEnum, AIState>();
 
     /// <summary>
-    /// 当前状态
+    /// 当前状态类
     /// </summary>
     public AIState State { get; set; }
 
@@ -252,6 +281,11 @@ public class AIBaseCtrl : MonoBehaviour
         StateDict.Add(state.Type, state);
         state.SetCtrl(this);
     }
+
+    /// <summary>
+    /// 用于unity面板中观察调试
+    /// </summary>
+    public AIStateEnum StateType = AIStateEnum.INVALID;
 
     /// <summary>
     /// 切换状态
@@ -289,6 +323,8 @@ public class AIBaseCtrl : MonoBehaviour
         State = StateDict[type];
         State.EnterState();
         StartCoroutine(State.RunLogic());
+
+        StateType = State.Type;
 
         return true;
     }

@@ -11,6 +11,15 @@ namespace MOBAClient
         #region 请求
 
         /// <summary>
+        /// 完成初始化
+        /// </summary>
+        private InitCompleteRequest m_InitComplete;
+        public void InitComplete()
+        {
+            m_InitComplete.SendRequest();
+        }
+
+        /// <summary>
         /// 移动的请求
         /// </summary>
         private HeroMoveRequest m_HeroMoveRequest;
@@ -89,6 +98,7 @@ namespace MOBAClient
             ResourcesManager.Instance.ReleaseAll();
 
             // 获取请求
+            m_InitComplete = GetComponent<InitCompleteRequest>();
             m_DamageRequest = GetComponent<DamageRequest>();
             m_HeroMoveRequest = GetComponent<HeroMoveRequest>();
             m_BuyRequest = GetComponent<BuyItemRequest>();

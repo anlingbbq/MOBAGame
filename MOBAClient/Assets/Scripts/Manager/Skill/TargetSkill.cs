@@ -33,11 +33,6 @@ public class TargetSkill : MonoBehaviour
     private bool m_Send;
 
     /// <summary>
-    /// 伤害请求
-    /// </summary>
-    private DamageRequest m_DamageRequest;
-
-    /// <summary>
     /// 初始化
     /// </summary>
     /// <param name="target"></param>

@@ -6,6 +6,8 @@ public class Paths
 {
     #region 音乐文件
 
+    #region 界面
+
     /// <summary>
     /// UI声音资源文件路径 
     /// </summary>
@@ -24,10 +26,27 @@ public class Paths
     /// </summary>
     public const string RES_SOUND_SELECT = "Sound/Select/";
 
+    #endregion
+
+    #region 战斗
+
     /// <summary>
     /// 战斗音效路径 
     /// </summary>
     public const string RES_SOUND_BATTLE = "Sound/Battle/";
+
+    // 小兵
+    public const string SOUND_MW_ATTACK = RES_SOUND_BATTLE + "MWAttack";
+    public const string SOUND_MW_DEATH = RES_SOUND_BATTLE + "MWDeath";
+
+    // 防御塔
+    public const string SOUND_TOWER_ATTACK = RES_SOUND_BATTLE + "TowerAttack";
+
+    // 战士英雄
+    public const string SOUND_WARRIOR_ATTACK = RES_SOUND_BATTLE + "WarriorAttack";
+    public const string SOUND_WARRIOR_DEATH = RES_SOUND_BATTLE + "WarriorDeath";
+
+    #endregion
 
     #endregion
 
@@ -51,4 +70,19 @@ public class Paths
     /// 英雄预设路径 
     /// </summary>
     public const string RES_MODEL_HERO = "Model/Hero/";
+
+    /// <summary>
+    /// 小兵预设路径
+    /// </summary>
+    public const string RES_MODEL_MINION = "Model/Minion/";
+
+    /// <summary>
+    /// 小兵纹理 红
+    /// </summary>
+    public const string TEXTURE_MINION_RED = "Texture/Minion/Minion_Red";
+
+    /// <summary>
+    /// 小兵纹理 蓝
+    /// </summary>
+    public const string TEXTURE_MINION_BULE = "Texture/Minion/Minion_Blue";
 }

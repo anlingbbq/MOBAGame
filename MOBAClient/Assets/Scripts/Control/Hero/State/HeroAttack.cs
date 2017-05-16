@@ -11,8 +11,7 @@ public class HeroAttack : AttackState
     {
         while(!m_Quit)
         {
-            if (m_Ctrl.Target == null ||
-                m_Ctrl.Target.Model.CurHp <= 0)
+            if (m_Ctrl.Target == null || m_Ctrl.Target.Model.CurHp <= 0)
             {
                 m_Ctrl.ChangeState(AIStateEnum.IDLE);
             }

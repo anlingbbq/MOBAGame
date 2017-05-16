@@ -48,6 +48,7 @@
     <Compile Include="Config\BuildData.cs" />
     <Compile Include="Config\HeroData.cs" />
     <Compile Include="Config\ItemData.cs" />
+    <Compile Include="Config\MinionData.cs" />
     <Compile Include="Config\SkillData.cs" />
     <Compile Include="Dto\DtoDamage.cs" />
     <Compile Include="Config\ServerConfig.cs" />

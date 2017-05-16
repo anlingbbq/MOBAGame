@@ -113,7 +113,7 @@ namespace MOBAServer.Skill
         /// <param name="to"></param>
         /// <param name="room"></param>
         /// <returns></returns>
-        public DtoDamage[] Damage(int skillId, int level, DtoMinion from, DtoMinion[] to = null, RoomBase<MobaPeer> room = null)
+        public DtoDamage[] Damage(RoomBase<MobaPeer> room, int skillId, int level, DtoMinion from, DtoMinion[] to)
         {
             SkillHandler skillHandler = HandlerDict.ExTryGet(skillId)[level];
             return skillHandler.RunDamage(room, from, to);

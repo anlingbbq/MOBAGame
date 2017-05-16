@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticleObject : ReuseableObject
+public class ParticleObject : MonoBehaviour, IPoolReuseable
 {
-    public override void BeforeGetObject()
+    public void BeforeGetObject()
     {
         
     }
 
-    public override void BeforeHideObject()
+    public void BeforeHideObject()
     {
         GetComponent<EllipsoidParticleEmitter>().ClearParticles();
         GetComponent<EllipsoidParticleEmitter>().emit = false;

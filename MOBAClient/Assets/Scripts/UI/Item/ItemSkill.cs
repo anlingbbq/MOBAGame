@@ -2,10 +2,11 @@
 using Common.Dto;
 using MOBAClient;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using BattleManager = MOBAClient.BattleManager;
 
-public class ItemSkill : MonoBehaviour, IResourceListener
+public class ItemSkill : MonoBehaviour, IResourceListener, IPointerEnterHandler, IPointerExitHandler
 {
     #region UI
 
@@ -41,6 +42,8 @@ public class ItemSkill : MonoBehaviour, IResourceListener
 
     #endregion
 
+    #region 属性
+
     /// <summary>
     /// 描述内容
     /// </summary>
@@ -71,6 +74,8 @@ public class ItemSkill : MonoBehaviour, IResourceListener
     /// </summary>
     private bool m_IsReady;
 
+    #endregion
+
     public void Init(DtoSkill data)
     {
         m_SkillId = data.Id;
@@ -98,17 +103,7 @@ public class ItemSkill : MonoBehaviour, IResourceListener
     /// </summary>
     public void OnSkillClick()
     {
-        if (m_Level < 0)
-        {
-            // 显示描述
-            TextDesc.text = m_Desc;
-            ImgDesc.gameObject.SetActive(true);
-            TimerManager.Instance.AddTimer("ShowSkillDesc", 5, () =>
-            {
-                ImgDesc.gameObject.SetActive(false);
-            });
-        }
-        else
+        if (m_Level >= 0)
         {
             // 使用技能
             if (m_IsReady)
@@ -145,6 +140,19 @@ public class ItemSkill : MonoBehaviour, IResourceListener
         m_Level = skill.Level;
         BtnUp.gameObject.SetActive(false);
         m_CoolDown = (float)skill.CoolDown;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // 隐藏描述
+        ImgDesc.gameObject.SetActive(false);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 显示描述
+        TextDesc.text = m_Desc;
+        ImgDesc.gameObject.SetActive(true);
     }
 
     public void OnLoaded(string assetName, object asset)

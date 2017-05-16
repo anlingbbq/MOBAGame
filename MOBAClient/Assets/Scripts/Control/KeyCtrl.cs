@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class KeyCtrl : MonoBehaviour
 {
+    public const KeyCode Key_Skill1 = KeyCode.Q;
+
     void Update()
     {
         if (!GameData.HeroCtrl)

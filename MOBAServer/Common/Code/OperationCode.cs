@@ -104,6 +104,14 @@ namespace Common.OpCode
         /// </summary>
         EnterBattle,
         /// <summary>
+        /// 初始化完成
+        /// </summary>
+        InitComplete,
+        /// <summary>
+        /// 生成小兵
+        /// </summary>
+        SpawnMinion,
+        /// <summary>
         /// 英雄移动
         /// </summary>
         HeroMove,

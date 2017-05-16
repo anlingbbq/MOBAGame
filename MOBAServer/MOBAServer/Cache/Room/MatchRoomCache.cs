@@ -74,10 +74,7 @@ namespace MOBAServer.Cache
             {
                 // 移除映射
                 RoomDict.Remove(room.Id);
-                // 移除定时任务
-                if (!room.Guid.Equals(new Guid()))
-                    room.Timer.RemoveAction(room.Guid);
-                // 清除房间信息
+                // 清理房间
                 room.Clear();
                 // 回收房间
                 RoomQue.Enqueue(room);

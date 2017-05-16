@@ -28,9 +28,9 @@ namespace Common.Config
 
         static HeroData()
         {
-            // 创建临时的英雄数据
+            // 创建英雄数据
             createHero(TypeId_Warrior, "战士", 60, 20, 300, 100, 6, 10, 3, 50, 10, 5, 1.2);
-            createHero(TypeId_Archer, "弓箭手", 50, 10, 200, 80, 6, 15, 2, 30, 5, 12, 1.2);
+            createHero(TypeId_Archer, "弓箭手", 50, 10, 200, 80, 6, 15, 2, 30, 5, 10, 1.2);
         }
 
         /// <summary>

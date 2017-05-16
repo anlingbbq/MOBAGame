@@ -106,15 +106,21 @@ namespace MOBAServer.Skill
             for (int i = 0; i < to.Length; i++)
             {
                 DtoMinion item = to[i];
+                if (item == null)
+                    continue;
+
                 int defense = item.Defense;
                 int damage = attack - defense;
 
                 // 减少生命值
                 item.CurHp -= damage;
+                // 死亡处理
                 if (item.CurHp <= 0)
-                    item.CurHp = 0;
+                {
+                    ((BattleRoom)room).UnitLost(from, item);
+                }
 
-                damages[i] = new DtoDamage(from.Id, item.Id, damage, item.CurHp == 0);
+                damages[i] = new DtoDamage(from.Id, item.Id, damage, item.CurHp <= 0);
             }
             return damages;
         }

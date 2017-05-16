@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Common.Code;
 using Common.Config;
 using Common.Dto;
+using Common.OpCode;
+using LitJson;
 
 namespace MOBAServer.Room
 {
@@ -77,6 +81,18 @@ namespace MOBAServer.Room
         }
 
         /// <summary>
+        /// 记录初始化完成的客户端数量
+        /// </summary>
+        public int InitCount = 0;
+        /// <summary>
+        /// 是否全部完成初始化完成
+        /// </summary>
+        public bool IsAllInit
+        {
+            get { return InitCount >= Count; }
+        }
+
+        /// <summary>
         /// 是否全部离开
         /// </summary>
         public bool IsAllLeave
@@ -88,6 +104,8 @@ namespace MOBAServer.Room
         {
 
         }
+
+        #region 初始化
 
         /// <summary>
         /// 初始化
@@ -143,42 +161,42 @@ namespace MOBAServer.Room
         /// </summary>
         private int m_MinionId = ServerConfig.MinionId;
 
-        public int MinionId
-        {
-            get
-            {
-                m_MinionId--;
-                return m_MinionId;
-            }
-        }
-
         /// <summary>
         /// 开启定时任务 每30秒生成小兵
         /// </summary>
-        private void SpawnMinion()
+        public void SpawnMinion()
         {
-            this.StartSchedule(DateTime.UtcNow.AddSeconds(30),
-                delegate
-                {
-                    List<DtoMinion> minions = new List<DtoMinion>();
+            MobaServer.LogInfo("----------- 开始生产小兵");
+            List<DtoMinion> minions = new List<DtoMinion>();
 
-                    // 产生1队小兵
-                    DtoMinion minion = new DtoMinion();
-                    minion.Id = MinionId;
-                    TeamOneMinions.Add(minion.Id, minion);
-                    minions.Add(minion);
+            // 生成每队的小兵
+            for (int i = 0; i < 3; i++)
+            {
+                // 产生1队小兵
+                DtoMinion minion = MinionData.GetMinionCopy(m_MinionId--, MinionData.TypeId_Warrior);
+                minion.Team = 1;
+                TeamOneMinions.Add(minion.Id, minion);
+                minions.Add(minion);
 
-                    // 生产2队小兵
-                    minion = new DtoMinion();
-                    minion.Id = MinionId;
-                    TeamTwoMinions.Add(minion.Id, minion);
-                    minions.Add(minion);
+                // 生产2队小兵
+                minion = MinionData.GetMinionCopy(m_MinionId--, MinionData.TypeId_Warrior);
+                minion.Team = 2;
+                TeamTwoMinions.Add(minion.Id, minion);
+                minions.Add(minion);
+            }
 
-                    // 告诉客户端出兵了
+            // 告诉客户端出兵了
+            Dictionary<byte, object> data = new Dictionary<byte, object>();
+            data.Add((byte)ParameterCode.MinionArray, JsonMapper.ToJson(minions.ToArray()));
+            Brocast(OperationCode.SpawnMinion, data);
 
-                    SpawnMinion();
-                });
+            // 等待30秒再次产生小兵
+            StartSchedule(DateTime.UtcNow.AddSeconds(30), SpawnMinion);
         }
+
+        #endregion
+
+        #region 获取数据
 
         /// <summary>
         /// 根据选择数据获取英雄数据
@@ -247,6 +265,92 @@ namespace MOBAServer.Room
         }
 
         /// <summary>
+        /// 根据标识id获取小兵
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DtoMinion GetDtoMinion(int id)
+        {
+            DtoMinion minion = null;
+            if (TeamOneMinions.TryGetValue(id, out minion))
+                return minion;
+            if (TeamTwoMinions.TryGetValue(id, out minion))
+                return minion;
+
+            return null;
+        }
+
+        /// <summary>
+        /// 根据id获取数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DtoMinion GetDto(int id)
+        {
+            DtoMinion dto = null;
+            // 英雄的id和玩家数据库id一致 所以正数id是英雄
+            if (id >= 0)
+            {
+                dto = GetDtoHero(id);
+            }
+            // 建筑id范围
+            else if (id >= ServerConfig.TeamTwoBuildId - 100 && id <= ServerConfig.TeamOneBuildId)
+            {
+                dto = GetDtoBuild(id);
+            }
+            // 小兵id范围
+            else if (id <= ServerConfig.MinionId)
+            {
+                dto = GetDtoMinion(id);
+            }
+            if (dto == null)
+                MobaServer.LogWarn(">>>>>>>>>>>>>> id:" + id + " cant found");
+
+            return dto;
+        }
+
+        /// <summary>
+        /// 根据id数组获取数据
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public DtoMinion[] GetDtos(int[] ids)
+        {
+            DtoMinion[] dtos = new DtoMinion[ids.Length];
+            for (int i = 0; i < ids.Length; i++)
+            {
+                dtos[i] = GetDto(ids[i]);
+            }
+            return dtos;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 失去单位
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        public void UnitLost(DtoMinion from, DtoMinion to)
+        {
+            // 如果被击杀者是小兵
+            if (to.Id <= ServerConfig.MinionId)
+            {
+                // 移除数据
+                if (TeamOneMinions.ContainsKey(to.Id))
+                    TeamOneMinions.Remove(to.Id);
+                if (TeamTwoMinions.ContainsKey(to.Id))
+                    TeamTwoMinions.Remove(to.Id);
+            }
+
+            // 如果击杀者是英雄
+            if (from.Id > 0)
+            {
+                // 获得奖励
+            }
+        }
+
+        /// <summary>
         /// 进入房间
         /// </summary>
         /// <param name="peer"></param>
@@ -287,6 +391,15 @@ namespace MOBAServer.Room
 
             PeerList.Clear();
             LeavePeer.Clear();
+
+            m_CurBuild1Id = ServerConfig.TeamOneBuildId;
+            m_CurBuild2Id = ServerConfig.TeamTwoBuildId;
+            m_MinionId = ServerConfig.MinionId;
+            InitCount = 0;
+
+            // 移除定时任务
+            if (!Guid.Equals(new Guid()))
+                Timer.RemoveAction(Guid);
         }
     }
 }

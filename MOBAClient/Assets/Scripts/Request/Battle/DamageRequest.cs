@@ -34,6 +34,9 @@ public class DamageRequest : BaseRequest
         for(int i = 0; i < damages.Length; i++)
         {
             item = damages[i];
+            if (item == null)
+                continue;
+
             int toId = item.ToId;
             // 获取目标控制器
             AIBaseCtrl toCtrl = BattleData.Instance.CtrlDict.ExTryGet(toId);

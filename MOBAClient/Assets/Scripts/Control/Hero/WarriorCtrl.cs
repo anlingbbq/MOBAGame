@@ -5,7 +5,7 @@ public class WarriorCtrl : AIBaseCtrl, IResourceListener
 {
     void Awake()
     {
-        // 初始化状态
+        // 初始化状态机
         AddState(new HeroIdel());
         AddState(new HeroMove());
         AddState(new HeroAttack());
@@ -25,8 +25,8 @@ public class WarriorCtrl : AIBaseCtrl, IResourceListener
         transform.rotation = Model.Team == 1 ? Quaternion.Euler(0, 90, 0) : Quaternion.Euler(0, -90, 1);
 
         // 加载音效
-        ResourcesManager.Instance.Load(Paths.RES_SOUND_BATTLE + "WarriorAttack", typeof(AudioClip), this);
-        ResourcesManager.Instance.Load(Paths.RES_SOUND_BATTLE + "WarriorDeath", typeof(AudioClip), this);
+        ResourcesManager.Instance.Load(Paths.SOUND_WARRIOR_ATTACK, typeof(AudioClip), this);
+        ResourcesManager.Instance.Load(Paths.SOUND_WARRIOR_DEATH, typeof(AudioClip), this);
     }
 
     public override void AttackRequest()
@@ -60,9 +60,6 @@ public class WarriorCtrl : AIBaseCtrl, IResourceListener
     public override void DeathResponse()
     {
         base.DeathResponse();
-
-        // 停止寻路
-        m_Agent.Stop();
         // 死亡状态
         ChangeState(AIStateEnum.DEAD);
     }
@@ -80,10 +77,10 @@ public class WarriorCtrl : AIBaseCtrl, IResourceListener
     {
         switch (assetName)
         {
-            case Paths.RES_SOUND_BATTLE + "WarriorAttack":
+            case Paths.SOUND_WARRIOR_ATTACK:
                 m_ClipDict.Add("attack", asset as AudioClip);
                 break;
-            case Paths.RES_SOUND_BATTLE + "WarriorDeath":
+            case Paths.SOUND_WARRIOR_DEATH:
                 m_ClipDict.Add("death", asset as AudioClip);
                 break;
         }

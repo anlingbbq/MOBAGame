@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// 动画控制
@@ -11,15 +9,54 @@ public class AnimeCtrl : MonoBehaviour
     /// 动画状态机
     /// </summary>
     [SerializeField]
-    private Animator animator;
+    private Animator m_Animator;
+
+    #region 动画速度
+
+    /// <summary>
+    /// 攻击动画的长度
+    /// </summary>
+    private float m_AttackLength;
+    /// <summary>
+    /// 攻击动画的速度
+    /// </summary>
+    private float m_AttackSpeed = 1;
+    /// <summary>
+    /// 根据攻击速度计算攻击动画的速度
+    /// </summary>
+    /// <param name="speed">攻击速度</param>
+    public void SetAttackSpeed(float speed)
+    {
+        if (m_AttackLength == 0)
+        {
+            // 获取攻击动画的长度
+            var clips = m_Animator.runtimeAnimatorController.animationClips;
+            foreach (AnimationClip clip in clips)
+            {
+                if (clip.name == "attack")
+                {
+                    m_AttackLength = clip.length;
+                    break;
+                }
+            }
+        }
+        // 计算动画速度
+        m_AttackSpeed = m_AttackLength / speed;
+    }
+
+    #endregion
+
+    #region 播放动画
 
     /// <summary>
     /// 播放闲置状态
     /// </summary>
     public void Idle()
     {
-        animator.SetBool("walk", false);
-        animator.SetBool("attack", false);
+        m_Animator.speed = 1;
+
+        m_Animator.SetBool("run", false);
+        m_Animator.SetBool("attack", false);
     }
 
     /// <summary>
@@ -27,8 +64,10 @@ public class AnimeCtrl : MonoBehaviour
     /// </summary>
     public void Attack()
     {
-        animator.SetBool("walk", false);
-        animator.SetBool("attack", true);
+        m_Animator.speed = m_AttackSpeed;
+
+        m_Animator.SetBool("run", false);
+        m_Animator.SetBool("attack", true);
     }
 
     /// <summary>
@@ -36,8 +75,10 @@ public class AnimeCtrl : MonoBehaviour
     /// </summary>
     public void Move()
     {
-        animator.SetBool("attack", false);
-        animator.SetBool("walk", true);
+        m_Animator.speed = 1;
+
+        m_Animator.SetBool("attack", false);
+        m_Animator.SetBool("run", true);
     }
 
     /// <summary>
@@ -45,6 +86,10 @@ public class AnimeCtrl : MonoBehaviour
     /// </summary>
     public void Death()
     {
-        animator.SetTrigger("death");
+        m_Animator.speed = 1;
+
+        m_Animator.SetTrigger("death");
     }
+
+    #endregion
 }

@@ -86,6 +86,10 @@ namespace Common.Code
         /// </summary>
         BuildsArray,
         /// <summary>
+        /// 小兵数组
+        /// </summary>
+        MinionArray,
+        /// <summary>
         /// 物品数组
         /// </summary>
         ItemArray,

@@ -132,21 +132,26 @@
     <Compile Include="Assets\Others\UHUDText\Scripts\Weight.cs" />
     <Compile Include="Assets\Scripts\Config\Paths.cs" />
     <Compile Include="Assets\Scripts\Control\Base\AIBaseCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\Base\AIBaseRadar.cs" />
     <Compile Include="Assets\Scripts\Control\Base\AIState.cs" />
     <Compile Include="Assets\Scripts\Control\Base\AnimeCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\Base\HpCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\Base\NavPathGizmo.cs" />
     <Compile Include="Assets\Scripts\Control\Build\CampCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\Build\MainBaseCtrl.cs" />
-    <Compile Include="Assets\Scripts\Control\Build\TowerCheck.cs" />
     <Compile Include="Assets\Scripts\Control\Build\TowerCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\CameraCtrl.cs" />
-    <Compile Include="Assets\Scripts\Control\Hero\NavPathGizmo.cs" />
     <Compile Include="Assets\Scripts\Control\Hero\State\HeroAttack.cs" />
     <Compile Include="Assets\Scripts\Control\Hero\State\HeroDead.cs" />
     <Compile Include="Assets\Scripts\Control\Hero\State\HeroIdle.cs" />
     <Compile Include="Assets\Scripts\Control\Hero\State\HeroMove.cs" />
     <Compile Include="Assets\Scripts\Control\Hero\WarriorCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\KeyCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\Minion\MinionCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\Minion\State\MinionAttack.cs" />
+    <Compile Include="Assets\Scripts\Control\Minion\State\MinionDead.cs" />
+    <Compile Include="Assets\Scripts\Control\Minion\State\MinionIdle.cs" />
+    <Compile Include="Assets\Scripts\Control\Minion\State\MinionMove.cs" />
     <Compile Include="Assets\Scripts\Data\BattleData.cs" />
     <Compile Include="Assets\Scripts\Data\GameData.cs" />
     <Compile Include="Assets\Scripts\Data\SelectData.cs" />
@@ -155,11 +160,11 @@
     <Compile Include="Assets\Scripts\Manager\GameRoot.cs" />
     <Compile Include="Assets\Scripts\Manager\Log.cs" />
     <Compile Include="Assets\Scripts\Manager\PhotonEngine.cs" />
+    <Compile Include="Assets\Scripts\Manager\Pool\IPoolReuseable.cs" />
     <Compile Include="Assets\Scripts\Manager\Pool\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\Manager\Pool\ObjectPoolList.cs" />
     <Compile Include="Assets\Scripts\Manager\Pool\ParticleObject.cs" />
     <Compile Include="Assets\Scripts\Manager\Pool\PoolManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\Pool\ReuseableObject.cs" />
     <Compile Include="Assets\Scripts\Manager\Resource\IResourceListener.cs" />
     <Compile Include="Assets\Scripts\Manager\Resource\LoadAsset.cs" />
     <Compile Include="Assets\Scripts\Manager\Resource\ResourcesManager.cs" />
@@ -173,7 +178,9 @@
     <Compile Include="Assets\Scripts\Request\Battle\DamageRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\EnterBattleRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\HeroMoveRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\InitCompleteRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\ReadyBattleRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\SpawnMinionRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\UpgradeSkillRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\UseSkillRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Match\BeReaySelectRequest.cs" />
@@ -216,6 +223,8 @@
     <Compile Include="Assets\Scripts\UI\UIFramework\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Parse\UIPanelInfo.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Parse\UIPanelType.cs" />
+    <Compile Include="Assets\Test\Scripts\TestData.cs" />
+    <Compile Include="Assets\Test\Scripts\TestKeyCtrl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Others\Demigiant\DOTween\DOTween.XML" />

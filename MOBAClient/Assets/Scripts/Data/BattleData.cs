@@ -4,6 +4,7 @@ using Common.Config;
 using Common.Dto;
 using MOBAClient;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BattleData : Singleton<BattleData>
 {
@@ -13,6 +14,8 @@ public class BattleData : Singleton<BattleData>
     [SerializeField]
     private Transform[] Team1HeroPoint;
     [SerializeField]
+    public Transform[] Team1MinionPoint;
+    [SerializeField]
     private GameObject[] Team1Builds;
 
     [Header("队伍2")]
@@ -21,16 +24,9 @@ public class BattleData : Singleton<BattleData>
     [SerializeField]
     private Transform[] Team2HeroPoint;
     [SerializeField]
+    public Transform[] Team2MinionPoint;
+    [SerializeField]
     private GameObject[] Team2Builds;
-
-    /// <summary>
-    /// 英雄数据
-    /// </summary>
-    public DtoHero[] Heros { get; set; }
-    /// <summary>
-    /// 建筑数据
-    /// </summary>
-    public DtoBuild[] Builds { get; private set; }
 
     /// <summary>
     /// 保存游戏控制器
@@ -44,9 +40,6 @@ public class BattleData : Singleton<BattleData>
     /// <param name="builds"></param>
     public void InitData(DtoHero[] heros, DtoBuild[] builds, SkillModel[] skills)
     {
-        Heros = heros;
-        Builds = builds;
-
         int myTeam = GetMyTeamId(heros, GameData.Player.Id);
 
         // 初始化技能数据
@@ -56,7 +49,7 @@ public class BattleData : Singleton<BattleData>
 
         // 创建英雄
         GameObject go = null;
-        foreach (DtoHero item in Heros)
+        foreach (DtoHero item in heros)
         {
             if (item.Team == 1)
             {
@@ -64,7 +57,7 @@ public class BattleData : Singleton<BattleData>
                     Team1HeroPoint[0].position, Quaternion.AngleAxis(180, Vector3.up));
                 go.transform.SetParent(Team1Parent);
             }
-            else if (item.Team == 2)
+            else
             {
                 go = Instantiate(Resources.Load<GameObject>(Paths.RES_MODEL_HERO + item.Name),
                     Team2HeroPoint[0].position, Quaternion.AngleAxis(180, Vector3.up));
@@ -107,6 +100,7 @@ public class BattleData : Singleton<BattleData>
 
             // 初始化控制器
             AIBaseCtrl ctrl = go.GetComponent<AIBaseCtrl>();
+            ctrl.Init(build, build.Team == myTeam);
             if (build.Team == myTeam)
             {
                 ctrl.Init(build, true);
@@ -122,6 +116,52 @@ public class BattleData : Singleton<BattleData>
         }
 
         #endregion
+
+        // 发送初始化完成的消息
+        MOBAClient.BattleManager.Instance.InitComplete();
+    }
+
+    /// <summary>
+    /// 产生小兵
+    /// </summary>
+    /// <param name="minions"></param>
+    public void SpawnMinion(DtoMinion[] minions)
+    {
+        // 每0.5秒生产一个小兵
+        for (int i = 0; i < minions.Length; i++)
+        {
+            DtoMinion minion = minions[i];
+            TimerManager.Instance.AddTimer("SpawnMinion" + minion.Id, i * 0.5f, CreateMinion, minion);
+        }
+    }
+
+    /// <summary>
+    /// 创建小兵
+    /// </summary>
+    /// <param name="minion"></param>
+    public void CreateMinion(params object[] args)
+    {
+        DtoMinion minion = (DtoMinion)args[0];
+
+        // 创建实例
+        GameObject go = null;
+        //go = Instantiate(Resources.Load<GameObject>(Paths.RES_MODEL_MINION + minion.Name),
+        //Team1MinionPoint[0].position, Quaternion.AngleAxis(180, Vector3.up));
+        go = PoolManager.Instance.GetObject("Minion");
+        if (minion.Team == 1)
+        {
+            go.transform.position = Team1MinionPoint[0].position;
+            go.transform.SetParent(Team1Parent);
+        }
+        else
+        {
+            go.transform.position = Team2MinionPoint[0].position;
+            go.transform.SetParent(Team2Parent);
+        }
+        // 初始化控制器
+        AIBaseCtrl ctrl = go.GetComponent<AIBaseCtrl>();
+        ctrl.Init(minion, minion.Team == GameData.HeroData.Team);
+        CtrlDict.Add(minion.Id, ctrl);
     }
 
     /// <summary>
