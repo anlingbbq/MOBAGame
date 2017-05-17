@@ -80,7 +80,7 @@ namespace MOBAClient
         /// <summary>
         /// 请求使用技能
         /// </summary>
-        public void RequestUseSkill(int skillId, int from, int target, int level = 0)
+        public void RequestUseSkill(int skillId, int from, int target, int level = 1)
         {
             RequestUseSkill(skillId, from, new int[] { target }, level);
         }

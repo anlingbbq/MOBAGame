@@ -51,6 +51,11 @@ namespace Common.Dto
         /// </summary>
         public int Level;
 
+        /// <summary>
+        /// 升级技能的英雄等级
+        /// </summary>
+        public int UpgradeLevel;
+
         public DtoSkill()
         {
         }
@@ -61,13 +66,14 @@ namespace Common.Dto
             Name = model.Name;
             Level = level;
             Description = model.Description;
-            if (level <= 0)
+            if (level <= 0 || level > model.LvData.Length)
                 return;
     
-            CostValue = model.LvData[level].CostValue;
-            Distance = model.LvData[level].Distance;
-            CoolDown = model.LvData[level].CoolDown;
-            EffectData = model.LvData[level].EffectData;
+            CostValue = model.LvData[level-1].CostValue;
+            Distance = model.LvData[level-1].Distance;
+            CoolDown = model.LvData[level-1].CoolDown;
+            EffectData = model.LvData[level-1].EffectData;
+            UpgradeLevel = model.LvData[level-1].UpgradeLevel;
         }
 
         /// <summary>
@@ -76,14 +82,15 @@ namespace Common.Dto
         public void Upgrade()
         {
             SkillModel model = SkillData.GetSkill(Id);
-            if (Level >= model.LvData.Length - 1)
+            if (Level > model.LvData.Length)
                 return;
 
             Level += 1;
-            CostValue = model.LvData[Level].CostValue;
-            Distance = model.LvData[Level].Distance;
-            CoolDown = model.LvData[Level].CoolDown;
-            EffectData = model.LvData[Level].EffectData;
+            CostValue = model.LvData[Level-1].CostValue;
+            Distance = model.LvData[Level-1].Distance;
+            CoolDown = model.LvData[Level-1].CoolDown;
+            EffectData = model.LvData[Level-1].EffectData;
+            UpgradeLevel = model.LvData[Level-1].UpgradeLevel;
         }
     }
 }

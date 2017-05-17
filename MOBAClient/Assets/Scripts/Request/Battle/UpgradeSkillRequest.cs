@@ -28,12 +28,17 @@ public class UpgradeSkillRequest : BaseRequest
 
     public override void OnOperationResponse(OperationResponse response)
     {
-        int skillId = (int) response[(byte)ParameterCode.SkillId];
         int heroId = (int) response[(byte) ParameterCode.PlayerId];
-        DtoHero hero = BattleData.Instance.CtrlDict.ExTryGet(heroId).Model as DtoHero;
-        DtoSkill skill = hero.UpgradeSkill(skillId);
 
-        // 更新ui
-        m_ItemSkill.UpdateView(skill);
+        // 是自身才有更新的必要
+        if (GameData.HeroData.Id == heroId)
+        {
+            // 更新数据
+            DtoSkill skill = JsonMapper.ToObject<DtoSkill>(response[(byte)ParameterCode.DtoSkill] as string);
+            GameData.HeroData.SP--;
+            Log.Debug("sp : " + (GameData.HeroCtrl.Model as DtoHero).SP);
+            // 更新ui
+            m_ItemSkill.UpdateView(skill);
+        }
     }
 }

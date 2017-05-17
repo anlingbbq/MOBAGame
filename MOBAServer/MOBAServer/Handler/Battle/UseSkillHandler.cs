@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Xml.Schema;
-using Common.Code;
-using Common.Config;
+﻿using Common.Code;
 using Common.Dto;
 using LitJson;
 using MOBAServer.Cache;
@@ -40,7 +37,7 @@ namespace MOBAServer.Handler
             // 使用技能
             SkillManager.Instance.UseSkill(skillId, level, from, to, room);
             // 广播谁使用了技能
-            room.Brocast(this.OpCode, request.Parameters);
+            room.Brocast(OpCode, request.Parameters);
         }
     }
 }

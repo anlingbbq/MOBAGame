@@ -100,7 +100,7 @@ namespace MOBAServer.Skill
         /// <returns></returns>
         public void UseSkill(int skillId, int level, DtoMinion from, DtoMinion[] to = null, RoomBase<MobaPeer> room = null)
         {
-            SkillHandler skillHandler = HandlerDict.ExTryGet(skillId)[level];
+            SkillHandler skillHandler = HandlerDict.ExTryGet(skillId)[level-1];
             skillHandler.RunSkill(room, from, to);
         }
 
@@ -115,7 +115,7 @@ namespace MOBAServer.Skill
         /// <returns></returns>
         public DtoDamage[] Damage(RoomBase<MobaPeer> room, int skillId, int level, DtoMinion from, DtoMinion[] to)
         {
-            SkillHandler skillHandler = HandlerDict.ExTryGet(skillId)[level];
+            SkillHandler skillHandler = HandlerDict.ExTryGet(skillId)[level-1];
             return skillHandler.RunDamage(room, from, to);
         }
     }

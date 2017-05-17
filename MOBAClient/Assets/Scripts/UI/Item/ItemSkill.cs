@@ -45,24 +45,14 @@ public class ItemSkill : MonoBehaviour, IResourceListener, IPointerEnterHandler,
     #region 属性
 
     /// <summary>
+    /// 技能数据
+    /// </summary>
+    private DtoSkill m_Data;
+
+    /// <summary>
     /// 描述内容
     /// </summary>
     private string m_Desc;
-
-    /// <summary>
-    /// 技能id
-    /// </summary>
-    private int m_SkillId;
-
-    /// <summary>
-    /// 冷却时间
-    /// </summary>
-    private float m_CoolDown;
-
-    /// <summary>
-    /// 当前等级
-    /// </summary>
-    private int m_Level = -1;
 
     /// <summary>
     /// 计时
@@ -78,9 +68,7 @@ public class ItemSkill : MonoBehaviour, IResourceListener, IPointerEnterHandler,
 
     public void Init(DtoSkill data)
     {
-        m_SkillId = data.Id;
-        m_Level = data.Level;
-        m_CoolDown = (float)data.CoolDown;
+        m_Data = data;
         m_Desc = data.Name + "\n" + data.Description;
         // 加载图片
         ResourcesManager.Instance.Load(Paths.RES_SKILL_UI + data.Id, typeof(Sprite), this);
@@ -95,7 +83,7 @@ public class ItemSkill : MonoBehaviour, IResourceListener, IPointerEnterHandler,
             return;
 
         // 发送升级技能的消息
-        MOBAClient.BattleManager.Instance.RequestUpgradeSkill(m_SkillId, this);
+        MOBAClient.BattleManager.Instance.RequestUpgradeSkill(m_Data.Id, this);
     }
 
     /// <summary>
@@ -103,25 +91,25 @@ public class ItemSkill : MonoBehaviour, IResourceListener, IPointerEnterHandler,
     /// </summary>
     public void OnSkillClick()
     {
-        if (m_Level >= 0)
+        if (m_Data.Level >= 1)
         {
             // 使用技能
             if (m_IsReady)
             {
                 m_IsReady = false;
-                MOBAClient.BattleManager.Instance.RequestUseSkill(m_SkillId, GameData.HeroData.Id, null, m_Level);
+                MOBAClient.BattleManager.Instance.RequestUseSkill(m_Data.Id, GameData.HeroData.Id, null, m_Data.Level);
             }
         }
     }
 
     void Update()
     {
-        if (m_Level >= 0 && !m_IsReady)
+        if (m_Data.Level >= 1 && !m_IsReady)
         {
             // 计算冷却时间
             m_Timer += Time.deltaTime;
-            ImgMask.fillAmount = 1 - m_Timer / m_CoolDown;
-            if (m_Timer >= m_CoolDown)
+            ImgMask.fillAmount = 1 - m_Timer / (float)m_Data.CoolDown;
+            if (m_Timer >= m_Data.CoolDown)
             {
                 m_Timer = 0;
                 m_IsReady = true;
@@ -130,16 +118,34 @@ public class ItemSkill : MonoBehaviour, IResourceListener, IPointerEnterHandler,
         }
     }
 
+    /// <summary>
+    /// 更新界面
+    /// </summary>
+    /// <param name="skill"></param>
     public void UpdateView(DtoSkill skill)
     {
-        if (m_Level < 0)
+        m_Data = skill;
+        // 第一次学习技能
+        if (m_Data.Level == 1)
         {
             m_IsReady = true;
             ImgMask.fillAmount = 0;
         }
-        m_Level = skill.Level;
-        BtnUp.gameObject.SetActive(false);
-        m_CoolDown = (float)skill.CoolDown;
+
+        UpdataBtnUp();
+    }
+
+    /// <summary>
+    /// 更新升级按钮状态
+    /// </summary>
+    /// <param name="active"></param>
+    public void UpdataBtnUp()
+    {
+        // 没有技能点 或英雄等级不够
+        if (GameData.HeroData.SP <= 0 || GameData.HeroData.Level < m_Data.UpgradeLevel)
+            BtnUp.gameObject.SetActive(false);
+        else
+            BtnUp.gameObject.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)

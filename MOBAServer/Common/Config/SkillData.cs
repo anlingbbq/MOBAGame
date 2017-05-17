@@ -31,22 +31,22 @@ namespace Common.Config
             #region 冲锋技能
             CreateSkill(skillId, "冲锋", "一段时间内,移动速度和下一次攻击加倍", new SkillLevelModel[]
             {
-                new SkillLevelModel(1, 6, 0, 0, new EffectModel[]
+                new SkillLevelModel(3, 6, 0, 0, new EffectModel[]
                 {
                     new EffectModel(SpeedDouble, 2, 2),
                     new EffectModel(AttackDouble, 2, 4),
                 }),
-                new SkillLevelModel(3, 6, 0, 0, new EffectModel[]
+                new SkillLevelModel(5, 6, 0, 0, new EffectModel[]
                 {
                     new EffectModel(SpeedDouble, 2.2, 2.5),
                     new EffectModel(AttackDouble, 2, 4),
                 }),
-                new SkillLevelModel(5, 6, 0, 0, new EffectModel[]
+                new SkillLevelModel(7, 6, 0, 0, new EffectModel[]
                 {
                     new EffectModel(SpeedDouble, 3, 2.5),
                     new EffectModel(AttackDouble, 2.5, 4),
                 }),
-                new SkillLevelModel(7, 6, 0, 0, new EffectModel[]
+                new SkillLevelModel(9, 6, 0, 0, new EffectModel[]
                 {
                     new EffectModel(SpeedDouble, 3, 2.5),
                     new EffectModel(AttackDouble, 4, 4),
@@ -182,9 +182,9 @@ namespace Common.Config
     public class SkillLevelModel
     {
         /// <summary>
-        /// 学习等级
+        /// 升级下一个的等级
         /// </summary>
-        public int Level;
+        public int UpgradeLevel;
 
         /// <summary>
         /// 冷却时间
@@ -211,9 +211,9 @@ namespace Common.Config
         {
         }
 
-        public SkillLevelModel(int level, int cooldown, int cost, double distance, EffectModel[] data)
+        public SkillLevelModel(int upgradeLevel, int cooldown, int cost, double distance, EffectModel[] data)
         {
-            Level = level;
+            UpgradeLevel = upgradeLevel;
             CoolDown = cooldown;
             CostValue = cost;
             Distance = distance;

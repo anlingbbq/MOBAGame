@@ -114,15 +114,15 @@ public class BattlePanel : UIBasePanel, IResourceListener
         m_HUDText.CanvasParent = GameObject.Find("Canvas").transform;
 
         // 技能设置
-        int index = 0;
-        foreach (DtoSkill skill in hero.Skills)
+        DtoSkill skill = null;
+        for (int i = 0; i < hero.Skills.Length; i++)
         {
+            skill = hero.Skills[i];
             if (skill != null)
             {
-                Skills[index].gameObject.SetActive(true);
-                Skills[index].GetComponent<ItemSkill>().Init(skill);
+                Skills[i].gameObject.SetActive(true);
+                Skills[i].GetComponent<ItemSkill>().Init(skill);
             }
-            ++index;
         }
     }
 
@@ -132,9 +132,10 @@ public class BattlePanel : UIBasePanel, IResourceListener
     /// <param name="hero"></param>
     public void UpdateView(DtoHero hero)
     {
+        GameData.HeroData = hero;
 
         // 更新状态条
-        BarExp.value = (float) hero.Exp / (hero.Level * 100);
+        BarExp.value = (float) hero.Exp / (hero.Level * 300);
         BarHp.value = (float) hero.CurHp / hero.MaxHp;
         BarMp.value = (float) hero.CurMp / hero.MaxMp;
 
@@ -154,6 +155,21 @@ public class BattlePanel : UIBasePanel, IResourceListener
             {
                 Equipments[i].sprite = ResourcesManager.Instance.GetAsset(Paths.RES_EQUIPMENT_UI + hero.Equipments[i]) as Sprite;
                 Equipments[i].color = Color.white;
+            }
+        }
+
+        // 更新技能栏的升级状态
+        if (GameData.HeroData.SP > 0)
+        {
+            DtoSkill skill = null;
+            for (int i = 0; i < hero.Skills.Length; i++)
+            {
+                skill = hero.Skills[i];
+                if (skill != null)
+                {
+                    ItemSkill item = Skills[i].GetComponent<ItemSkill>();
+                    item.UpdataBtnUp();
+                }
             }
         }
     }

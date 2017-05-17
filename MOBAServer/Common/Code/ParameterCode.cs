@@ -118,6 +118,10 @@ namespace Common.Code
         /// </summary>
         SkillId,
         /// <summary>
+        /// 技能数据
+        /// </summary>
+        DtoSkill,
+        /// <summary>
         /// 伤害数据
         /// </summary>
         DtoDamages,
@@ -133,6 +137,14 @@ namespace Common.Code
         /// 技能模型数组
         /// </summary>
         SkillArray,
+        /// <summary>
+        /// 获得经验
+        /// </summary>
+        GetExp,
+        /// <summary>
+        /// 获得金币
+        /// </summary>
+        GetCoins,
 
         #endregion
     }

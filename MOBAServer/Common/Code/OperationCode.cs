@@ -131,6 +131,10 @@ namespace Common.OpCode
         /// 购买装备
         /// </summary>
         BuyItem,
+        /// <summary>
+        /// 获得奖励
+        /// </summary>
+        GetReward,
 
         #endregion
     }

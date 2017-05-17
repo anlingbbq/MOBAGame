@@ -42,7 +42,6 @@
         /// </summary>
         public const int MinionId = -1000;
 
-
         /// <summary>
         /// 基地
         /// </summary>

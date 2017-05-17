@@ -103,7 +103,7 @@ namespace MOBAClient
                 Log.Error("没有找到技能 : " + skillId);
                 return;
             }
-            SkillHandler handler = HandlerDict.ExTryGet(skillId)[level];
+            SkillHandler handler = HandlerDict.ExTryGet(skillId)[level-1];
             if (handler != null)
             {
                 handler.RunSkill(level, from, to);

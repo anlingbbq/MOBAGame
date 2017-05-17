@@ -177,6 +177,7 @@
     <Compile Include="Assets\Scripts\Request\Battle\BuyItemRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\DamageRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\EnterBattleRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\GetRewardRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\HeroMoveRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\InitCompleteRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\ReadyBattleRequest.cs" />

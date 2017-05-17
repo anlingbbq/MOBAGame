@@ -42,7 +42,7 @@ namespace MOBAServer.Handler
 
             // 使用技能 获取伤害数据
             DtoDamage[] damages = null;
-            damages = SkillManager.Instance.Damage(room, skillId, 0, from, to);
+            damages = SkillManager.Instance.Damage(room, skillId, 1, from, to);
 
             // 广播伤害数据传输对象
             Dictionary<byte, object> data = new Dictionary<byte, object>();

@@ -92,7 +92,7 @@ namespace Common.Dto
                 SkillModel model = SkillData.GetSkill(SkillIds[i]);
                 if (model != null)
                 {
-                    Skills[i] = new DtoSkill(model, -1);
+                    Skills[i] = new DtoSkill(model, 0);
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using Common.Config;
+﻿using System.Collections.Generic;
+using Common.Config;
 using Common.Dto;
 using Common.DTO;
 

@@ -17,16 +17,14 @@ public class BuyItemRequest : BaseRequest
     public override void OnOperationResponse(OperationResponse response)
     {
         if (response.ReturnCode == (byte) ReturnCode.Falied)
-        {
             return;
-        }
 
-        // 修改数据
+        // 更新数据
         DtoHero hero = JsonMapper.ToObject<DtoHero>(response[(byte) ParameterCode.DtoHero] as string);
         BattleData.Instance.CtrlDict[hero.Id].Model = hero;
 
         // 如果时自己购买
-        if (hero.Id == GameData.HeroData.Id)
+        if (hero.Id == GameData.HeroCtrl.Model.Id)
         {
             SoundManager.Instance.PlayEffectMusic(Paths.UI_BUY);
             (UIManager.Instance.GetPanel(UIPanelType.Battle) as BattlePanel).UpdateView(hero);

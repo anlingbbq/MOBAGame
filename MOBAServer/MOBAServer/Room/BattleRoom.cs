@@ -326,6 +326,8 @@ namespace MOBAServer.Room
 
         #endregion
 
+        #region 击杀处理
+
         /// <summary>
         /// 失去单位
         /// </summary>
@@ -333,22 +335,126 @@ namespace MOBAServer.Room
         /// <param name="to"></param>
         public void UnitLost(DtoMinion from, DtoMinion to)
         {
-            // 如果被击杀者是小兵
+            // 奖励数据
+            Dictionary<byte, object> data = new Dictionary<byte, object>();
+            // 击杀者id
+            data.Add((byte)ParameterCode.FromId, from.Id);
+            // 击杀队伍id
+            data.Add((byte)ParameterCode.TeamId, from.Team);
+
+            #region 经验奖励
+
+            int exp = 0;
+            // 被击杀者是小兵
             if (to.Id <= ServerConfig.MinionId)
             {
-                // 移除数据
+                exp = 100;
+            }
+            // 被击杀者是英雄
+            else if (to.Id >= 0)
+            {
+                exp = 100 * (to as DtoHero).Level;
+            }
+            // 添加经验
+            TeamGetExp(from.Team, exp);
+            data.Add((byte)ParameterCode.GetExp, exp);
+
+            #endregion
+
+            #region 金币奖励
+
+            // 击杀者是英雄才有金币
+            if (from.Id > 0)
+            {
+                int coins = 0;
+                // 小兵
+                if (to.Id <= ServerConfig.MinionId)
+                {
+                    coins = 50;
+                }
+                // 英雄
+                else if (to.Id >= 0)
+                {
+                    coins = 300;
+                }
+                // 建筑
+                else if (to.Id >= ServerConfig.TeamTwoBuildId - 100 && to.Id <= ServerConfig.TeamOneBuildId)
+                {
+                    // 防御塔
+                    if (to.TypeId == ServerConfig.TowerId)
+                    {
+                        coins = 200;
+                    }
+                }
+                // 添加金币
+                HeroGetCoins(from.Id, coins);
+                data.Add((byte)ParameterCode.GetCoins, coins);
+            }
+            
+
+            #endregion
+
+            // 发送奖励数据
+            Brocast(OperationCode.GetReward, data);
+
+            // 移除小兵数据
+            if (to.Id <= ServerConfig.MinionId)
+            {
                 if (TeamOneMinions.ContainsKey(to.Id))
                     TeamOneMinions.Remove(to.Id);
                 if (TeamTwoMinions.ContainsKey(to.Id))
                     TeamTwoMinions.Remove(to.Id);
             }
+        }
 
-            // 如果击杀者是英雄
-            if (from.Id > 0)
+        /// <summary>
+        /// 队伍获得经验
+        /// </summary>
+        public void TeamGetExp(int teamId, int exp)
+        {
+            if (teamId == 1)
             {
-                // 获得奖励
+                foreach (DtoHero hero in TeamOneHeros.Values)
+                {
+                    hero.Exp += exp;
+                    if (hero.Exp >= hero.Level*300)
+                    {
+                        hero.Exp -= hero.Level*300;
+                        hero.Level++;
+                        hero.SP++;
+                    }
+                        
+                }
+            }
+            else if (teamId == 2)
+            {
+                foreach (DtoHero hero in TeamTwoHeros.Values)
+                {
+                    hero.Exp += exp;
+                    if (hero.Exp >= hero.Level*300)
+                    {
+                        hero.Exp -= hero.Level*300;
+                        hero.Level++;
+                        hero.SP++;
+                    }
+                        
+                }
             }
         }
+
+        /// <summary>
+        /// 英雄获得金币
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="coins"></param>
+        public void HeroGetCoins(int id, int coins)
+        {
+            DtoHero hero = GetDtoHero(id);
+            if (hero != null)
+                hero.Money += coins;
+        }
+
+        #endregion
 
         /// <summary>
         /// 进入房间
