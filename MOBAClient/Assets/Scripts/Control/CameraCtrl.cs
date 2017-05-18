@@ -91,14 +91,14 @@ public class CameraCtrl : MonoBehaviour
     }
 
     /// <summary>
-    /// 焦点在英雄上
+    /// 焦点位置
     /// </summary>
-    public void FocusOn()
+    public void FocusOn(Transform target)
     {
-        if (GameData.HeroCtrl == null)
+        if (target == null)
             return;
 
-        Vector3 pos = GameData.HeroCtrl.transform.position;
+        Vector3 pos = target.position;
         transform.position = new Vector3(pos.x, transform.position.y, pos.z - 10);
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class MinionAttack : AttackState
 {
     private float m_WaitTime;
+    private bool m_Moving;
+
     private AIBaseRadar m_Radar;
 
     public override void EnterState()
@@ -34,20 +36,20 @@ public class MinionAttack : AttackState
                 else
                 {
                     // 获取与目标的距离
-                    float distance = Vector2.Distance(m_Ctrl.transform.position, m_Ctrl.Target.transform.position);
-
+                    float distance = Vector3.Distance(m_Ctrl.transform.position, m_Ctrl.Target.transform.position);
                     // 超过攻击距离
                     if (distance > m_Ctrl.Model.AttackDistance)
                     {
                         m_WaitTime += Time.deltaTime;
+                        // 一秒思考时间
                         if (m_WaitTime >= 1)
                         {
                             m_WaitTime = 0;
                             // 重新寻找最近的敌人
                             m_Radar.FindRecentlyEnemy();
+                            // 这里如果一直调用moveto会导致小兵不停的规划路径 然后就不走，找了好久原因。。
+                            m_Ctrl.MoveTo(m_Ctrl.Target.transform.position);
                         }
-                        // 移动至目标位置
-                        m_Ctrl.MoveTo(m_Ctrl.Target.transform.position);
                     }
                     // 直接攻击
                     else

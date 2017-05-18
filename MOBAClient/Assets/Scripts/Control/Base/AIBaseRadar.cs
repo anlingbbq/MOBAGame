@@ -5,16 +5,16 @@ public class AIBaseRadar : MonoBehaviour
 {
 
     /// <summary>
-    /// 所属队伍
+    /// AI控制器
     /// </summary>
-    private int m_Team;
+    private AIBaseCtrl m_Ctrl;
     /// <summary>
     /// 开启
     /// </summary>
-    /// <param name="team"></param>
-    public void Open(int team)
+    /// <param name="ctrl"></param>
+    public void Open(AIBaseCtrl ctrl)
     {
-        m_Team = team;
+        m_Ctrl = ctrl;
         gameObject.SetActive(true);
     }
     /// <summary>
@@ -38,7 +38,7 @@ public class AIBaseRadar : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         AIBaseCtrl ctrl = other.GetComponent<AIBaseCtrl>();
-        if (ctrl == null || ctrl.Model.Team == m_Team)
+        if (ctrl == null || ctrl.Model.Team == m_Ctrl.Model.Team)
             return;
 
         EnemyList.Add(ctrl);
@@ -52,7 +52,11 @@ public class AIBaseRadar : MonoBehaviour
     {
         AIBaseCtrl ctrl = other.GetComponent<AIBaseCtrl>();
         if (EnemyList.Contains(ctrl))
+        {
             EnemyList.Remove(ctrl);
+            if (m_Ctrl.Target == ctrl)
+                m_Ctrl.Target = null;
+        }
     }
 
     /// <summary>
@@ -84,7 +88,7 @@ public class AIBaseRadar : MonoBehaviour
     public AIBaseCtrl FindRecentlyEnemy()
     {
         AIBaseCtrl enemy = null;
-        float rDistance = 100;
+        float rDistance = 1000;
         foreach (AIBaseCtrl item in EnemyList)
         {
             float distance = Vector2.Distance(transform.position, item.transform.position);

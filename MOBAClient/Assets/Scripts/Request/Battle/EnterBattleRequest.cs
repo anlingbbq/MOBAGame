@@ -26,6 +26,6 @@ public class EnterBattleRequest : BaseRequest
         // 初始化战斗界面
         UIManager.Instance.PushPanel(UIPanelType.Battle);
         // 焦距英雄
-        Camera.main.GetComponent<CameraCtrl>().FocusOn();
+        Camera.main.GetComponent<CameraCtrl>().FocusOn(GameData.HeroCtrl.transform);
     }
 }

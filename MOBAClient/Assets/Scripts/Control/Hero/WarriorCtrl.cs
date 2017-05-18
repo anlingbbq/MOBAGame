@@ -1,4 +1,7 @@
-﻿using Common.Config;
+﻿//#define TEST
+
+using Common.Config;
+using Common.Dto;
 using UnityEngine;
 
 public class WarriorCtrl : AIBaseCtrl, IResourceListener
@@ -17,21 +20,43 @@ public class WarriorCtrl : AIBaseCtrl, IResourceListener
     {
         base.Start();
 
-        // 设置移动速度
-        Speed = (float)Model.Speed;
-
-        // 调整角度
-        MiniMapHead.transform.rotation = Quaternion.Euler(90, 0, 0);
-        transform.rotation = Model.Team == 1 ? Quaternion.Euler(0, 90, 0) : Quaternion.Euler(0, -90, 1);
-
         // 加载音效
         ResourcesManager.Instance.Load(Paths.SOUND_WARRIOR_ATTACK, typeof(AudioClip), this);
         ResourcesManager.Instance.Load(Paths.SOUND_WARRIOR_DEATH, typeof(AudioClip), this);
     }
 
+    public override void Init(DtoMinion model, bool friend)
+    {
+        base.Init(model, friend);
+
+        // 设置移动速度
+        Speed = (float)Model.Speed;
+
+#if !TEST
+        // 调整角度
+        MiniMapHead.transform.rotation = Quaternion.Euler(90, 0, 0);
+        transform.rotation = Model.Team == 1 ? Quaternion.Euler(0, 90, 0) : Quaternion.Euler(0, -90, 1);
+#endif
+    }
+
     public override void AttackRequest()
     {
         PlayAudio("attack");
+
+#if TEST
+        if (Target != null && Target.Model.CurHp > 0)
+        {
+            int damage = Model.Attack - Target.Model.Defense;
+            if (damage < 0) damage = 0;
+            Target.Model.CurHp -= damage;
+            Target.OnHpChange();
+            if (Target.Model.CurHp <= 0)
+            {
+                Target.DeathResponse();
+            }
+        }
+        return;
+#endif
 
         // 只发送自己的攻击
         if (Target == null || this != GameData.HeroCtrl)

@@ -13,7 +13,7 @@ public class TestKeyCtrl : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             // 焦距到自己的英雄
-            Camera.main.GetComponent<CameraCtrl>().FocusOn();
+            Camera.main.GetComponent<CameraCtrl>().FocusOn(Ctrl.transform);
         }
 
         #endregion

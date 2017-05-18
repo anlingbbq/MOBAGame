@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//#define TEST
+
+using System.Collections;
 
 public class MinionDead : DeadState
 {
@@ -17,9 +19,11 @@ public class MinionDead : DeadState
         // 延时回收
         TimerManager.Instance.AddTimer("PoolHide" + m_Ctrl.Model.Id, 10, () =>
         {
-            if (m_Ctrl)
+
+#if !TEST
             // 清理数据
             BattleData.Instance.CtrlDict.Remove(m_Ctrl.Model.Id);
+#endif
             m_Ctrl.Model = null;
 
             PoolManager.Instance.HideObjet(m_Ctrl.gameObject);

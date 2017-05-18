@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Common.Config;
 using Common.Dto;
 using MOBAClient;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class BattleData : Singleton<BattleData>
 {

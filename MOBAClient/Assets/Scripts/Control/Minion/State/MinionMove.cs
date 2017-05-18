@@ -15,14 +15,20 @@ public class MinionMove : MoveState
     {
         while (!m_Quit)
         {
-            // 检测攻击目标
-            if (m_Ctrl.Target == null || m_Ctrl.Target.Model == null || m_Ctrl.Target.Model.CurHp <= 0)
+            if (m_Ctrl.Model.CurHp > 0)
             {
-                AIBaseCtrl target = m_Radar.FindEnemy();
-                if (target != null)
+                if (!m_Ctrl.IsMoving)
+                    m_Ctrl.Move(((MinionCtrl)m_Ctrl).EndPoint);
+
+                // 检测攻击目标
+                if (m_Ctrl.Target == null || m_Ctrl.Target.Model == null || m_Ctrl.Target.Model.CurHp <= 0)
                 {
-                    m_Ctrl.Target = target;
-                    m_Ctrl.ChangeState(AIStateEnum.ATTACK);
+                    AIBaseCtrl target = m_Radar.FindRecentlyEnemy();
+                    if (target != null)
+                    {
+                        m_Ctrl.Target = target;
+                        m_Ctrl.ChangeState(AIStateEnum.ATTACK);
+                    }
                 }
             }
 

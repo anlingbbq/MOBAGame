@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define TEST
+
 using Common.Config;
 using Common.Dto;
 using UnityEngine;
@@ -30,7 +31,11 @@ public class MinionCtrl : AIBaseCtrl, IResourceListener, IPoolReuseable
         AddState(new MinionMove());
         AddState(new MinionAttack());
         AddState(new MinionDead());
+    }
 
+    protected override void Start()
+    {
+        base.Start();
         // 加载音效
         ResourcesManager.Instance.Load(Paths.SOUND_MW_ATTACK, typeof(AudioClip), this);
         ResourcesManager.Instance.Load(Paths.SOUND_MW_DEATH, typeof(AudioClip), this);
@@ -47,13 +52,7 @@ public class MinionCtrl : AIBaseCtrl, IResourceListener, IPoolReuseable
         SetAgent(true);
 
         // 开启雷达
-        Radar.Open(model.Team);
-
-        // 设置终点为对方小兵出生地
-        if (model.Team == 1)
-            EndPoint = BattleData.Instance.Team2MinionPoint[0].position;
-        else
-            EndPoint = BattleData.Instance.Team1MinionPoint[0].position;
+        Radar.Open(this);
 
         if (friend)
         {
@@ -70,12 +69,37 @@ public class MinionCtrl : AIBaseCtrl, IResourceListener, IPoolReuseable
             GetComponentInChildren<SkinnedMeshRenderer>().material.mainTexture = Resources.Load<Texture>(Paths.TEXTURE_MINION_RED);
         }
 
+#if TEST
+        return;
+#endif
+
+        // 设置终点为对方小兵出生地
+        if (model.Team == 1)
+            EndPoint = BattleData.Instance.Team2MinionPoint[0].position;
+        else
+            EndPoint = BattleData.Instance.Team1MinionPoint[0].position;
+
         ChangeState(AIStateEnum.IDLE);
     }
 
     public override void AttackRequest()
     {
         PlayAudio("attack");
+
+#if TEST
+        if (Target != null && Target.Model.CurHp > 0)
+        {
+            int damage = Model.Attack - Target.Model.Defense;
+            if (damage < 0) damage = 0;
+            Target.Model.CurHp -= damage;
+            Target.OnHpChange();
+            if (Target.Model.CurHp <= 0)
+            {
+                Target.DeathResponse();
+            }
+        }
+        return;
+#endif
 
         // 只发送己方的伤害请求
         if (!m_IsFriend)

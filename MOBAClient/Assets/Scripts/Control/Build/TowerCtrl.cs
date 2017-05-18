@@ -53,7 +53,7 @@ public class TowerCtrl : AIBaseCtrl, IResourceListener
 
         m_IsFriend = friend;
 
-        m_Rader.Open(model.Team);
+        m_Rader.Open(this);
     }
 
     public override void AttackResponse(params AIBaseCtrl[] target)

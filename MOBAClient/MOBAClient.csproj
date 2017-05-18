@@ -224,8 +224,10 @@
     <Compile Include="Assets\Scripts\UI\UIFramework\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Parse\UIPanelInfo.cs" />
     <Compile Include="Assets\Scripts\UI\UIFramework\Parse\UIPanelType.cs" />
-    <Compile Include="Assets\Test\Scripts\TestData.cs" />
+    <Compile Include="Assets\Test\Scripts\Test2Manager.cs" />
+    <Compile Include="Assets\Test\Scripts\TestHeroData.cs" />
     <Compile Include="Assets\Test\Scripts\TestKeyCtrl.cs" />
+    <Compile Include="Assets\Test\Scripts\TestMinionData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Others\Demigiant\DOTween\DOTween.XML" />

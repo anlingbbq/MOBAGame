@@ -51,6 +51,10 @@ public class AIBaseCtrl : MonoBehaviour
         // 设置攻击速度
         if (AnimeCtrl != null)
             AnimeCtrl.SetAttackSpeed((float)model.AttackInterval);
+
+        // 设置导航
+        if (m_Agent != null)
+            m_Agent.stoppingDistance = (float)model.AttackDistance;
     }
 
     #region 动画

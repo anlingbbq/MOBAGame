@@ -36,7 +36,6 @@ public class UpgradeSkillRequest : BaseRequest
             // 更新数据
             DtoSkill skill = JsonMapper.ToObject<DtoSkill>(response[(byte)ParameterCode.DtoSkill] as string);
             GameData.HeroData.SP--;
-            Log.Debug("sp : " + (GameData.HeroCtrl.Model as DtoHero).SP);
             // 更新ui
             m_ItemSkill.UpdateView(skill);
         }
