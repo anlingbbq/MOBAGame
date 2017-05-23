@@ -1,6 +1,12 @@
 # MOBAGame
 仿moba类游戏demo，服务器使用PhotonServer。
+
+先上图 演示为固定15帧的gif
 ![演示图片](https://github.com/anlingbbq/MOBAGame/raw/master/Demo.gif)
+
+## 实现功能
+
+## 主要问题
 
 ## 简单的写一些日志：
 
