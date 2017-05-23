@@ -24,8 +24,8 @@ public class AnimeCtrl : MonoBehaviour
     /// <summary>
     /// 根据攻击速度计算攻击动画的速度
     /// </summary>
-    /// <param name="speed">攻击速度</param>
-    public void SetAttackSpeed(float speed)
+    /// <param name="attackInterval">攻击间隔</param>
+    public void SetAttackSpeed(float attackInterval)
     {
         if (m_AttackLength == 0)
         {
@@ -41,7 +41,7 @@ public class AnimeCtrl : MonoBehaviour
             }
         }
         // 计算动画速度
-        m_AttackSpeed = m_AttackLength / speed;
+        m_AttackSpeed = m_AttackLength / attackInterval;
     }
 
     #endregion
@@ -89,6 +89,14 @@ public class AnimeCtrl : MonoBehaviour
         m_Animator.speed = 1;
 
         m_Animator.SetTrigger("death");
+    }
+
+    /// <summary>
+    /// 设置动画复活状态
+    /// </summary>
+    public void Rebirth()
+    {
+        m_Animator.SetTrigger("rebirth");
     }
 
     #endregion

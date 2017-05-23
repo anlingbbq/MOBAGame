@@ -138,10 +138,7 @@ public class MinionCtrl : AIBaseCtrl, IResourceListener, IPoolReuseable
 
     public void BeforeGetObject()
     {
-        // 显示血条
-        SetHpBar(true);
-        // 显示小地图头像
-        MiniMapHead.gameObject.SetActive(true);
+        RebirthResponse();
     }
 
     public void BeforeHideObject()

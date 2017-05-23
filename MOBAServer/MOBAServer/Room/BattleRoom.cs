@@ -335,12 +335,10 @@ namespace MOBAServer.Room
         /// <param name="to"></param>
         public void UnitLost(DtoMinion from, DtoMinion to)
         {
-            // 奖励数据
+            // 传输数据
             Dictionary<byte, object> data = new Dictionary<byte, object>();
-            // 击杀者id
-            data.Add((byte)ParameterCode.FromId, from.Id);
-            // 击杀队伍id
-            data.Add((byte)ParameterCode.TeamId, from.Team);
+            DtoHero[] heros = null;
+            int getCoinsId = 0;
 
             #region 经验奖励
 
@@ -356,8 +354,7 @@ namespace MOBAServer.Room
                 exp = 100 * (to as DtoHero).Level;
             }
             // 添加经验
-            TeamGetExp(from.Team, exp);
-            data.Add((byte)ParameterCode.GetExp, exp);
+            heros = TeamGetExp(from.Team, exp);
 
             #endregion
 
@@ -387,17 +384,17 @@ namespace MOBAServer.Room
                     }
                 }
                 // 添加金币
-                HeroGetCoins(from.Id, coins);
-                data.Add((byte)ParameterCode.GetCoins, coins);
+                getCoinsId = HeroGetCoins(from.Id, coins);
             }
-            
 
             #endregion
 
             // 发送奖励数据
+            data.Add((byte)ParameterCode.HerosArray, JsonMapper.ToJson(heros));
+            data.Add((byte)ParameterCode.HeroId, getCoinsId);
             Brocast(OperationCode.GetReward, data);
 
-            // 移除小兵数据
+            // 如果被杀的是小兵 移除小兵数据
             if (to.Id <= ServerConfig.MinionId)
             {
                 if (TeamOneMinions.ContainsKey(to.Id))
@@ -405,41 +402,47 @@ namespace MOBAServer.Room
                 if (TeamTwoMinions.ContainsKey(to.Id))
                     TeamTwoMinions.Remove(to.Id);
             }
+            else if (to.Id > 0)
+            {
+                // 如果被杀的是英雄 开启复活倒计时
+                StartSchedule(DateTime.UtcNow.AddSeconds(ServerConfig.HeroRebirthCD), () =>
+                {
+                    data.Clear();
+                    // 恢复血量
+                    to.CurHp = to.MaxHp;
+                    // 广播英雄复活的消息
+                    data.Add((byte)ParameterCode.HeroId, to.Id);
+                    Brocast(OperationCode.HeroRebirth, data);
+                });
+            }
         }
 
         /// <summary>
         /// 队伍获得经验
         /// </summary>
-        public void TeamGetExp(int teamId, int exp)
+        public DtoHero[] TeamGetExp(int teamId, int exp)
         {
+            DtoHero[] heros = null;
+            int i = 0;
             if (teamId == 1)
             {
+                heros = new DtoHero[TeamOneHeros.Count];
                 foreach (DtoHero hero in TeamOneHeros.Values)
                 {
-                    hero.Exp += exp;
-                    if (hero.Exp >= hero.Level*300)
-                    {
-                        hero.Exp -= hero.Level*300;
-                        hero.Level++;
-                        hero.SP++;
-                    }
-                        
+                    hero.AddExp(exp);
+                    heros[i++] = hero;
                 }
             }
             else if (teamId == 2)
             {
+                heros = new DtoHero[TeamTwoHeros.Count];
                 foreach (DtoHero hero in TeamTwoHeros.Values)
                 {
-                    hero.Exp += exp;
-                    if (hero.Exp >= hero.Level*300)
-                    {
-                        hero.Exp -= hero.Level*300;
-                        hero.Level++;
-                        hero.SP++;
-                    }
-                        
+                    hero.AddExp(exp);
+                    heros[i++] = hero;
                 }
             }
+            return heros;
         }
 
         /// <summary>
@@ -447,11 +450,14 @@ namespace MOBAServer.Room
         /// </summary>
         /// <param name="id"></param>
         /// <param name="coins"></param>
-        public void HeroGetCoins(int id, int coins)
+        public int HeroGetCoins(int id, int coins)
         {
             DtoHero hero = GetDtoHero(id);
-            if (hero != null)
-                hero.Money += coins;
+            if (hero == null)
+                return -1;
+
+            hero.Money += coins;
+            return hero.Id;
         }
 
         #endregion

@@ -29,8 +29,7 @@ public class ItemHero : MonoBehaviour, IResourceListener
         HeroName = hero.Name;
 
         // 加载选择的音效资源
-        ResourcesManager.Instance.Load(Paths.RES_SOUND_SELECT + HeroName, typeof(AudioClip));
-
+        ResourcesManager.Instance.Load(Paths.RES_SOUND_SELECT + HeroName, typeof(AudioClip), this);
         // 获取头像资源
         ResourcesManager.Instance.Load(Paths.RES_HEAD_UI + HeroName, typeof(Sprite), this);
     }

@@ -15,9 +15,6 @@ namespace Common.Config
 
         static SkillData()
         {
-            // 创建默认战士技能
-            int skillId = HeroData.TypeId_Warrior * ServerConfig.SkillId + 1;
-
             #region 普通攻击
             CreateSkill(ServerConfig.SkillId, "普攻", "", new SkillLevelModel[]
             {
@@ -28,13 +25,15 @@ namespace Common.Config
             });
             #endregion
 
-            #region 冲锋技能
-            CreateSkill(skillId, "冲锋", "一段时间内,移动速度和下一次攻击加倍", new SkillLevelModel[]
+            #region 战士
+
+            int skillId = HeroData.TypeId_Warrior * ServerConfig.SkillId + 1;
+            CreateSkill(skillId, "冲锋", "一段时间内,移动速度和下一次攻击增倍", new SkillLevelModel[]
             {
                 new SkillLevelModel(3, 6, 0, 0, new EffectModel[]
                 {
                     new EffectModel(SpeedDouble, 2, 2),
-                    new EffectModel(AttackDouble, 2, 4),
+                    new EffectModel(AttackDouble, 1.5, 4),
                 }),
                 new SkillLevelModel(5, 6, 0, 0, new EffectModel[]
                 {
@@ -49,9 +48,34 @@ namespace Common.Config
                 new SkillLevelModel(9, 6, 0, 0, new EffectModel[]
                 {
                     new EffectModel(SpeedDouble, 3, 2.5),
-                    new EffectModel(AttackDouble, 4, 4),
+                    new EffectModel(AttackDouble, 3, 4),
                 }),
             });
+            #endregion
+
+            #region 弓箭手
+
+            skillId = HeroData.TypeId_Archer * ServerConfig.SkillId + 1;
+            CreateSkill(skillId, "急速射击", "一段时间内攻速加增倍", new SkillLevelModel[]
+            {
+                new SkillLevelModel(3, 15, 30, 0, new EffectModel[]
+                {
+                   new EffectModel(AttackSpeedDouble, 1.5, 5),
+                }),
+                new SkillLevelModel(5, 12, 40, 0, new EffectModel[]
+                {
+                   new EffectModel(AttackSpeedDouble, 2, 5),
+                }),
+                new SkillLevelModel(7, 10, 50, 0, new EffectModel[]
+                {
+                    new EffectModel(AttackSpeedDouble, 2.2, 6), 
+                }), 
+                new SkillLevelModel(9, 10, 50, 0, new EffectModel[]
+                {
+                    new EffectModel(AttackSpeedDouble, 2.5, 8), 
+                }), 
+            });
+
             #endregion
         }
 
@@ -139,6 +163,10 @@ namespace Common.Config
         /// 攻击加倍
         /// </summary>
         public const string AttackDouble = EffectType + "AttackDouble";
+        /// <summary>
+        /// 攻速加倍
+        /// </summary>
+        public const string AttackSpeedDouble = EffectType + "AttackSpeedDouble";
 
         #endregion
     }

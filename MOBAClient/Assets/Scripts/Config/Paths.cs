@@ -46,6 +46,10 @@ public class Paths
     public const string SOUND_WARRIOR_ATTACK = RES_SOUND_BATTLE + "WarriorAttack";
     public const string SOUND_WARRIOR_DEATH = RES_SOUND_BATTLE + "WarriorDeath";
 
+    // 弓箭手英雄
+    public const string SOUND_ARCHER_ATTACK = RES_SOUND_BATTLE + "ArcherAttack";
+    public const string SOUND_ARCHER_DEATH = RES_SOUND_BATTLE + "ArcherDeath";
+
     #endregion
 
     #endregion

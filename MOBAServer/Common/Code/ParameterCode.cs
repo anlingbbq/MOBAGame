@@ -138,13 +138,9 @@ namespace Common.Code
         /// </summary>
         SkillArray,
         /// <summary>
-        /// 获得经验
+        /// 效果键值
         /// </summary>
-        GetExp,
-        /// <summary>
-        /// 获得金币
-        /// </summary>
-        GetCoins,
+        EffectKey,
 
         #endregion
     }

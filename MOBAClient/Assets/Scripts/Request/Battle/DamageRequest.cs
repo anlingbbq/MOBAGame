@@ -50,12 +50,16 @@ public class DamageRequest : BaseRequest
             panel.FloatDamage(item.Damage, toCtrl.transform);
 
             // 如果被攻击的是自己
-            if (toId == GameData.Player.Id)
+            if (toId == GameData.HeroData.Id)
             {
+                GameData.HeroData = toCtrl.Model as DtoHero;
                 // 更新ui界面
-                panel.UpdateView((DtoHero) toCtrl.Model);
+                panel.UpdateView();
                 if (item.IsDead)
                 {
+                    // 开始复活倒计时
+                    (UIManager.Instance.GetPanel(UIPanelType.Battle) as BattlePanel).StartRebirthCD();
+                    // 遮罩
                     UIManager.Instance.ShopPanel(UIPanelType.Mask);
                     toCtrl.DeathResponse();
                 }

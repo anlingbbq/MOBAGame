@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using UnityEngine;
 
 public class HeroDead : DeadState
 {
@@ -8,6 +7,8 @@ public class HeroDead : DeadState
         base.EnterState();
         // 停止寻路
         m_Ctrl.StopMove();
+        // 禁用寻路组件
+        m_Ctrl.SetAgent(false);
         // 动画
         m_Ctrl.AnimeCtrl.Death();
         // 音效
@@ -17,5 +18,10 @@ public class HeroDead : DeadState
     public override IEnumerator RunLogic()
     {
         yield return null;
+    }
+
+    public override bool CheckNextState(AIStateEnum next)
+    {
+        return true;
     }
 }

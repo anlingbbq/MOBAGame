@@ -61,16 +61,16 @@ public class TowerCtrl : AIBaseCtrl, IResourceListener
         // 生成一个攻击特效
         GameObject go = null;
         if (Model.Team == 1)
-            go = PoolManager.Instance.GetObject("BulletOne");
+            go = PoolManager.Instance.GetObject("TowerBulletOne");
         else 
-            go = PoolManager.Instance.GetObject("BulletTwo");
+            go = PoolManager.Instance.GetObject("TowerBulletTwo");
 
         go.transform.position = m_AttackPos.position;
         // 防止重置位置时产生的粒子
         go.GetComponent<EllipsoidParticleEmitter>().emit = true;
         // 初始化
         int targetId = target[0].Model.Id;
-        go.GetComponent<TargetSkill>().Init(target[0].transform, ServerConfig.SkillId, Model.Id, targetId, m_IsFriend);
+        go.GetComponent<FlightProps>().Init(target[0].transform, ServerConfig.SkillId, Model.Id, targetId, m_IsFriend);
 
         // 音效
         PlayAudio("attack");

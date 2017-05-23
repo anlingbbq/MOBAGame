@@ -59,6 +59,7 @@ namespace MOBAServer.Skill
             {
                 // 创建每一级的处理对象
                 SkillHandler skillHandler = new SkillHandler();
+                skillHandler.SkillId = skill.Id;
                 EffectModel[] effects = skill.LvData[i].EffectData;
                 skillHandler.Data = new EffectModel[effects.Length];
                 // 遍历技能效果
@@ -118,6 +119,26 @@ namespace MOBAServer.Skill
             SkillHandler skillHandler = HandlerDict.ExTryGet(skillId)[level-1];
             return skillHandler.RunDamage(room, from, to);
         }
+
+        /// <summary>
+        /// 效果提前结束
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="effectType"></param>
+        /// <returns></returns>
+        public bool EffectEnd(RoomBase<MobaPeer> room, string effectType)
+        {
+            TimerAction ta = SkillHandlerData.TimerDict.ExTryGet(effectType);
+            if (ta == null)
+                return false;
+
+            // 移除计时器
+            room.Timer.RemoveAction(ta.Id);
+            // 调用结束处理
+            ta.Action();
+
+            return true;
+        }
     }
 
     /// <summary>
@@ -125,6 +146,10 @@ namespace MOBAServer.Skill
     /// </summary>
     public class SkillHandler
     {
+        /// <summary>
+        /// 技能id
+        /// </summary>
+        public int SkillId;
         /// <summary>
         /// 效果数据
         /// </summary>
@@ -153,7 +178,7 @@ namespace MOBAServer.Skill
             for (int i = 0; i < Effect.GetInvocationList().Length; i++)
             {
                 var action = (EffectHandler)Effect.GetInvocationList()[i];
-                action(room, from, to, Data[i]);
+                action(room, SkillId, from, to, Data[i]);
             }
         }
 
@@ -166,7 +191,7 @@ namespace MOBAServer.Skill
         /// <returns></returns>
         public DtoDamage[] RunDamage(RoomBase<MobaPeer> room, DtoMinion from, DtoMinion[] to)
         {
-            return Damage == null ? null : Damage(room, from, to, Data[Data.Length - 1]);
+            return Damage == null ? null : Damage(room, SkillId, from, to, Data[Data.Length - 1]);
         }
     }
 }

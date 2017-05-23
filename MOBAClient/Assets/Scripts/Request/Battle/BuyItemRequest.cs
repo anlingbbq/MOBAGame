@@ -27,7 +27,8 @@ public class BuyItemRequest : BaseRequest
         if (hero.Id == GameData.HeroCtrl.Model.Id)
         {
             SoundManager.Instance.PlayEffectMusic(Paths.UI_BUY);
-            (UIManager.Instance.GetPanel(UIPanelType.Battle) as BattlePanel).UpdateView(hero);
+            GameData.HeroData = hero;
+            (UIManager.Instance.GetPanel(UIPanelType.Battle) as BattlePanel).UpdateView();
         }
     }
 }

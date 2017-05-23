@@ -1,4 +1,5 @@
-﻿using Common.Config;
+﻿using System.Collections;
+using Common.Config;
 using Common.Dto;
 using UnityEngine;
 using UnityEngine.UI;
@@ -63,6 +64,16 @@ public class BattlePanel : UIBasePanel, IResourceListener
     /// </summary>
     [SerializeField]
     private Text TextCoins;
+    /// <summary>
+    /// 复活倒计时
+    /// </summary>
+    [SerializeField]
+    private Text TextRebirth;
+    /// <summary>
+    /// 购买按钮
+    /// </summary>
+    [SerializeField]
+    private Button BtnShop;
 
     /// <summary>
     /// 装备栏
@@ -82,11 +93,11 @@ public class BattlePanel : UIBasePanel, IResourceListener
 
     [Header("浮动文字")]
     [SerializeField]
-    private bl_HUDText m_HUDText;
+    private bl_HUDText HUDText;
 
     public void FloatDamage(int damage, Transform trans)
     {
-        m_HUDText.NewText("- " + damage, trans, Color.red, 28, 20f, -1f, 2.2f, bl_Guidance.Up);
+        HUDText.NewText("- " + damage, trans, Color.red, 28, 20f, -1f, 2.2f, bl_Guidance.Up);
     }
 
     #endregion
@@ -111,7 +122,11 @@ public class BattlePanel : UIBasePanel, IResourceListener
         TextKDA.text = hero.Kill + "/" + hero.Death;
 
         // 飘字设置
-        m_HUDText.CanvasParent = GameObject.Find("Canvas").transform;
+        HUDText.CanvasParent = GameObject.Find("Canvas").transform;
+
+        // 复活倒计时
+        TextRebirth.text = ServerConfig.HeroRebirthCD.ToString();
+        TextRebirth.gameObject.SetActive(false);
 
         // 技能设置
         DtoSkill skill = null;
@@ -130,9 +145,9 @@ public class BattlePanel : UIBasePanel, IResourceListener
     /// 刷新界面
     /// </summary>
     /// <param name="hero"></param>
-    public void UpdateView(DtoHero hero)
+    public void UpdateView()
     {
-        GameData.HeroData = hero;
+        DtoHero hero = GameData.HeroData;
 
         // 更新状态条
         BarExp.value = (float) hero.Exp / (hero.Level * 300);
@@ -172,6 +187,63 @@ public class BattlePanel : UIBasePanel, IResourceListener
                 }
             }
         }
+    }
+
+    #region 复活倒计时
+
+    /// <summary>
+    /// 是否开始计时
+    /// </summary>
+    private bool m_StartRebirth;
+
+    /// <summary>
+    /// 开始复活计时
+    /// </summary>
+    public void StartRebirthCD()
+    {
+        m_StartRebirth = true;
+        m_RebirthCount = ServerConfig.HeroRebirthCD;
+        TextRebirth.gameObject.SetActive(true);
+        //StartCoroutine(RebirthCD());
+    }
+
+    private float m_RebirthCount;
+    void Update()
+    {
+        if (m_StartRebirth)
+        {
+            m_RebirthCount -= Time.deltaTime;
+            TextRebirth.text = Mathf.RoundToInt(m_RebirthCount).ToString();
+
+            if (m_RebirthCount <= 0)
+            {
+                m_StartRebirth = false;
+                TextRebirth.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private IEnumerator RebirthCD()
+    {
+        while (m_StartRebirth)
+        {
+            m_RebirthCount -= Time.deltaTime;
+            TextRebirth.text = Mathf.RoundToInt(m_RebirthCount).ToString();
+
+            if (m_RebirthCount <= 0)
+            {
+                m_StartRebirth = false;
+                TextRebirth.gameObject.SetActive(false);
+            }
+        }
+        yield return null;
+    }
+
+    #endregion
+
+    public void OnBtnShopClick()
+    {
+        UIManager.Instance.ShopPanel(UIPanelType.Shop);
     }
 
     void IResourceListener.OnLoaded(string assetName, object asset)

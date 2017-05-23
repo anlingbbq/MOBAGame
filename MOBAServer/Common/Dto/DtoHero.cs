@@ -146,5 +146,35 @@ namespace Common.Dto
             skill.Upgrade();
             return skill;
         }
+
+        /// <summary>
+        /// 添加经验
+        /// </summary>
+        /// <param name="exp"></param>
+        public void AddExp(int exp)
+        {
+            Exp += exp;
+            if (Exp >= Level*300)
+            {
+                Exp -= Level*300;
+                UpgradeLevel();
+            }
+        }
+
+        /// <summary>
+        /// 英雄升级
+        /// </summary>
+        private void UpgradeLevel()
+        {
+            HeroModel model = HeroData.GetHeroData(TypeId);
+            Level++;
+            SP++;
+            CurHp += model.GrowHp;
+            MaxHp += model.GrowHp;
+            CurMp += model.GrowMp;
+            MaxMp += model.GrowMp;
+            Attack += model.GrowAttack;
+            Defense += model.GrowDefense;
+        }
     }
 }

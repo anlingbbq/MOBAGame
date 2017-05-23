@@ -8,7 +8,7 @@ namespace Common.Config
 {
     /// <summary>
     /// 小兵的数据
-    /// 这里小兵没有数据变化，直接用数据传输对象
+    /// 这里小兵不做数据变化，直接用数据传输对象
     /// </summary>
     public class MinionData
     {

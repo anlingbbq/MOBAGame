@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// 选择目标型的技能
+/// 可造成伤害的飞行道具
 /// </summary>
-public class TargetSkill : MonoBehaviour
+public class FlightProps : MonoBehaviour
 {
     /// <summary>
     /// 目标
@@ -47,6 +45,8 @@ public class TargetSkill : MonoBehaviour
         m_AttackId = attackId;
         m_TargetId = targetId;
         m_Send = send;
+
+        transform.LookAt(target);
     }
 
     void Update()

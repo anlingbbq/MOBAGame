@@ -73,24 +73,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="DemiLib">
-      <HintPath>Assets\Others\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>Assets\Others\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween43">
-      <HintPath>Assets\Others\Demigiant\DOTween\DOTween43.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween46">
-      <HintPath>Assets\Others\Demigiant\DOTween\DOTween46.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween50">
-      <HintPath>Assets\Others\Demigiant\DOTween\DOTween50.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTweenPro">
-      <HintPath>Assets\Others\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
-    </Reference>
     <Reference Include="Common">
       <HintPath>Assets\Plugins\Common.dll</HintPath>
     </Reference>
@@ -100,36 +82,26 @@
     <Reference Include="Photon3Unity3D">
       <HintPath>Assets\Plugins\Photon3Unity3D.dll</HintPath>
     </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>Assets\ThirdParty\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\ThirdParty\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\ThirdParty\Demigiant\DOTween\DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets\ThirdParty\Demigiant\DOTween\DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\ThirdParty\Demigiant\DOTween\DOTween50.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenPro">
+      <HintPath>Assets\ThirdParty\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Others\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
-    <Compile Include="Assets\Others\RTS Effects\KunaiEditor\KunaiRotation.cs" />
-    <Compile Include="Assets\Others\RTS Effects\Scripts\AnimatedUVs.cs" />
-    <Compile Include="Assets\Others\RTS Effects\Scripts\ClickSpawn.cs" />
-    <Compile Include="Assets\Others\UHUDText\Content\Script\Core\bl_HUDText.cs" />
-    <Compile Include="Assets\Others\UHUDText\Content\Script\Core\bl_Text.cs" />
-    <Compile Include="Assets\Others\UHUDText\Content\Script\Internal\Enum\bl_Guidance.cs" />
-    <Compile Include="Assets\Others\UHUDText\Example\Script\bl_CameraOrbit.cs" />
-    <Compile Include="Assets\Others\UHUDText\Example\Script\bl_ExampleUI.cs" />
-    <Compile Include="Assets\Others\UHUDText\Example\Script\bl_TestMouseEvent.cs" />
-    <Compile Include="Assets\Others\UHUDText\Plugins\Pixelplacement\iTween\Sample\MoveSample.cs" />
-    <Compile Include="Assets\Others\UHUDText\Plugins\Pixelplacement\iTween\Sample\RotateSample.cs" />
-    <Compile Include="Assets\Others\UHUDText\Plugins\Pixelplacement\iTween\Sample\SampleInfo.cs" />
-    <Compile Include="Assets\Others\UHUDText\Plugins\iTween.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\BattleManager.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\Enemy.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\EnemyAniTest.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\FPSCounter.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\HP.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\Hero.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\HeroInformation.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\HexNavMapManager.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\HexTile.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\PlayMp4.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\Prop.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\Singleton.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\TouchDebug.cs" />
-    <Compile Include="Assets\Others\UHUDText\Scripts\Weight.cs" />
     <Compile Include="Assets\Scripts\Config\Paths.cs" />
     <Compile Include="Assets\Scripts\Control\Base\AIBaseCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\Base\AIBaseRadar.cs" />
@@ -141,6 +113,9 @@
     <Compile Include="Assets\Scripts\Control\Build\MainBaseCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\Build\TowerCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\CameraCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\FlightProps.cs" />
+    <Compile Include="Assets\Scripts\Control\Hero\ArcherCtrl.cs" />
+    <Compile Include="Assets\Scripts\Control\Hero\HeroCtrl.cs" />
     <Compile Include="Assets\Scripts\Control\Hero\State\HeroAttack.cs" />
     <Compile Include="Assets\Scripts\Control\Hero\State\HeroDead.cs" />
     <Compile Include="Assets\Scripts\Control\Hero\State\HeroIdle.cs" />
@@ -170,15 +145,16 @@
     <Compile Include="Assets\Scripts\Manager\Resource\ResourcesManager.cs" />
     <Compile Include="Assets\Scripts\Manager\Skill\SkillHandlerData.cs" />
     <Compile Include="Assets\Scripts\Manager\Skill\SkillManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\Skill\TargetSkill.cs" />
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Manager\TimerManager.cs" />
     <Compile Include="Assets\Scripts\Request\BaseRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\BuyItemRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\DamageRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\EffectEndRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\EnterBattleRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\GetRewardRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\HeroMoveRequest.cs" />
+    <Compile Include="Assets\Scripts\Request\Battle\HeroRebirthRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\InitCompleteRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\ReadyBattleRequest.cs" />
     <Compile Include="Assets\Scripts\Request\Battle\SpawnMinionRequest.cs" />
@@ -228,21 +204,49 @@
     <Compile Include="Assets\Test\Scripts\TestHeroData.cs" />
     <Compile Include="Assets\Test\Scripts\TestKeyCtrl.cs" />
     <Compile Include="Assets\Test\Scripts\TestMinionData.cs" />
+    <Compile Include="Assets\ThirdParty\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
+    <Compile Include="Assets\ThirdParty\RTS Effects\KunaiEditor\KunaiRotation.cs" />
+    <Compile Include="Assets\ThirdParty\RTS Effects\Scripts\AnimatedUVs.cs" />
+    <Compile Include="Assets\ThirdParty\RTS Effects\Scripts\ClickSpawn.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Content\Script\Core\bl_HUDText.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Content\Script\Core\bl_Text.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Content\Script\Internal\Enum\bl_Guidance.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Example\Script\bl_CameraOrbit.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Example\Script\bl_ExampleUI.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Example\Script\bl_TestMouseEvent.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Plugins\Pixelplacement\iTween\Sample\MoveSample.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Plugins\Pixelplacement\iTween\Sample\RotateSample.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Plugins\Pixelplacement\iTween\Sample\SampleInfo.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Plugins\iTween.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\BattleManager.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\Enemy.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\EnemyAniTest.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\FPSCounter.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\HP.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\Hero.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\HeroInformation.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\HexNavMapManager.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\HexTile.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\PlayMp4.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\Prop.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\Singleton.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\TouchDebug.cs" />
+    <Compile Include="Assets\ThirdParty\UHUDText\Scripts\Weight.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Others\Demigiant\DOTween\DOTween.XML" />
-    <None Include="Assets\Others\Demigiant\DOTween\DOTween43.xml" />
-    <None Include="Assets\Others\Demigiant\DOTween\DOTween46.xml" />
-    <None Include="Assets\Others\Demigiant\DOTween\DOTween50.xml" />
-    <None Include="Assets\Others\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
-    <None Include="Assets\Others\Demigiant\DOTween\readme.txt" />
-    <None Include="Assets\Others\Demigiant\DOTweenPro\DOTweenPro.XML" />
-    <None Include="Assets\Others\Demigiant\DOTweenPro\Editor\DOTweenProEditor.XML" />
-    <None Include="Assets\Others\Demigiant\DOTweenPro\readme.txt" />
-    <None Include="Assets\Others\Demigiant\DemiLib\Core\DemiLib.xml" />
-    <None Include="Assets\Others\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
-    <None Include="Assets\Others\Demigiant\readme_DOTweenPro.txt" />
-    <None Include="Assets\Others\RTS Effects\KunaiEditor\Editor\Readme.txt" />
+    <None Include="Assets\ThirdParty\Demigiant\DOTween\DOTween.XML" />
+    <None Include="Assets\ThirdParty\Demigiant\DOTween\DOTween43.xml" />
+    <None Include="Assets\ThirdParty\Demigiant\DOTween\DOTween46.xml" />
+    <None Include="Assets\ThirdParty\Demigiant\DOTween\DOTween50.xml" />
+    <None Include="Assets\ThirdParty\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\ThirdParty\Demigiant\DOTween\readme.txt" />
+    <None Include="Assets\ThirdParty\Demigiant\DOTweenPro\DOTweenPro.XML" />
+    <None Include="Assets\ThirdParty\Demigiant\DOTweenPro\Editor\DOTweenProEditor.XML" />
+    <None Include="Assets\ThirdParty\Demigiant\DOTweenPro\readme.txt" />
+    <None Include="Assets\ThirdParty\Demigiant\DemiLib\Core\DemiLib.xml" />
+    <None Include="Assets\ThirdParty\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
+    <None Include="Assets\ThirdParty\Demigiant\readme_DOTweenPro.txt" />
+    <None Include="Assets\ThirdParty\RTS Effects\KunaiEditor\Editor\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

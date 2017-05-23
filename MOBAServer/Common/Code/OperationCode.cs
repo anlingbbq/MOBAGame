@@ -135,6 +135,14 @@ namespace Common.OpCode
         /// 获得奖励
         /// </summary>
         GetReward,
+        /// <summary>
+        /// 效果结束
+        /// </summary>
+        EffectEnd,
+        /// <summary>
+        /// 英雄复活
+        /// </summary>
+        HeroRebirth,
 
         #endregion
     }

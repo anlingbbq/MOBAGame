@@ -179,7 +179,7 @@ public class SelectPanel : UIBasePanel
         foreach (ItemHero hero in ItemHeroDict.Values)
         {
             // 如果玩家已经准备了
-            if (BtnReady.interactable == false && hasSelected)
+            if (BtnReady.interactable == false && m_HasSelected)
             {
                 hero.Interactable = false;
                 continue;
@@ -196,7 +196,7 @@ public class SelectPanel : UIBasePanel
     /// <summary>
     /// 是否有选择
     /// </summary>
-    private bool hasSelected = false;
+    private bool m_HasSelected = false;
 
     /// <summary>
     /// 点击英雄头像的回调
@@ -204,7 +204,7 @@ public class SelectPanel : UIBasePanel
     /// <param name="heroId"></param>
     public void OnSelectHeroClick(int heroId)
     {
-        hasSelected = true;
+        m_HasSelected = true;
         BtnReady.interactable = true;
         m_SelectedRequest.SendSelectedRequest(heroId);
     }
@@ -250,6 +250,7 @@ public class SelectPanel : UIBasePanel
 
         // 禁用准备按钮
         BtnReady.interactable = false;
+        m_HasSelected = false;
         // 清空聊天框
         TextContent.text = "";
         // 发送进入选人房间的消息

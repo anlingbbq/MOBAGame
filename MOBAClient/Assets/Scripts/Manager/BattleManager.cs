@@ -89,6 +89,15 @@ namespace MOBAClient
             m_UseSkillRequest.SendUseSkill(skillId, level, from, target);            
         }
 
+        /// <summary>
+        /// 效果结束的请求
+        /// </summary>
+        private EffectEndRequest m_EffectEndRequest;
+        public void RequestEffectEnd(string effectkey)
+        {
+            m_EffectEndRequest.SendEffectEnd(effectkey);
+        }
+
         #endregion
 
         void Start()
@@ -104,6 +113,7 @@ namespace MOBAClient
             m_BuyRequest = GetComponent<BuyItemRequest>();
             m_UpgradeSkillRequest = GetComponent<UpgradeSkillRequest>();
             m_UseSkillRequest = GetComponent<UseSkillRequest>();
+            m_EffectEndRequest = GetComponent<EffectEndRequest>();
 
             // 加载资源
             ResourcesManager.Instance.Load(Paths.UI_BUY, typeof(AudioClip));

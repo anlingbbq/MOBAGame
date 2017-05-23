@@ -2,10 +2,7 @@
 {
     public class ServerConfig
     {
-        /// <summary>
-        /// 进入选择房间的等待时间
-        /// </summary>
-        public const int SelectRoomTimeOff = 10;
+        #region ID
 
         #region 英雄
 
@@ -70,5 +67,29 @@
         public const int ItemMaxCount = 6;
 
         #endregion
+
+        #endregion
+
+        /// <summary>
+        /// 进入选择房间的等待时间
+        /// </summary>
+        public const int SelectRoomTimeOff = 10;
+
+        /// <summary>
+        /// 英雄复活倒计时时间
+        /// </summary>
+        public const int HeroRebirthCD = 3;
+
+        /// <summary>
+        /// 获取技能效果的唯一标识
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="skillId"></param>
+        /// <param name="effectType"></param>
+        /// <returns></returns>
+        public static string GetEffectKey(int userId, int skillId, string effectType)
+        {
+            return userId + skillId + effectType;
+        }
     }
 }

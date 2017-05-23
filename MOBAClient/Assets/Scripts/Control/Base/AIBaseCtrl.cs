@@ -51,10 +51,6 @@ public class AIBaseCtrl : MonoBehaviour
         // 设置攻击速度
         if (AnimeCtrl != null)
             AnimeCtrl.SetAttackSpeed((float)model.AttackInterval);
-
-        // 设置导航
-        if (m_Agent != null)
-            m_Agent.stoppingDistance = (float)model.AttackDistance;
     }
 
     #region 动画
@@ -170,7 +166,10 @@ public class AIBaseCtrl : MonoBehaviour
     /// </summary>
     public virtual void RebirthResponse()
     {
-
+        // 设置血条
+        SetHpBar(true);
+        // 显示小地图头像
+        MiniMapHead.gameObject.SetActive(true);
     }
 
     #endregion
@@ -254,6 +253,54 @@ public class AIBaseCtrl : MonoBehaviour
         if (enable == false)
             m_Agent.Stop();
         m_Agent.enabled = enable;
+    }
+
+    #endregion
+
+    #region 增益/减益效果
+
+    /// <summary>
+    /// 保存效果类型和计时器键值的映射
+    /// 与SkillHandlerData相关
+    /// </summary>
+    protected Dictionary<string, string> m_BuffDict = new Dictionary<string, string>();
+
+    /// <summary>
+    /// 添加buff
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    public void AddBuff(string key, string value)
+    {
+        if (m_BuffDict.ContainsKey(key))
+            return;
+
+        m_BuffDict.Add(key, value);
+    }
+
+    /// <summary>
+    /// 获取buff
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public string GetBuff(string key)
+    {
+        if (m_BuffDict.ContainsKey(key))
+            return m_BuffDict[key];
+
+        return null;
+    }
+
+    /// <summary>
+    /// 移除buff
+    /// </summary>
+    /// <param name="key"></param>
+    public void RemoveBuff(string key)
+    {
+        if (m_BuffDict.ContainsKey(key))
+            return;
+
+        m_BuffDict.Remove(key);
     }
 
     #endregion

@@ -83,6 +83,7 @@
     <Compile Include="Handler\BaseHandler.cs" />
     <Compile Include="Handler\Battle\BuyItemHandler.cs" />
     <Compile Include="Handler\Battle\DamageHandler.cs" />
+    <Compile Include="Handler\Battle\EffectEndHandler.cs" />
     <Compile Include="Handler\Battle\EnterBattleHandler.cs" />
     <Compile Include="Handler\Battle\HeroMoveHandler.cs" />
     <Compile Include="Handler\Battle\InitCompleteHandler.cs" />

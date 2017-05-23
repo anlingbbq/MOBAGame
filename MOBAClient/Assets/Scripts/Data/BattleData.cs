@@ -70,10 +70,10 @@ public class BattleData : Singleton<BattleData>
             // 判断这个英雄是不是自己
             if (item.Id == GameData.Player.Id)
             {
-                // 保存自己英雄的数据
-                GameData.HeroData = item;
                 // 保存自己英雄的控制器
                 GameData.HeroCtrl = ctrl;
+                // 保存自己英雄的数据
+                GameData.HeroData = ctrl.Model as DtoHero;
             }
         }
 
@@ -178,5 +178,26 @@ public class BattleData : Singleton<BattleData>
             }
         }
         return -1;
+    }
+
+    public void RebirthHero(int heroId)
+    {
+        if (!CtrlDict.ContainsKey(heroId))
+            return;
+
+        HeroCtrl hero = CtrlDict[heroId] as HeroCtrl;
+        // 设置位置
+        if (hero.Model.Team == 1)
+            hero.transform.position = Team1HeroPoint[0].position;
+        else if (hero.Model.Team == 2)
+            hero.transform.position = Team2HeroPoint[0].position;
+
+        // 设置层
+        if (hero.Model.Team == GameData.HeroData.Team)
+            hero.gameObject.layer = LayerMask.NameToLayer("Friend");
+        else
+            hero.gameObject.layer = LayerMask.NameToLayer("Enemy");
+
+        hero.RebirthResponse();
     }
 }

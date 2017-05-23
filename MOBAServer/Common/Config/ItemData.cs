@@ -9,7 +9,7 @@ namespace Common.Config
 
         static ItemData()
         {
-            CreateItem(ServerConfig.ItemTypeId, "长剑", 15, 5, 80, 450);
+            CreateItem(ServerConfig.ItemTypeId, "长剑", 10, 5, 80, 450);
             CreateItem(ServerConfig.ItemTypeId + 1, "圆盾", 0, 10, 180, 450);
             CreateItem(ServerConfig.ItemTypeId + 2, "弯弓", 20, 0, 40, 450);
         }
